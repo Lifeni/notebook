@@ -17,6 +17,6 @@ jobs:
           script: |
             cd /home/content/
             git pull
-            cp -r -f /home/content/ /home/website/content/
+            cp -r -f /home/content/ /home/website/
             cd /home/website/
             npm run build
