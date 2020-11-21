@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - run: git submodule update --remote
       - run: npm ci
       - run: npm run build
         env:
