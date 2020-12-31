@@ -2,7 +2,7 @@
 name: github-actions-example
 title: GitHub Actions 的应用场景
 create-date: 2020-11-21
-date: 2020-11-21
+date: 2020-12-31
 descriptions:
   - 记录一些常见的 GitHub Actions 配置与应用场景
 tags:
@@ -16,7 +16,90 @@ license: CC-BY-SA-4.0
 
 👀 之前写过一个类似的文章，[用 GitHub Actions 部署 Vue 项目到 GitHub Pages | 记录干杯](https://lifeni.life/article/deploy-with-github-actions)
 
-## 构建 Node.js 应用并部署到服务器
+## 制作并发布 Docker 镜像
+
+### 需求
+
+我做了一个可以自托管的文字展示与分享应用（[Lifeni/i-show-you: A self-hosted web application for data presentation and sharing.](https://github.com/Lifeni/i-show-you)），并把它制作成了 Docker 镜像（[Docker Hub](https://hub.docker.com/repository/docker/lifeni/i-show-you/general)），然后用户可以通过 Docker Compose 进行应用的搭建。应用采用前后端分离，前端用的 React，后端用的 Golang，所以最后打包的镜像中要包含前端静态文件和后端的可执行二进制文件。
+
+为了节省时间、避免网络问题带来的影响，我选择使用 GitHub Actions 进行应用的构建以及 Docker 镜像的构建与上传，具体流程及配置文件如下。
+
+### 实现
+
+直接根据 Docker 官方提供的 Actions，按照文档（[Build and push Docker images · Actions · GitHub Marketplace](https://github.com/marketplace/actions/build-and-push-docker-images)）修改即可。基本流程是根据写好的 Dockerfile 生成镜像，然后发布到 Docker Hub。
+
+实际执行流程可以去我的项目的 Actions 中看看：[Actions · Lifeni/i-show-you](https://github.com/Lifeni/i-show-you/actions?query=workflow%3A%22Build+and+Publish+Docker+Image%22) 。
+
+### 配置文件
+
+构建镜像的 YAML 如下，需要在 GitHub 仓库的设置的 secret 中设定 `DOCKER_USERNAME` 和 `DOCKER_PASSWORD`，其中 `DOCKER_PASSWORD` 不是 Docker 账户的密码，而是一个用户令牌（Access Token），可以在 https://hub.docker.com/settings/security 这个页面中获取。
+
+```yml
+name: Build and Publish Docker Image
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  push-to-registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./build/Dockerfile
+          push: true
+          tags: lifeni/i-show-you:latest
+```
+
+使用到的 Dockerfile 如下，先通过包含前端和后端环境的两个镜像把最终的可运行的文件构建出来，其中前端是静态 HTML、JS 等，后端是可执行文件。然后再把这些文件打包进 Alpine 镜像（一种精简的镜像），生成最终的镜像。最后生成的镜像大概只有十几 MB，比较精简。
+
+```dockerfile
+# Build Webapp
+FROM node:lts-alpine as webapp
+WORKDIR /web
+COPY ./webapp .
+RUN yarn && yarn build
+
+# Build Server
+FROM golang:alpine as server
+WORKDIR /go/src/app
+COPY ./server .
+RUN go install -v ./... && go get -d -v ./...
+
+FROM alpine:latest
+WORKDIR /app
+COPY --from=webapp /web/build ./public
+COPY --from=server /go/bin/server .
+COPY ./configs/main.yml ./configs/
+RUN apk update && apk --no-cache add ca-certificates && rm -rf /var/cache/apk/*
+
+EXPOSE 8080
+
+CMD ["/app/server"]
+```
+
+## 构建与部署 Node.js 应用
 
 ### 需求
 
@@ -72,22 +155,19 @@ jobs:
           source: "public"
           target: "/home/website"
           overwrite: true
-
 ```
 
-## 使用 SSH 执行服务器上的部署命令
+## 使用 SSH
 
 ### 需求
 
 有一些私密项目或者其他原因，我们可能不希望把代码文件放在 GitHub Actions 上执行，我也有这样一个仓库，是我的 API 服务器，一个使用 Nest.js 编写的项目，需要 Build 后使用 pm2 执行。
 
-### 实现
+### 实现与配置文件
 
 我这里选择了直接在 Commit 后通过 SSH 连接到远程服务器，然后 Clone 代码再进行构建和部署操作。
 
 需要注意的是，因为是私密仓库，所以在远程服务器上需要配置好 Git 的 SSH Key，才能在不输入密码的情况下 Clone 仓库。
-
-### 配置文件
 
 ```yml
 name: GitHub Actions Build and Deploy
@@ -116,29 +196,35 @@ jobs:
 
 ## 常用的 Actions
 
-- actions/checkout
+- actions/**checkout**
 
     用于获取 Git 仓库，默认是获取当前仓库。
 
-    官方文档：[Checkout · Actions · GitHub Marketplace](https://github.com/marketplace/actions/checkout) 。
+    文档：[Checkout · Actions · GitHub Marketplace](https://github.com/marketplace/actions/checkout) 。
 
-- actions/setup-node
+- actions/**setup-node**
 
     用于设置 Node.js 环境。
 
-    官方文档：[Setup Node.js environment · Actions · GitHub Marketplace](https://github.com/marketplace/actions/setup-node-js-environment) 。
+    文档：[Setup Node.js environment · Actions · GitHub Marketplace](https://github.com/marketplace/actions/setup-node-js-environment) 。
 
-- appleboy/ssh-action
+- appleboy/**ssh-action**
 
     用于执行远程的 SSH 命令。
 
-    官方文档：[SSH Remote Commands · Actions · GitHub Marketplace](https://github.com/marketplace/actions/ssh-remote-commands) 。
+    文档：[SSH Remote Commands · Actions · GitHub Marketplace](https://github.com/marketplace/actions/ssh-remote-commands) 。
 
-- appleboy/scp-action
+- appleboy/**scp-action**
 
     用于执行 SCP 命令。
 
-    官方文档：[SCP Files · Actions · GitHub Marketplace](https://github.com/marketplace/actions/scp-files) 。
+    文档：[SCP Files · Actions · GitHub Marketplace](https://github.com/marketplace/actions/scp-files) 。
+    
+- actions/**build-and-push-docker-images**
+
+    用于构建和推送 Docker 镜像。
+
+    文档：[Build and push Docker images · Actions · GitHub Marketplace](https://github.com/marketplace/actions/build-and-push-docker-images) 。
 
 ## 进一步了解
 
