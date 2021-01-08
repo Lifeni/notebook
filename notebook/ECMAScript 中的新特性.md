@@ -1,11 +1,11 @@
 ---
 name: es-features
-title: ECMAScript 中的新特性（补充中）
+title: ECMAScript 中的新特性
 create-date: 2021-01-04
-date: 2021-01-07
+date: 2021-01-08
 descriptions:
     - 记录从 ES6 发布至今 ECMAScript 中出现的新特性，每年更新
-    - 目前包含 ECMAScript 2016 ~ 2021 的新特性
+    - 目前包含 ECMAScript 2016 ~ 2021 的部分新特性
 tags:
     - ECMAScript
     - 年更
@@ -16,7 +16,7 @@ license: CC-BY-SA-4.0
 
 📌 记录从 ES6 发布至今 ECMAScript 中出现的新特性，每年更新
 
-💡 目前包含 ECMAScript 2016 ~ 2021 的新特性
+💡 目前包含 ECMAScript 2016 ~ 2021 的部分新特性
 
 > 所有进入标准的提案汇总：[proposals/finished-proposals.md at master · tc39/proposals](https://github.com/tc39/proposals/blob/master/finished-proposals.md)
 
@@ -112,7 +112,7 @@ Promise.any([
 > - [tc39/proposal-promise-any: ECMAScript proposal: Promise.any](https://github.com/tc39/proposal-promise-any)
 > - [Promise.any() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/any)
 
-### 逻辑赋值符号 `||=` `&&=` `??=`
+### 逻辑赋值符号 `||=`  `&&=`  `??=`
 
 把逻辑运算符和赋值表达式结合起来。
 
@@ -210,7 +210,7 @@ const hugeButString = BigInt('9007199254740991');
 // ↪ 9007199254740991n
 ```
 
-BigInt 可以使用 `+` `*` `-` `**` 和 `%` 符号，但符号两边必须都是 BigInt 类型，否则会报错。
+BigInt 可以使用 `+`  `*`  `-`  `**` 和 `%` 符号，但符号两边必须都是 BigInt 类型，否则会报错。
 
 ```js
 const previousMaxSafe = BigInt(Number.MAX_SAFE_INTEGER);
@@ -408,7 +408,7 @@ for (var prop in obj) {
 
 当左侧为 `undefined` 或者 `null` 时，返回右侧值。
 
-主要用来解决 `||` 操作符将 `''` `0` `false` 判断为假的情况，`??` 会把以上这些判断为真，并返回右侧的值。
+主要用来解决 `||` 操作符将 `''`  `0`  `false` 判断为假的情况，`??` 会把以上这些判断为真，并返回右侧的值。
 
 ```js
 const response = {
@@ -489,25 +489,150 @@ a == null ? undefined : a()
 > - [tc39/proposal-optional-chaining](https://github.com/tc39/proposal-optional-chaining)
 > - [可选链操作符 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E5%8F%AF%E9%80%89%E9%93%BE)
 
-### `Promise.allSettled`（待补充）
+### `Promise.allSettled`
+
+所有 Promise 都完成时（无论是 `fulfilled` 还是 `reject`），返回结果的数组。
+
+```js
+const promises = [ 
+    fetch('https://lifeni.life'), 
+    fetch('https://does-not-exist/') 
+];
+
+const results = await Promise.allSettled(promises);
+const errors = results
+  .filter(p => p.status === 'rejected')
+  .map(p => p.reason);
+
+console.log(JSON.stringify(results));
+
+/** output
+[
+  {
+    "status":"fulfilled",
+    "value":{...}
+  },
+  {
+    "status":"rejected",
+    "reason":{...}
+  }
+]
+*/
+```
 
 > 参考资料：
 >
 > - [tc39/proposal-promise-allSettled: ECMAScript Proposal, specs, and reference implementation for Promise.allSettled](https://github.com/tc39/proposal-promise-allSettled)
 > - [Promise.allSettled() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)
 
-### `import()`（待补充）
+### `import()`
+
+也就是动态导入，返回一个 Promise。
+
+```html
+<!DOCTYPE html>
+<nav>
+  <a href="books.html" data-entry-module="books">Books</a>
+  <a href="movies.html" data-entry-module="movies">Movies</a>
+  <a href="video-games.html" data-entry-module="video-games">Video Games</a>
+</nav>
+
+<main>Content will load here!</main>
+
+<script>
+  const main = document.querySelector("main");
+  for (const link of document.querySelectorAll("nav > a")) {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+
+      import(`./section-modules/${link.dataset.entryModule}.js`)
+        .then(module => {
+          module.loadPageInto(main);
+        })
+        .catch(err => {
+          main.textContent = err.message;
+        });
+    });
+  }
+</script>
+```
 
 > 参考资料：
 >
 > - [tc39/proposal-dynamic-import: import() proposal for JavaScript](https://github.com/tc39/proposal-dynamic-import)
 > - [import - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import)
 
-### `globalThis`（待补充）
+### `import.meta`
+
+获取模块的元数据。
+
+```html
+<script type="module" src="my-module.mjs"></script>
+```
+
+```js
+console.log(import.meta); // { url: "file:///home/user/my-module.mjs" }
+```
+
+下面是一个例子。
+
+```html
+<script type="module" src="path/to/hamster-displayer.mjs" data-size="500"></script>
+```
+
+```js
+(async () => {
+  // new URL() 的第二个参数是相对地址（baseUrl）
+  const response = await fetch(new URL("../hamsters.jpg", import.meta.url));
+  const blob = await response.blob();
+
+  const size = import.meta.scriptElement.dataset.size || 300;
+
+  const image = new Image();
+  image.src = URL.createObjectURL(blob);
+  image.width = image.height = size;
+
+  document.body.appendChild(image);
+})();
+```
 
 > 参考资料：
 >
-> - [tc39/proposal-global: ECMAScript Proposal, specs, and reference implementation for `global`](https://github.com/tc39/proposal-global)
+> - [tc39/proposal-import-meta: import.meta proposal for JavaScript](https://github.com/tc39/proposal-import-meta)
+> - [import.meta - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import.meta)
+
+### `globalThis`
+
+在不同的运行环境下，获取全局对象的方式不同。
+
+> 在以前，从不同的 JavaScript 环境中获取全局对象需要不同的语句。在 Web 中，可以通过 `window`、`self` 或者 `frames` 取到全局对象，但是在 [Web Workers](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker) 中，只有 `self` 可以。在 Node.js 中，它们都无法获取，必须使用 `global`。
+
+```js
+var getGlobal = function () {
+  if (typeof self !== 'undefined') { return self; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  throw new Error('unable to locate global object');
+};
+
+var globals = getGlobal();
+
+if (typeof globals.setTimeout !== 'function') {
+  // 此环境中没有 setTimeout 方法！
+}
+```
+
+因此为了简化代码，可以使用 `globalThis` 来调用全局对象。
+
+```js
+if (typeof globalThis.setTimeout !== 'function') {
+  //  此环境中没有 setTimeout 方法！
+}
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-global: ECMAScript Proposal, specs, and reference implementation for global](https://github.com/tc39/proposal-global)
 > - [globalThis - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
 
 ## ES 2019
@@ -520,7 +645,153 @@ a == null ? undefined : a()
 
 ## ES 2017
 
-// TODO
+### `Object.values` 和 `Object.entries`
+
+- `Object.values` 返回一个对象所有可枚举的 **属性值** 的数组。
+- `Object.entries` 返回一个对象所有可枚举的 **键值对** 组成的数组。
+
+```js
+var obj = { foo: 'bar', baz: 42 };
+Object.values(obj);     // ['bar', 42]
+Object.entries(obj);    // [ ['foo', 'bar'], ['baz', 42] ]
+
+// 类似数组的对象
+var obj = { 0: 'a', 1: 'b', 2: 'c' };
+Object.values(obj);     // ['a', 'b', 'c']
+Object.entries(obj);    // [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]
+
+// 乱序的类似数组的对象
+// 当使用数字作为键时，值将会按照键的数字顺序返回
+var an_obj = { 100: 'a', 2: 'b', 7: 'c' };
+Object.values(an_obj);  // ['b', 'c', 'a']
+Object.entries(an_obj);  // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
+
+// getFoo 是一个不可枚举的属性
+var my_obj = Object.create({}, { 
+    getFoo: { value: function() { return this.foo; } } 
+});
+my_obj.foo = 'bar';
+Object.values(my_obj);  // ['bar']
+Object.entries(my_obj); // [ ['foo', 'bar'] 
+
+// 非对象的参数将会强制转换成对象
+Object.values('foo');   // ['f', 'o', 'o']
+Object.entries('foo');  // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
+```
+
+`Object.entries` 还有很多用法。
+
+```js
+// 优雅地遍历 key-value
+const obj = { a: 5, b: 7, c: 9 };
+for (const [key, value] of Object.entries(obj)) {
+  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+}
+
+// 或者使用数组遍历对象
+Object.entries(obj).forEach(([key, value]) => {
+console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+});
+
+// 将 Object 转换成 Map
+var obj = { foo: "bar", baz: 42 };
+var map = new Map(Object.entries(obj));
+console.log(map); // Map { foo: "bar", baz: 42 }
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-object-values-entries: ECMAScript Proposal, specs, and reference implementation for Object.values/Object.entries](https://github.com/tc39/proposal-object-values-entries)
+> - [Object.values() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values)
+> - [Object.entries() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
+
+### `String.prototype.padStart` 和 `String.prototype.padEnd`
+
+用于填充字符串到指定长度。
+
+```js
+str.padStart(targetLength [, padString])
+```
+
+`targetLength` 要填充到的长度，如果小于当前字符串的长度，则返回当前字符串。
+
+`padString` 要填充的字符串，超出的部分会被截断。默认填充空格 ` ` 。
+
+```js
+'abc'.padStart(10);         // "       abc"
+'abc'.padStart(10, "foo");  // "foofoofabc"
+'abc'.padStart(6,"123465"); // "123abc"
+'abc'.padStart(8, "0");     // "00000abc"
+'abc'.padStart(1);          // "abc"
+```
+
+`String.prototype.padEnd` 同理。
+
+```js
+'abc'.padEnd(10);          // "abc       "
+'abc'.padEnd(10, "foo");   // "abcfoofoof"
+'abc'.padEnd(6, "123456"); // "abc123"
+'abc'.padEnd(1);           // "abc"
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-string-pad-start-end: ECMAScript spec proposal for String.prototype.{padStart,padEnd}](https://github.com/tc39/proposal-string-pad-start-end)
+> - [String.prototype.padStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padStart)
+> - [String.prototype.padEnd() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd)
+
+### 允许在函数的参数列表末尾项后添加逗号
+
+如果函数有很多参数，那么经过格式化之后，参数会垂直排列。如果要添加一个参数，那么在代码管理软件（例如 Git）看来，实际上修改了两行：上一个参数后添加逗号、新的参数。
+
+```js
+function clownPuppiesEverywhere(
+  param1,
+  param2, // updated to add a comma
+  param3  // updated to add new parameter
+) { /* ... */ }
+
+clownPuppiesEverywhere(
+  'foo',
+  'bar', // updated to add a comma
+  'baz'  // updated to add new parameter
+);
+```
+
+但是如果允许默认情况下在最后一个参数后加上逗号，那么未来添加新的参数时，要修改的代码就只有一行。
+
+```js
+function clownPuppiesEverywhere(
+  param1,
+  param2, // 添加下一个参数时只会修改下面这一行，而不会修改这一行
+) { /* ... */ }
+
+clownPuppiesEverywhere(
+  'foo',
+  'bar', // 添加下一个参数时只会修改下面这一行，而不会修改这一行
+);
+```
+
+其实不止函数的参数可以这样做，数组、对象的末尾逗号也是可以的，并且在 ECMAScript 5 中就已经得到了支持。但是在 JSON 中是不行的。
+
+> 参考资料：
+>
+> - [tc39/proposal-trailing-function-commas](https://github.com/tc39/proposal-trailing-function-commas)
+> - [尾后逗号 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Trailing_commas)
+
+### `Object.getOwnPropertyDescriptors`（待补充）
+
+> 参考资料：
+>
+> - [tc39/proposal-object-getownpropertydescriptors: ECMAScript proposal for Object.getOwnPropertyDescriptors](https://github.com/tc39/proposal-object-getownpropertydescriptors)
+> - [Object.getOwnPropertyDescriptors() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors)
+
+### 共享内存和 `Atomics`（待补充）
+
+> 参考资料：
+>
+> - [tc39/ecmascript_sharedmem: Shared memory and atomics for ECMAscript](https://github.com/tc39/ecmascript_sharedmem)
+> - [ecmascript_sharedmem/TUTORIAL.md at master · tc39/ecmascript_sharedmem](https://github.com/tc39/ecmascript_sharedmem/blob/master/TUTORIAL.md)
 
 ## ES 2016
 
