@@ -2,7 +2,7 @@
 name: es-features
 title: ECMAScript 中的新特性
 create-date: 2021-01-04
-date: 2021-01-08
+date: 2021-01-09
 descriptions:
     - 记录从 ES6 发布至今 ECMAScript 中出现的新特性，每年更新
     - 目前包含 ECMAScript 2016 ~ 2021 的部分新特性
@@ -18,7 +18,6 @@ license: CC-BY-SA-4.0
 
 💡 目前包含 ECMAScript 2016 ~ 2021 的部分新特性
 
-> 所有进入标准的提案汇总：[proposals/finished-proposals.md at master · tc39/proposals](https://github.com/tc39/proposals/blob/master/finished-proposals.md)
 
 ## ES 2021
 
@@ -156,9 +155,63 @@ let amount = 1_234_500; // 1,234,500
 
 > 参考资料：[tc39/proposal-numeric-separator: A proposal to add numeric literal separators in JavaScript.](https://github.com/tc39/proposal-numeric-separator)
 
-### WeakRefs（待补充）
+### WeakRefs
 
-> 参考资料：[tc39/proposal-weakrefs: WeakRefs](https://github.com/tc39/proposal-weakrefs)
+用于保留对一个对象的弱引用，不会阻止 GC（JavaScript 引擎的垃圾回收机制）。
+
+下面的例子创建了一个计时器，计时器元素不存在时停止。
+
+```js
+class Counter {
+  constructor(element) {
+    // 记录一个弱引用到 DOM 元素
+    this.ref = new WeakRef(element);
+    this.start();
+  }
+
+  start() {
+    if (this.timer) {
+      return;
+    }
+
+    this.count = 0;
+
+    const tick = () => {
+      // 从弱引用中获取元素，如果存在就执行操作
+      const element = this.ref.deref();
+      if (element) {
+        element.textContent = ++this.count;
+      } else {
+        // 元素不存在时
+        console.log("The element is gone.");
+        this.stop();
+        this.ref = null;
+      }
+    };
+
+    tick();
+    this.timer = setInterval(tick, 1000);
+  }
+
+  stop() {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = 0;
+    }
+  }
+}
+
+const counter = new Counter(document.getElementById("counter"));
+counter.start();
+setTimeout(() => {
+  document.getElementById("counter").remove();
+}, 5000);
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-weakrefs: WeakRefs](https://github.com/tc39/proposal-weakrefs)
+> - [WeakRef - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakRef)
 
 ## ES 2020
 
@@ -639,16 +692,431 @@ if (typeof globalThis.setTimeout !== 'function') {
 
 // TODO
 
+###  `Object.fromEntries`
+
+相当于 `Object.entries` 的反向操作，生成一个对象。
+
+```js
+obj = Object.fromEntries([['a', 0], ['b', 1]]); // { a: 0, b: 1 }
+```
+
+可以将 Map 或者 Array 转化为 Object。
+
+```js
+const map = new Map([ ['foo', 'bar'], ['baz', 42] ]);
+const obj = Object.fromEntries(map);
+console.log(obj); // { foo: "bar", baz: 42 }
+```
+
+```js
+const arr = [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ];
+const obj = Object.fromEntries(arr);
+console.log(obj); // { 0: "a", 1: "b", 2: "c" }
+```
+
+如果键或者值不是字符串，则可能会出现意料之外的结果。
+
+```js
+const map = new Map([
+  [{}, 'a'],
+  [{}, 'b'],
+]);
+Object.fromEntries(map);
+// → { '[object Object]': 'b' }
+// Note: the value 'a' is nowhere to be found, since both keys
+// stringify to the same value of '[object Object]'.
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-object-from-entries: TC39 proposal for Object.fromEntries](https://github.com/tc39/proposal-object-from-entries)
+> - [Object.fromEntries() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)
+> - [【译】关于Object.fromEntries](https://juejin.cn/post/6844903877301665799#heading-3)
+
+### `String.prototype.{trimStart,trimEnd}`
+
+删除字符串中 开头/结尾 的连续空白符，也可以使用别名 `String.prototype.{trimLeft,trimRight}`。
+
+```js
+var str = "   foo  ";
+
+console.log(str.length); // 8
+
+str = str.trimStart()    // 等同于 str = str.trimLeft();
+console.log(str.length); // 5
+console.log(str);        // "foo  "
+
+str = str.trimRight();  // 或写成str = str.trimEnd();
+console.log(str.length); // 6
+console.log(str);       // '   foo'
+```
+
+> 参考资料：
+>
+> - [String.prototype.trimStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft)
+> - [String.prototype.trimRight() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimRight)
+
+### `Array.prototype.{flat,flatMap}`
+
+`Array.prototype.flat` 用来把一个嵌套的数组展开成一个一维的数组。
+
+```js
+var newArray = arr.flat([depth]);
+```
+
+`depth` 展开的深度，默认为 1。
+
+```js
+var arr1 = [1, 2, [3, 4]];
+arr1.flat();
+// [1, 2, 3, 4]
+
+var arr2 = [1, 2, [3, 4, [5, 6]]];
+arr2.flat();
+// [1, 2, 3, 4, [5, 6]]
+
+var arr3 = [1, 2, [3, 4, [5, 6]]];
+arr3.flat(2);
+// [1, 2, 3, 4, 5, 6]
+
+// flat 会去除空元素
+var arr4 = [1, 2, , 4, 5];
+arr4.flat();
+// [1, 2, 4, 5]
+```
+
+`Array.prototype.flatMap` 相当于把 `map()` 的结果进行 `flat()`，展开深度为 1。
+
+```js
+var arr1 = [1, 2, 3, 4];
+
+arr1.map(x => [x * 2]);
+// [[2], [4], [6], [8]]
+
+arr1.flatMap(x => [x * 2]);
+// [2, 4, 6, 8]
+
+// 只会展开一层
+arr1.flatMap(x => [[x * 2]]);
+// [[2], [4], [6], [8]]
+```
+
+> 参考资料：
+>
+> - [Array.prototype.flat() - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/flat)
+> - [Array.prototype.flatMap() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap)
+
+### `Function.prototype.toString`
+
+把函数的源码转换成字符串，建议直接看 MDN 上的 [示例](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/toString#%E7%A4%BA%E4%BE%8B)，很详细。
+
+> 参考资料：[Function.prototype.toString() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/toString)
+
+### `Symbol.prototype.description`
+
+返回 `Symbol` 的描述。
+
+```js
+Symbol('desc').toString();   // "Symbol(desc)"
+Symbol('desc').description;  // "desc"
+Symbol('').description;      // ""
+Symbol().description;        // undefined
+
+// well-known symbols
+Symbol.iterator.toString();  // "Symbol(Symbol.iterator)"
+Symbol.iterator.description; // "Symbol.iterator"
+
+// global symbols
+Symbol.for('foo').toString();  // "Symbol(foo)"
+Symbol.for('foo').description; // "foo"
+```
+
+> 参考资料：[Symbol.prototype.description - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description)
+
+### 可选的 `catch` 绑定
+
+如果不需要 `catch` 中的 Error 绑定，则可以省略。
+
+```js
+// 原来的写法，不需要 Error，但仍然要绑定变量到 Error
+try {
+  // 尝试使用可能不被支持的 Web 特性
+} catch (unused) {
+  // 退回到被广泛支持的 Web 特性
+}
+```
+
+```js
+// 现在的写法
+try {
+  // ...
+} catch {
+  // ...
+}
+```
+
+> 参考资料：[tc39/proposal-optional-catch-binding: proposal for ECMAScript to allow omission of the catch binding](https://github.com/tc39/proposal-optional-catch-binding)
+
+### 将 ECMAScript 语法拓展为 JSON 的超集
+
+由于 JSON 中的字符串可以包含非转义的 U+2028 行分隔符 和 U+2029 段分隔符，而 ECMAScript 2018 及之前的字符串中不包含，所以在使用 `JSON.parse` 时会出现 `SyntaxError`。
+
+```js
+// A raw U+2029 character, produced by eval:
+const PS = eval('"\u2029"');
+// ES 2018: SyntaxError
+// ES 2019: ok!
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-json-superset: Proposal to make all JSON text valid ECMA-262](https://github.com/tc39/proposal-json-superset)
+> - [Subsume JSON and Well-formed JSON.stringify | by Kesk -*- | JavaScript In Plain English | Medium](https://medium.com/javascript-in-plain-english/subsume-json-and-well-formed-json-stringify-323f70c9dc36)
+
+### 格式正确的 `JSON.stringify`
+
+JSON 规定使用 UTF-8 进行编码，但是对于一些编码，`JSON.stringify` 可能会出现解析失败的问题（这个地方看文档不太明白，啥 UTF-16 什么的）。所以提案对这种情况采取转义 Unicode 的方式。
+
+```js
+// Non-BMP characters still serialize to surrogate pairs.
+JSON.stringify('𝌆')
+// → '"𝌆"'
+JSON.stringify('\uD834\uDF06')
+// → '"𝌆"'
+
+// Unpaired surrogate code units will serialize to escape sequences.
+JSON.stringify('\uDF06\uD834')
+// → '"\\udf06\\ud834"'
+JSON.stringify('\uDEAD')
+// → '"\\udead"'
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-well-formed-stringify: Proposal to prevent JSON.stringify from returning ill-formed strings](https://github.com/tc39/proposal-well-formed-stringify)
+> - [Subsume JSON and Well-formed JSON.stringify | by Kesk -*- | JavaScript In Plain English | Medium](https://medium.com/javascript-in-plain-english/subsume-json-and-well-formed-json-stringify-323f70c9dc36)
+
 ## ES 2018
 
-// TODO
+### 异步迭代
+
+这里只介绍 `for-await-of` 的用法，其他比如 `generator` 等内容可以查看下面的参考资料。
+
+```js
+// 创建一个可迭代的异步对象
+var asyncIterable = {
+  [Symbol.asyncIterator]() {
+    return {
+      i: 0,
+      next() {
+        if (this.i < 3) {
+          return Promise.resolve({ value: this.i++, done: false });
+        }
+
+        return Promise.resolve({ done: true });
+      }
+    };
+  }
+};
+
+// 然后可以使用 for await of 遍历这个对象
+(async function() {
+   for await (num of asyncIterable) {
+     console.log(num);
+   }
+})();
+
+// 0
+// 1
+// 2
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-async-iteration: Asynchronous iteration for JavaScript](https://github.com/tc39/proposal-async-iteration)
+> - [for await...of - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for-await...of)
+> - [异步迭代和 generator](https://zh.javascript.info/async-iterators-generators)
+
+### 对象属性的 `Spread` 和 `Rest` 语法
+
+把 ES 6 里的 `...` 语法拓展到了对象的属性上。
+
+```js
+// 把剩余的属性赋值给 z
+let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+x; // 1
+y; // 2
+z; // { a: 3, b: 4 }
+```
+
+```js
+// 展开 z 中的属性
+let n = { x, y, ...z };
+n; // { x: 1, y: 2, a: 3, b: 4 }
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-object-rest-spread: Rest/Spread Properties for ECMAScript](https://github.com/tc39/proposal-object-rest-spread)
+> - [展开语法 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+> - [剩余参数 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters)
+
+### `Promise.prototype.finally`
+
+无论 Promise 的结果如何，都会执行回调函数。
+
+```js
+let isLoading = true;
+
+fetch(myRequest).then(function(response) {
+    var contentType = response.headers.get("content-type");
+    if(contentType && contentType.includes("application/json")) {
+      return response.json();
+    }
+    throw new TypeError("Oops, we haven't got JSON!");
+  })
+  .then(function(json) { /* process your JSON further */ })
+  .catch(function(error) { console.log(error); })
+  .finally(function() { isLoading = false; });
+```
+
+> 参考资料：
+>
+> - [tc39/proposal-promise-finally: ECMAScript Proposal, specs, and reference implementation for Promise.prototype.finally](https://github.com/tc39/proposal-promise-finally)
+> - [Promise.prototype.finally() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally)
+
+### 模板字符串的修订
+
+> 带标签的模版字符串应该允许嵌套支持常见转义序列的语言（例如 [DSLs](https://en.wikipedia.org/wiki/Domain-specific_language)、[LaTeX](https://en.wikipedia.org/wiki/LaTeX)）。ECMAScript 提议[模版字面量修订](https://tc39.github.io/proposal-template-literal-revision/)（第 4 阶段，将要集成到 ECMAScript 2018 标准）移除对 ECMAScript 在带标签的模版字符串中转义序列的语法限制。
+
+```js
+function latex(str) {
+ return { "cooked": str[0], "raw": str.raw[0] }
+}
+
+latex`\unicode`
+// 非法转义序列变成了 undefined
+// { cooked: undefined, raw: "\\unicode" }
+
+// 不带标签的没事
+let bad = `bad escape sequence: \unicode`;
+```
+
+> 参考资料：[模板字符串 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings)
+
+### 正则标识 `s`
+
+在正则表达式后添加标识 `s` 可以使得 `.` 匹配任意字符，包含行终止符 `\n`，用来代替 `[^]` 这个写法。
+
+```js
+// ES 2017 -
+
+/foo.bar/.test('foo\nbar');
+// → false
+
+/foo[^]bar/.test('foo\nbar');
+// → true
+```
+
+```js
+// ES 2018 +
+
+/foo.bar/s.test('foo\nbar');
+// → true
+```
+
+> 参考资料：[tc39/proposal-regexp-dotall-flag: Proposal to add the s (dotAll) flag to regular expressions in ECMAScript.](https://github.com/tc39/proposal-regexp-dotall-flag)
+
+### 正则反向断言
+
+肯定的反向断言使用 `(?<=...)` 的格式。
+
+```js
+const reLookbehind = /(?<=\$)\d+(\.\d*)?/;
+const match1        = reLookbehind.exec('$123.89');
+const match2        = reLookbehind.exec('€123.89');
+
+console.log( match1[0] );   // 123.89
+console.log( match2 );      // null
+```
+
+否定的反向断言使用 `(?<!...)` 的格式。
+
+```js
+const reLookbehind = /(?<!\$)\d+(?:\.\d*)/;
+const match1        = reLookbehind.exec('$10.53');
+const match2        = reLookbehind.exec('€10.53');
+
+console.log( match1[0] );   // 0.53
+console.log( match2[0] );   // 10.53
+```
+
+> 参考资料：[tc39/proposal-regexp-lookbehind: RegExp lookbehind assertions](https://github.com/tc39/proposal-regexp-lookbehind)
+
+### 正则命名组
+
+在正则表达式中使用 `?<name>` 的形式可以给一个匹配组进行命名。
+
+```js
+let re = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/u;
+let result = re.exec('2015-01-02');
+// result.groups.year === '2015';
+// result.groups.month === '01';
+// result.groups.day === '02';
+
+// result[0] === '2015-01-02';
+// result[1] === '2015';
+// result[2] === '01';
+// result[3] === '02';
+```
+
+也可以使用解构简化代码。
+
+```js
+let { groups: {one, two} } = /^(?<one>.*):(?<two>.*)$/u.exec('foo:bar');
+console.log(`one: ${one}, two: ${two}`);  // prints one: foo, two: bar
+```
+
+> 参考资料：[tc39/proposal-regexp-named-groups: Named capture groups for JavaScript RegExps](https://github.com/tc39/proposal-regexp-named-groups)
+
+### 正则 Unicode 转义
+
+在正则表达式中使用 `\p{…}` 和 `\P{…}` 的格式来转义 Unicode。
+
+```js
+// GreekSymbol 是希腊符号的意思
+
+const regexGreekSymbol = /\p{Script=Greek}/u;
+regexGreekSymbol.test('π');
+// → true
+```
+
+> 参考资料：[tc39/proposal-regexp-unicode-property-escapes: Proposal to add Unicode property escapes \p{…} and \P{…} to regular expressions in ECMAScript.](https://github.com/tc39/proposal-regexp-unicode-property-escapes)
 
 ## ES 2017
 
-### `Object.values` 和 `Object.entries`
+### 异步函数
 
-- `Object.values` 返回一个对象所有可枚举的 **属性值** 的数组。
-- `Object.entries` 返回一个对象所有可枚举的 **键值对** 组成的数组。
+使用 `async` 定义一个返回 Promise 的函数，函数内可以使用 `await`。
+
+```js
+async function name([param[, param[, ... param]]]) {
+   statements
+}
+```
+
+更多资料可以去 Google 的 [文档](https://developers.google.com/web/fundamentals/primers/async-functions) 看看。
+
+> 参考资料：
+>
+> - [async function - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/async_function)
+> - [异步函数 - 提高 Promise 的易用性  |  Web  |  Google Developers](https://developers.google.com/web/fundamentals/primers/async-functions)
+
+### `Object.{values,entries}` 
+
+`Object.values`  返回一个对象所有可枚举的 **属性值** 的数组。
+
+`Object.entries` 返回一个对象所有可枚举的 **键值对** 组成的数组。
 
 ```js
 var obj = { foo: 'bar', baz: 42 };
@@ -705,9 +1173,9 @@ console.log(map); // Map { foo: "bar", baz: 42 }
 > - [Object.values() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values)
 > - [Object.entries() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
 
-### `String.prototype.padStart` 和 `String.prototype.padEnd`
+### `String.prototype.{padStart,padEnd}`
 
-用于填充字符串到指定长度。
+用于 从头/从尾 部填充字符串到指定长度。
 
 ```js
 str.padStart(targetLength [, padString])
@@ -740,7 +1208,7 @@ str.padStart(targetLength [, padString])
 > - [String.prototype.padStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padStart)
 > - [String.prototype.padEnd() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd)
 
-### 允许在函数的参数列表末尾项后添加逗号
+### 允许在函数参数中添加末尾逗号
 
 如果函数有很多参数，那么经过格式化之后，参数会垂直排列。如果要添加一个参数，那么在代码管理软件（例如 Git）看来，实际上修改了两行：上一个参数后添加逗号、新的参数。
 
@@ -770,6 +1238,9 @@ clownPuppiesEverywhere(
   'foo',
   'bar', // 添加下一个参数时只会修改下面这一行，而不会修改这一行
 );
+
+// 这样也是可以的
+obj(1, 2, 3,)
 ```
 
 其实不止函数的参数可以这样做，数组、对象的末尾逗号也是可以的，并且在 ECMAScript 5 中就已经得到了支持。但是在 JSON 中是不行的。
@@ -779,19 +1250,50 @@ clownPuppiesEverywhere(
 > - [tc39/proposal-trailing-function-commas](https://github.com/tc39/proposal-trailing-function-commas)
 > - [尾后逗号 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Trailing_commas)
 
-### `Object.getOwnPropertyDescriptors`（待补充）
+### `Object.getOwnPropertyDescriptors`
+
+返回指定对象的所有自身属性的描述符。
+
+```js
+Object.getOwnPropertyDescriptors(Date)
+
+/** output
+UTC: {writable: true, enumerable: false, configurable: true, value: ƒ}
+length: {value: 7, writable: false, enumerable: false, configurable: true}
+name: {value: "Date", writable: false, enumerable: false, configurable: true}
+now: {writable: true, enumerable: false, configurable: true, value: ƒ}
+parse: {writable: true, enumerable: false, configurable: true, value: ƒ}
+prototype: {value: {…}, writable: false, enumerable: false, configurable: false}
+__proto__: Object
+*/
+```
+
+可以用来进行浅拷贝。
+
+```js
+Object.create(
+  Object.getPrototypeOf(obj),
+  Object.getOwnPropertyDescriptors(obj)
+);
+```
 
 > 参考资料：
 >
 > - [tc39/proposal-object-getownpropertydescriptors: ECMAScript proposal for Object.getOwnPropertyDescriptors](https://github.com/tc39/proposal-object-getownpropertydescriptors)
 > - [Object.getOwnPropertyDescriptors() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors)
 
-### 共享内存和 `Atomics`（待补充）
+### 共享内存和 `Atomics` 
+
+这里的共享内存指的是 `SharedArrayBuffer` 对象，用于 Web Worker 和主线程之间内存的共享。
+
+关于 `SharedArrayBuffer` 和 `Atomics` 的更多信息可以查看下面的参考资料。
 
 > 参考资料：
 >
 > - [tc39/ecmascript_sharedmem: Shared memory and atomics for ECMAscript](https://github.com/tc39/ecmascript_sharedmem)
 > - [ecmascript_sharedmem/TUTORIAL.md at master · tc39/ecmascript_sharedmem](https://github.com/tc39/ecmascript_sharedmem/blob/master/TUTORIAL.md)
+> - [SharedArrayBuffer - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
+> - [Atomics - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Atomics)
 
 ## ES 2016
 
@@ -849,3 +1351,10 @@ a **= 2;
 ```
 
 > 参考资料：[tc39/proposal-exponentiation-operator: Progress tracking for ES7 exponentiation operator](https://github.com/tc39/proposal-exponentiation-operator)
+
+## 其他参考资料
+
+- 所有进入标准的提案汇总：[proposals/finished-proposals.md at master · tc39/proposals](https://github.com/tc39/proposals/blob/master/finished-proposals.md)
+- MDN 上的文档：[JavaScript 参考 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference)
+- ECMAScript 2021 标准：[ECMAScript® 2021 Language Specification](https://tc39.es/ecma262/)
+
