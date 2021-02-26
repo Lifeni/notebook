@@ -4,12 +4,12 @@ title: 用 GitHub Actions 部署 Vue 项目到 GitHub Pages
 create-date: 2020-10-19
 date: 2020-10-19
 descriptions:
-  - 尝试使用 GitHub Workflows 实现前端代码自动部署
-  - 使用 CNAME 绑定域名到 GitHub Pages
+    - 尝试使用 GitHub Workflows 实现前端代码自动部署
+    - 使用 CNAME 绑定域名到 GitHub Pages
 tags:
-  - Vue.js
-  - GitHub Actions
-  - GitHub Pages
+    - Vue.js
+    - GitHub Actions
+    - GitHub Pages
 license: CC-BY-SA-4.0
 ---
 

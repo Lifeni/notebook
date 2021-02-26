@@ -3,7 +3,7 @@ name: install-arch-linux
 title: 安装 Arch Linux
 create-date: 2020-02-03
 date: 2020-02-03
-descriptions: 
+descriptions:
     - 记录在旧的笔记本上安装和简单配置 Arch Linux 的过程
     - 这里只给出一种解决方案，请结合其他资料进行安装与配置
 tags:

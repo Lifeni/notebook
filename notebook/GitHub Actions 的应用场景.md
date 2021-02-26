@@ -4,9 +4,9 @@ title: GitHub Actions 的应用场景
 create-date: 2020-11-21
 date: 2020-12-31
 descriptions:
-  - 记录一些常见的 GitHub Actions 配置与应用场景
+    - 记录一些常见的 GitHub Actions 配置与应用场景
 tags:
-  - GitHub Actions
+    - GitHub Actions
 license: CC-BY-SA-4.0
 ---
 
@@ -139,7 +139,7 @@ jobs:
           node-version: 12
       # npm ci 是专门用于 ci 的命令
       # 与 npm install 的区别是 npm ci 每次执行的时候会删除 node_modules
-      - run: npm ci			
+      - run: npm ci
       - run: npm run build
         env:	# algolia 是一个页内搜索，这个 env 等同于根目录下的 .env 文件
           GATSBY_ALGOLIA_APP_ID: ${{ secrets.GATSBY_ALGOLIA_APP_ID }}
@@ -219,7 +219,7 @@ jobs:
     用于执行 SCP 命令。
 
     文档：[SCP Files · Actions · GitHub Marketplace](https://github.com/marketplace/actions/scp-files) 。
-    
+
 - actions/**build-and-push-docker-images**
 
     用于构建和推送 Docker 镜像。

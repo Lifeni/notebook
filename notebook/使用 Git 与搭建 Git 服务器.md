@@ -420,11 +420,11 @@ v1.8.5.1
 ```
 
 > Git 支持两种标签：轻量标签（lightweight）与附注标签（annotated）。
-> 
+>
 > 轻量标签很像一个不会改变的分支——它只是某个特定提交的引用。
-> 
+>
 > 而附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。 通常会建议创建附注标签，这样你可以拥有以上所有信息。但是如果你只是想用一个临时的标签， 或者因为某些原因不想要保存这些信息，那么也可以用轻量标签。
-> 
+>
 > 引用来源：[Git - 打标签](https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)。
 
 使用 `git tag -a` 创建一个附注标签。
@@ -749,7 +749,7 @@ To https://dev.lifeni.life/gitea/liangfengning/git-test.git
 ```
 
 > 只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先抓取他们的工作并将其合并进你的工作后才能推送。
-> 
+>
 > 引用来源：[Git - 远程仓库的使用](https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8)。
 
 ## `.gitignore`
@@ -757,15 +757,15 @@ To https://dev.lifeni.life/gitea/liangfengning/git-test.git
 忽略文件，即不会跟踪文件。
 
 > 文件 `.gitignore` 的格式规范如下：
-> 
+>
 > - 所有空行或者以 `#` 开头的行都会被 Git 忽略。
 > - 可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。
 > - 匹配模式可以以（`/`）开头防止递归。
 > - 匹配模式可以以（`/`）结尾指定目录。
 > - 要忽略指定模式以外的文件或目录，可以在模式前加上叹号（`!`）取反。
-> 
+>
 > 所谓的 glob 模式是指 shell 所使用的简化了的正则表达式。 星号（`*`）匹配零个或多个任意字符；`[abc]` 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（`?`）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 `[0-9]` 表示匹配所有 0 到 9 的数字）。 使用两个星号（`**`）表示匹配任意中间目录，比如 `a/**/z` 可以匹配 `a/z` 、 `a/b/z` 或 `a/b/c/z` 等。
-> 
+>
 > 引用来源：[Git - 记录每次更新到仓库](https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E8%AE%B0%E5%BD%95%E6%AF%8F%E6%AC%A1%E6%9B%B4%E6%96%B0%E5%88%B0%E4%BB%93%E5%BA%93)。
 
 Github 上有整理好的 `.gitignore` 文件：[github/gitignore: A collection of useful .gitignore templates](https://github.com/github/gitignore)。
@@ -775,7 +775,7 @@ Github 上有整理好的 `.gitignore` 文件：[github/gitignore: A collection 
 ### 合并冲突
 
 1. 两个分支修改同一个文件，在 merge 时发生冲突：
-   
+
    ```bash
     # 修改文件
     $ git checkout dev
@@ -787,7 +787,7 @@ Github 上有整理好的 `.gitignore` 文件：[github/gitignore: A collection 
     $ git add *
     $ git commit -m "merge test 2"
    ```
-   
+
    ```bash
     $ git merge dev
     Auto-merging 1.txt
@@ -796,7 +796,7 @@ Github 上有整理好的 `.gitignore` 文件：[github/gitignore: A collection 
    ```
 
 2. 查看冲突情况：
-   
+
    ```bash
     $ cat 1.txt
     <<<<<<< HEAD
@@ -810,7 +810,7 @@ Github 上有整理好的 `.gitignore` 文件：[github/gitignore: A collection 
    ```
 
 3. 手动解决冲突并 add 和 commit：
-   
+
    ```bash
     $ vim 1.txt
     $ git add *
@@ -818,10 +818,10 @@ Github 上有整理好的 `.gitignore` 文件：[github/gitignore: A collection 
     On branch test
     All conflicts fixed but you are still merging.
       (use "git commit" to conclude merge)
-   
+
     Changes to be committed:
             modified:   1.txt
-   
+
     $ git commit -m "fix conflicts"
    ```
 
@@ -919,36 +919,36 @@ $ ssh-keygen
 ### 问题解决
 
 1. **用 Nginx 把网站反代部署在二级目录，但除了首页均 404。**
-   
+
     即，访问 `example.com/gitea`，Nginx 把请求转发到 `localhost:3000`。由于网页中使用绝对路径，如 `/img/logo.png`，实际请求时会指向 `example.com/img/logo.png` 而不是`example.com/gitea/img/logo.png`，因此产生 404 错误。
-   
+
     **解决方法：**[使用：反向代理 - Docs](https://docs.gitea.io/zh-cn/reverse-proxies/#%E4%BD%BF%E7%94%A8-nginx-%E4%BD%9C%E4%B8%BA%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%B9%B6%E5%B0%86-gitea-%E8%B7%AF%E7%94%B1%E8%87%B3%E4%B8%80%E4%B8%AA%E5%AD%90%E8%B7%AF%E5%BE%84) 中的第二条。
-   
+
     Nginx 配置好转发后，在 Gitea 的配置文件 `/home/gitea/gitea/conf/app.ini` 里修改：
-   
+
    ```ini
     [server]
     ...
     ROOT_URL = http://localhost:3000/gitea/
     ...
    ```
-   
+
     之后重启 Nginx 和 Gitea。
 
 2. **配置好 SSH Key 之后，仍然需要输入密码，而且不知道密码是什么。**
-   
+
     **解决方法：**在 `git@[ip]` 之前加上 `ssh://`：
-   
+
    ```bash
     # Error
     $ git clone git@[ip]:username/example.git
     Cloning into 'git-test'...
     git@[ip]'s password:
-   
+
     # Success
     $ git clone ssh://git@[ip]:username/example.git
    ```
-   
+
     或者参考 [Cloning via ssh asks for password · Issue #9267 · go-gitea/gitea](https://github.com/go-gitea/gitea/issues/9267) 里的第二种方法。
 
 ## 参考资料

@@ -2,7 +2,7 @@
 name: windows-config
 title: Windows 的习惯配置
 create-date: 2020-08-07
-date: 2021-02-23
+date: 2021-02-26
 descriptions:
     - 记录自己配置和完善 Windows 10 的方法和问题
     - 配置方法均来自网络，可能会随系统更新而失效
@@ -21,9 +21,9 @@ license: CC-BY-SA-4.0
 &nbsp;
 
 > **前排建议：**
-> 
+>
 > - 在下载 WSL 的时候，最好按照版本下载，比如下载 Ubuntu-18.04 而不是 Ubuntu
-> 
+>
 > - WSL1 与 Ubuntu 20.04 之间的兼容性存在问题，用 WSL1 最好使用 Ubuntu-18.04
 
 ## 配置
@@ -54,7 +54,7 @@ license: CC-BY-SA-4.0
 
 <details>
  <summary>点击查看之前的解决方案</summary>
-  
+
 > 在 Windows 10 2004 测试通过。
 >
 > 教程参考自：[将 Windows Terminal 添加到右键菜单 · GitHub](https://gist.github.com/Garwih/b4ec0d853e0f3093874e919ace7fce2f) 。
@@ -63,10 +63,10 @@ license: CC-BY-SA-4.0
 
     ```
       Windows Registry Editor Version 5.00
-    
+
       [HKEY_CLASSES_ROOT\Directory\Background\shell\wt]
       @="Windows Terminal Here"
-    
+
       [HKEY_CLASSES_ROOT\Directory\Background\shell\wt\command]
       @="C:\\Users\\你的用户名\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe"
     ```
@@ -160,7 +160,7 @@ set completion-ignore-case on
 1. 按 `win` 键 + `x`，打开 `Windows Powershell（管理员）`
 
 2. 输入命令：
-   
+
    ```powershell
      set-ExecutionPolicy RemoteSigned
    ```
@@ -170,9 +170,9 @@ set completion-ignore-case on
 ### 使用 WSL2 时，Webpack 无法 Hot Reloading
 
 > 这个是 WSL2 的缺陷。
-> 
+>
 > 参考：[[WSL2] File changes made by Windows apps on Windows filesystem don't trigger notifications for Linux apps · Issue #4739 · microsoft/WSL](https://github.com/microsoft/WSL/issues/4739) 与 [Comparing WSL 2 and WSL 1 | Microsoft Docs](https://docs.microsoft.com/en-us/windows/wsl/compare-versions#exceptions-for-using-wsl-1-rather-than-wsl-2) 。
-> 
+>
 
 WSL2 读写 Windows 文件系统中的文件时，性能不行，也不支持热重载的特性，因此最好把 WSL2 降级成 WSL1：
 
@@ -187,12 +187,12 @@ $ wsl --set-version ubuntu 1
 ### 在 WSL1 和 Ubuntu 20.04 中使用 Node 时 CPU 占用高问题
 
 > 这是一个 Bug，据说在下一个 WSL 版本中会修复。
-> 
+>
 > 参考：[High cpu usage of node process in Remote-WSL extension · Issue #2921 · microsoft/vscode-remote-release · GitHub](https://github.com/microsoft/vscode-remote-release/issues/2921) 与 [[WSL1] [glibc] sleep: cannot read realtime clock: Invalid argument · Issue #4898 · microsoft/WSL · GitHub](https://github.com/microsoft/WSL/issues/4898) 以及 [Ubuntu 20.04 and WSL 1 - WSL2 - Ubuntu Community Hub](https://discourse.ubuntu.com/t/ubuntu-20-04-and-wsl-1/15291/4) 。
-> 
+>
 
 1. WSL1 中依次执行：
-   
+
    ```bash
      $ cd ~
      $ wget "https://launchpadlibrarian.net/474302949/libc6_2.31-0ubuntu8+lp1871129~1_amd64.deb"
@@ -200,15 +200,15 @@ $ wsl --set-version ubuntu 1
    ```
 
 2. 管理员模式的 PowerShell 中执行：
-   
+
    ```powershell
      > net stop LxssManager
      LxssManager 服务正在停止.
      LxssManager 服务已成功停止。
-   
+
      > net start LxssManager
      LxssManager 服务正在启动 .
      LxssManager 服务已经启动成功。
    ```
-   
+
     以重启 WSL。

@@ -117,43 +117,43 @@ app.listen(3001);
 两个 Node 程序运行后进行测试：
 
 - 浏览器输入 `localhost:3000`：
-  
+
   ```
   Cannot GET /
   ```
-  
+
   正常，因为没有代理根目录。
 
 - 浏览器输入 `localhost:3000/api`：
-  
+
   ```
   127.0.0.1:3000/api
   ```
-  
+
   正常，此时测试程序获取到了主程序的 Host 和地址。此时如果把主程序中的 `changeOrigin: false` 改为 `true`，那么浏览器输出的应该是 `127.0.0.1:3001/api`。
 
 - 浏览器输入 `localhost:3000/api/abc/555?name=123&age=0`：
-  
+
   ```
   127.0.0.1:3000/api/abc/555?name=123&age=0
   ```
-  
+
   正常。
 
 - 浏览器输入 `localhost:3000/api/old-path?name=123&age=0`：
-  
+
   ```
   127.0.0.1:3000/api/new-path?name=123&age=0
   ```
-  
+
   正常，此时触发了 `pathRewrite` 的设置。
 
 - 浏览器输入 `localhost:3000/project-name/api/v1/some-apis`：
-  
+
   ```
   localhost:3000/api/v1/some-apis
   ```
-  
+
   测试通过，满足需求。
 
 ## 高级的设置
@@ -172,32 +172,32 @@ app.listen(3001);
 ```
 
 - **匹配路径**
-  
+
   - `createProxyMiddleware({...})` - 匹配任何路径，代理所有请求
   - `createProxyMiddleware('/', {...})` - 匹配任何路径，代理所有请求（和上面一样）
   - `createProxyMiddleware('/api', {...})` - 匹配以 `/api` 开头的路径
 
 - **匹配多个路径**
-  
+
   - `createProxyMiddleware(['/api', '/ajax', '/someotherpath'], {...})`
 
 - **使用通配符匹配路径**
-  
+
   为了更精细的控制，可以使用通配符来匹配。 Glob 匹配模式由 _micromatch_ 完成，访问 [micromatch](https://www.npmjs.com/package/micromatch) 或者 [glob](https://www.npmjs.com/package/glob) 来获得更多例子。
-  
+
   - `createProxyMiddleware('**', {...})` 匹配任何路径，代理所有请求
   - `createProxyMiddleware('**/*.html', {...})` 匹配所有以 `.html` 结尾的路径
   - `createProxyMiddleware('/*.html', {...})` 直接在绝对路径下匹配路径
   - `createProxyMiddleware('/api/**/*.html', {...})` 匹配 `/api` 路径中以 `.html` 结尾的请求
   - `createProxyMiddleware(['/api/**', '/ajax/**'], {...})` 组合多个模式
   - `createProxyMiddleware(['/api/**', '!**/bad.json'], {...})` 排除
-  
+
   **注意**：在同时匹配多个路径的情况下，不能混合使用字符串和通配符。
 
 - **自定义匹配**
-  
+
   为了全面控制，你可以自定义一个函数来决定请求是否需要被代理。
-  
+
   ```js
   /**
    * @return {Boolean}
@@ -205,7 +205,7 @@ app.listen(3001);
   const filter = function (pathname, req) {
       return pathname.match('^/api') && req.method === 'GET';
   };
-  
+
   const apiProxy = createProxyMiddleware(filter, {
       target: 'http://www.example.org',
   });
@@ -252,15 +252,15 @@ app.listen(3001);
 - **option.protocolRewrite**: 在（301/302/307/308）上将本地协议重写为“ http”或“ https”。Default: null.
 
 - **option.cookieDomainRewrite**: rewrites domain of `set-cookie` headers. Possible values:
-  
+
   - `false` (default): 禁用 cookie 重写
-  
+
   - String: 新域, for example `cookieDomainRewrite: "new.domain"`. 移除域使用 `cookieDomainRewrite: ""`.
-  
+
   - Object: 域到新域的映射，请使用“ \*”来匹配所有域
-    
+
     例如，保持一个域不变，重写一个域并删除其他域：
-    
+
     ```js
     cookieDomainRewrite: {
       "unchanged.domain": "unchanged.domain",
@@ -270,13 +270,13 @@ app.listen(3001);
     ```
 
 - **option.cookiePathRewrite**: rewrites path of `set-cookie` headers. Possible values:
-  
+
   - `false` (default): disable cookie rewriting
-  
+
   - String: new path, for example `cookiePathRewrite: "/newPath/"`. To remove the path, use `cookiePathRewrite: ""`. To set path to root use `cookiePathRewrite: "/"`.
-  
+
   - Object: mapping of paths to new paths, use `"*"` to match all paths. For example, to keep one path unchanged, rewrite one path and remove other paths:
-    
+
     ```js
     cookiePathRewrite: {
       "/unchanged.path/": "/unchanged.path/",
@@ -296,14 +296,14 @@ app.listen(3001);
 - **option.selfHandleResponse** true/false, if set to true, none of the webOutgoing passes are called and it's your responsibility to appropriately return the response by listening and acting on the `proxyRes` event
 
 - **option.buffer**: 要作为请求正文发送的数据流。也许您有一些中间件在请求代理之前消耗了请求流，例如如果您将请求的主体读入名为“ req.rawbody”的字段中，则可以在 buffer 选项中重新传输该字段：
-  
+
   ```js
   'use strict';
-  
+
   const streamify = require('stream-array');
   const HttpProxy = require('http-proxy');
   const proxy = new HttpProxy();
-  
+
   module.exports = (req, res, next) => {
       proxy.web(
           req,
@@ -372,9 +372,9 @@ createProxyMiddleware('ws://echo.websocket.org');
 ## 问题解决
 
 1. **如何在访问根路径时返回静态网页？**
-   
+
     假设静态网页的目录是 `/pubic`，在 `app.js` 中加入下面的代码即可：
-   
+
    ```js
     app.use(express.static('public'));
    ```

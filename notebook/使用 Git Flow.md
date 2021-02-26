@@ -32,15 +32,15 @@ $ sudo apt-get install git-flow
 
 下图是 Git Flow 的流程图，长期存在的分支为 `master` 和 `develop`。
 
-| 分支        | 含义                                              |
-| --------- | ----------------------------------------------- |
+| 分支      | 含义                                                                                       |
+| --------- | ------------------------------------------------------------------------------------------ |
 | `master`  | 主分支，用来存放最终产品的代码，不能直接在这个分支上进行提交，每次合并代码之后都需要打 Tag |
-| `develop` | 开发分支，用来生成新的功能分支，同时也会合并分支到 release               |
-| `feature` | 功能分支，每个功能都用一个分支来开发，开发完成后会合并到开发分支，然后被删除          |
-| `release` | 发布分支，用来进行发布前的小修复，完善后会合并到 master 分支              |
-| `hotfix`  | master 分支中遇到 Bug 时，进行热修复                        |
-| `bugfix`  | release 分支中遇到 Bug 时，进行修复                        |
-| `support` | 用来支持多个版本，并不常见                                   |
+| `develop` | 开发分支，用来生成新的功能分支，同时也会合并分支到 release                                 |
+| `feature` | 功能分支，每个功能都用一个分支来开发，开发完成后会合并到开发分支，然后被删除               |
+| `release` | 发布分支，用来进行发布前的小修复，完善后会合并到 master 分支                               |
+| `hotfix`  | master 分支中遇到 Bug 时，进行热修复                                                       |
+| `bugfix`  | release 分支中遇到 Bug 时，进行修复                                                        |
+| `support` | 用来支持多个版本，并不常见                                                                 |
 
 ![Git Flow](https://file.lifeni.life/markdown/use-git-flow/01.jpg)
 
@@ -243,15 +243,15 @@ GitHub Flow 和 Git Flow 有些不一样，它只有一个基本分支，就是 
 处理完成后，进行 Merge pull request，合并拉取请求，这里可以选择三种合并的方式（图片来自 参考#6）：
 
 1. Merge pull request （合并拉请求）
-   
+
     ![Merge pull request](https://file.lifeni.life/markdown/use-git-flow/02.jpg)
 
 2. Squash and merge（压缩并合并）
-   
+
     ![Squash and merge](https://file.lifeni.life/markdown/use-git-flow/03.jpg)
 
 3. Rebase and merge（变基并合并）
-   
+
     简单地说就是把新的分支的提交拼接到 master 分支的最后面（或者说前面，就是最新的一端）
 
 如果有冲突，需要解决冲突再进行合并。合并完成后可以选择删除已经合并的分支。

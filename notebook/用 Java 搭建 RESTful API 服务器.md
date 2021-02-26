@@ -18,11 +18,11 @@ license: CC-BY-SA-4.0
 
 📁 本文为过程记录类文章，可能不会对代码进行详细解释，项目完整代码见 [仓库](https://github.com/Lifeni/java-restful-api-server)
 
-| TODO                              | 状态   |
-| --------------------------------- | ---- |
-| 搭建 Java 在 Windows 下的开发环境          | ✅ 完成 |
+| TODO                                    | 状态   |
+| --------------------------------------- | ------ |
+| 搭建 Java 在 Windows 下的开发环境       | ✅ 完成 |
 | 实现 POST GET PUT DELETE 四种 HTTP 方法 | ✅ 完成 |
-| 连接数据库（MongoDB）                    | ✅ 完成 |
+| 连接数据库（MongoDB）                   | ✅ 完成 |
 
 ## 1. 配置开发环境
 
@@ -33,7 +33,7 @@ license: CC-BY-SA-4.0
 2. 新建一个 Maven 项目，选择 `org.apache.maven.archetypes:maven-archetype-webapp`，并把 `Maven home directory` `User settings file` `Local repository` 改为下载好的文件位置，如果没有 repository 文件夹就新建一个。
 
 3. 等 IDEA 自动配置完后在 pom.xml 中添加以下内容：
-   
+
    ```xml
     <dependencies>
         <dependency>
@@ -60,7 +60,7 @@ license: CC-BY-SA-4.0
    ```
 
 4. 在 `/src/main/webapp/WEB-INF/web.xml` 中添加以下代码：
-   
+
    ```xml
     <servlet>
         <servlet-name>server</servlet-name>
@@ -77,7 +77,7 @@ license: CC-BY-SA-4.0
    ```
 
 5. 添加文件夹：
-   
+
    - `/src/main/java/` 存放 java 代码
    - `/src/main/resource/` 存放资源文件
    - `/src/test/java/`
@@ -86,7 +86,7 @@ license: CC-BY-SA-4.0
 6. 在 `/src/main/java/` 文件夹下新建 Package，添加三个 Class：`MainService` `EventHandler` `DataModel`。
 
 7. 目录结构如下（使用 `tree /f` 命令）：
-   
+
    ```
     │  pom.xml
     │

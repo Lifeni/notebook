@@ -4,12 +4,12 @@ title: Linux 中的 SCP 命令与文件传输
 create-date: 2020-10-19
 date: 2020-10-28
 descriptions:
-  - 学习 SCP 命令的基本用法
-  - 使用 SCP 命令实现项目文件的自动部署
+    - 学习 SCP 命令的基本用法
+    - 使用 SCP 命令实现项目文件的自动部署
 tags:
-  - Linux
-  - SSH
-  - SCP
+    - Linux
+    - SSH
+    - SCP
 license: CC-BY-SA-4.0
 ---
 

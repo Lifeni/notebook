@@ -271,7 +271,7 @@ const previousMaxSafe = BigInt(Number.MAX_SAFE_INTEGER);
 
 const maxPlusOne = previousMaxSafe + 1n;
 // ↪ 9007199254740992n
- 
+
 const theFuture = previousMaxSafe + 2n;
 // ↪ 9007199254740993n, this works now!
 
@@ -438,7 +438,7 @@ JSON.stringify(bigObj)
 > - [tc39/proposal-bigint: Arbitrary precision integers in JavaScript](https://github.com/tc39/proposal-bigint)
 > - [BigInt - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
 
-### `for-in` 
+### `for-in`
 
 遍历对象中的可枚举属性。
 
@@ -474,19 +474,19 @@ const response = {
   }
 };
 
-const undefinedValue = response.settings.undefinedValue ?? 'some other default'; 
+const undefinedValue = response.settings.undefinedValue ?? 'some other default';
 // result: 'some other default'
 
-const nullValue = response.settings.nullValue ?? 'some other default'; 
+const nullValue = response.settings.nullValue ?? 'some other default';
 // result: 'some other default'
 
-const headerText = response.settings.headerText ?? 'Hello, world!'; 
+const headerText = response.settings.headerText ?? 'Hello, world!';
 // result: ''
 
-const animationDuration = response.settings.animationDuration ?? 300; 
+const animationDuration = response.settings.animationDuration ?? 300;
 // result: 0
 
-const showSplashScreen = response.settings.showSplashScreen ?? true; 
+const showSplashScreen = response.settings.showSplashScreen ?? true;
 // result: false
 ```
 
@@ -525,12 +525,12 @@ a?.[x]  // 如果 a 是 null/undefined 则返回 undefined 否则返回 a[x]
 a == null ? undefined : a[x]
 
 a?.b()  // 如果 a 是 null/undefined 则返回 undefined
-a == null ? undefined : a.b() 
+a == null ? undefined : a.b()
 // 如果 a.b 不是函数，则抛出 TypeError
 // 否则执行 a.b()
 
 a?.()   // 如果 a 是 null/undefined 则返回 undefined
-a == null ? undefined : a()  
+a == null ? undefined : a()
 // 如果 a 不是 null/undefined 也不是函数，则抛出 TypeError
 // 否则调用函数 a
 ```
@@ -547,9 +547,9 @@ a == null ? undefined : a()
 所有 Promise 都完成时（无论是 `fulfilled` 还是 `reject`），返回结果的数组。
 
 ```js
-const promises = [ 
-    fetch('https://lifeni.life'), 
-    fetch('https://does-not-exist/') 
+const promises = [
+    fetch('https://lifeni.life'),
+    fetch('https://does-not-exist/')
 ];
 
 const results = await Promise.allSettled(promises);
@@ -1112,7 +1112,7 @@ async function name([param[, param[, ... param]]]) {
 > - [async function - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/async_function)
 > - [异步函数 - 提高 Promise 的易用性  |  Web  |  Google Developers](https://developers.google.com/web/fundamentals/primers/async-functions)
 
-### `Object.{values,entries}` 
+### `Object.{values,entries}`
 
 `Object.values`  返回一个对象所有可枚举的 **属性值** 的数组。
 
@@ -1135,12 +1135,12 @@ Object.values(an_obj);  // ['b', 'c', 'a']
 Object.entries(an_obj);  // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
 
 // getFoo 是一个不可枚举的属性
-var my_obj = Object.create({}, { 
-    getFoo: { value: function() { return this.foo; } } 
+var my_obj = Object.create({}, {
+    getFoo: { value: function() { return this.foo; } }
 });
 my_obj.foo = 'bar';
 Object.values(my_obj);  // ['bar']
-Object.entries(my_obj); // [ ['foo', 'bar'] 
+Object.entries(my_obj); // [ ['foo', 'bar']
 
 // 非对象的参数将会强制转换成对象
 Object.values('foo');   // ['f', 'o', 'o']
@@ -1282,7 +1282,7 @@ Object.create(
 > - [tc39/proposal-object-getownpropertydescriptors: ECMAScript proposal for Object.getOwnPropertyDescriptors](https://github.com/tc39/proposal-object-getownpropertydescriptors)
 > - [Object.getOwnPropertyDescriptors() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors)
 
-### 共享内存和 `Atomics` 
+### 共享内存和 `Atomics`
 
 这里的共享内存指的是 `SharedArrayBuffer` 对象，用于 Web Worker 和主线程之间内存的共享。
 
@@ -1357,4 +1357,3 @@ a **= 2;
 - 所有进入标准的提案汇总：[proposals/finished-proposals.md at master · tc39/proposals](https://github.com/tc39/proposals/blob/master/finished-proposals.md)
 - MDN 上的文档：[JavaScript 参考 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference)
 - ECMAScript 2021 标准：[ECMAScript® 2021 Language Specification](https://tc39.es/ecma262/)
-

@@ -115,7 +115,7 @@ services:
 > - [RNA world](https://zh.wikipedia.org/w/index.php?title=RNA_world&action=edit&redlink=1)—研究分析生物中[RNA](https://zh.wikipedia.org/wiki/核醣核酸)的分子结构。
 > - [DNA@Home](https://zh.wikipedia.org/w/index.php?title=DNA@Home&action=edit&redlink=1)—研究有关生物中DNA的基因调控作用，目前已停止运作。
 > - [FightNeglectedDiseases@Home](https://zh.wikipedia.org/w/index.php?title=FightNeglectedDiseases@Home&action=edit&redlink=1)（FiND@Home）
-> 
+>
 > **气象学、地球科学**
 >
 > - [Climateprediction.net](https://zh.wikipedia.org/wiki/Climateprediction.net)（CPDN）—预测[廿一世纪](https://zh.wikipedia.org/wiki/廿一世紀)的气候。
@@ -128,12 +128,12 @@ services:
 >- [Cosmology@Home](https://zh.wikipedia.org/w/index.php?title=Cosmology@Home&action=edit&redlink=1)—研究宇宙的模型及其相关的物理天文学信息。
 > - [Leiden Classical](https://zh.wikipedia.org/wiki/Leiden_Classical)—模拟在经典物理环境下的各种[分子](https://zh.wikipedia.org/wiki/分子)和[原子](https://zh.wikipedia.org/wiki/原子)。
 >- [LHC@home](https://zh.wikipedia.org/wiki/LHC@home)—模拟[粒子加速](https://zh.wikipedia.org/w/index.php?title=粒子加速&action=edit&redlink=1)，协助设计及改善[LHC](https://zh.wikipedia.org/wiki/LHC)[粒子加速器](https://zh.wikipedia.org/wiki/粒子加速器)。
-> 
+>
 > - [NanoHive@Home](https://zh.wikipedia.org/w/index.php?title=NanoHive@Home&action=edit&redlink=1)—模拟和研究[奈米分子](https://zh.wikipedia.org/w/index.php?title=奈米分子&action=edit&redlink=1)的结构系统和特性，目前已停止运作。
 > - [Orbit@home](https://zh.wikipedia.org/w/index.php?title=Orbit@home&action=edit&redlink=1)—计算[近地小行星](https://zh.wikipedia.org/wiki/近地小行星)的轨道路径，以预防其碰撞地球而对地球造成损害，曾经由于缺乏资金已暂停运作，已在2014-15年恢复运行。
 > - [QMC@Home](https://zh.wikipedia.org/w/index.php?title=QMC@Home&action=edit&redlink=1)—发展在[量子化学](https://zh.wikipedia.org/wiki/量子化學)领域广泛使用的量子统计模拟方法。
 >- [SETI@home](https://zh.wikipedia.org/wiki/SETI@home)—搜索[外太空文明](https://zh.wikipedia.org/wiki/外太空文明)，已于3月31日无限期暂停。
-> 
+>
 >- [μFluids@Home](https://web.archive.org/web/20100910021816/http://www.ufluids.net/)—模拟[微重力](https://zh.wikipedia.org/wiki/微重力)和[微流体力学](https://zh.wikipedia.org/w/index.php?title=微流體力學&action=edit&redlink=1)问题的两相现象，目前已停止运作。
 > - [Milkyway@home](https://zh.wikipedia.org/w/index.php?title=Milkyway@home&action=edit&redlink=1)—研究[银河系](https://zh.wikipedia.org/wiki/銀河系)的重力波，支持NVidia CUDA及[ATi](https://zh.wikipedia.org/wiki/ATi)的显卡运算。
 > - [Spinhenge@home](https://zh.wikipedia.org/w/index.php?title=Spinhenge@home&action=edit&redlink=1)—研究[纳米磁性分子](https://zh.wikipedia.org/w/index.php?title=納米磁性分子&action=edit&redlink=1)的物理特性，目前已停止运作。
@@ -142,9 +142,9 @@ services:
 >- [Magnetism@home](https://zh.wikipedia.org/w/index.php?title=Magnetism@home&action=edit&redlink=1)
 > - [SLinCA@Home](https://zh.wikipedia.org/w/index.php?title=SLinCA@Home&action=edit&redlink=1)—研究物理及[材料科学](https://zh.wikipedia.org/wiki/材料科學)领域。
 >- [Eon](https://zh.wikipedia.org/w/index.php?title=Eon&action=edit&redlink=1)—利用[理论化学](https://zh.wikipedia.org/wiki/理论化学)方法来研究[凝聚态物理学](https://zh.wikipedia.org/wiki/凝聚态物理学)和材料科学。
-> 
+>
 > **数学**
-> 
+>
 > - [ABC@Home](https://zh.wikipedia.org/wiki/ABC@Home)—尝试解决[ABC猜想](https://zh.wikipedia.org/wiki/Abc猜想)。
 > - [Chess960@Home](https://zh.wikipedia.org/wiki/Chess960@Home)—研究[菲舍尔任意制象棋](https://zh.wikipedia.org/wiki/菲舍爾任意制象棋)的开局理论并创建巨型的[国际象棋](https://zh.wikipedia.org/wiki/國際象棋)棋局数据库。
 > - [NQueens@home](https://zh.wikipedia.org/wiki/NQueens@home)—解决国际象棋的[N皇后问题](https://zh.wikipedia.org/wiki/N皇后問題)，目前已停止运作。
@@ -159,9 +159,9 @@ services:
 > - [WEP-M+2 Project](https://zh.wikipedia.org/w/index.php?title=WEP-M%2B2_Project&action=edit&redlink=1)—使用WEP算法对2^p+1进行因式分解。
 > - [Sudoku@vtaiwan](https://zh.wikipedia.org/w/index.php?title=Sudoku@vtaiwan&action=edit&redlink=1)—由[台湾](https://zh.wikipedia.org/wiki/台灣)的[交通大学](https://zh.wikipedia.org/wiki/交通大學)推出的计划，研究数独问题，目前已停止运作。
 > - [DNETC@HOME](https://zh.wikipedia.org/w/index.php?title=DNETC@HOME&action=edit&redlink=1)
-> 
+>
 > **电脑、信息技术**
-> 
+>
 > - [World Community Grid](https://zh.wikipedia.org/wiki/World_Community_Grid)—由[IBM](https://zh.wikipedia.org/wiki/IBM)主持，主要目的为利用分布式计算来帮助查找人类疾病的治疗方法，和改善人类生活的相关研究。
 > - [AQUA@home](https://zh.wikipedia.org/w/index.php?title=AQUA@home&action=edit&redlink=1)—帮助设计量子电脑，目前已停止运作。
 > - [BURP](https://zh.wikipedia.org/w/index.php?title=BURP&action=edit&redlink=1)—处理及创作三维动画。

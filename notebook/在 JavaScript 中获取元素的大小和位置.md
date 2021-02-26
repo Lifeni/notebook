@@ -82,7 +82,7 @@ license: CC-BY-SA-4.0
 以下举例来自 [javascript - What is offsetHeight, clientHeight, scrollHeight? - Stack Overflow](https://stackoverflow.com/questions/22675126/what-is-offsetheight-clientheight-scrollheight) 最高票回答。
 
 > Consider:
-> 
+>
 > ```js
 > <element>
 >     <!-- *content*: child nodes: -->        | content
@@ -91,16 +91,16 @@ license: CC-BY-SA-4.0
 >     ... and I am the 4th child node         | element
 > </element>
 > ```
-> 
+>
 > **scrollHeight**: `ENTIRE content & padding (visible or not)`
 > Height of all content + paddings, despite of height of the element.
-> 
+>
 > **clientHeight**: `VISIBLE content & padding`
 > Only visible height: content portion limited by explicitly defined height of the element.
-> 
+>
 > **offsetHeight**: `VISIBLE content & padding` `+ border + scrollbar`
 > Height occupied by the element on document.
-> 
+>
 > ![引用的图片：三种写法的对比](https://file.lifeni.life/markdown/js-size-position/02.webp)
 
 ## 元素位置
@@ -111,16 +111,16 @@ license: CC-BY-SA-4.0
 
 返回一个对象，包含 `x` `y` `width` `height` `top` `right` `bottom` `left` 这几个属性，表示到浏览器可视区域的距离。这个方法看着挺长，其实兼容性挺好，基本全绿，除了 IE 和老 Edge 没有 `x` `y` 两个属性。
 
-| 属性       | 解释                                                 |
-| -------- | -------------------------------------------------- |
-| `x`      | [?] 貌似与 `left` 的作用相同                               |
-| `y`      | [?] 貌似与 `top` 的作用相同                                |
-| `width`  | 同 `element.offsetWidth`，包括 `padding` `border` 和滚动条 |
-| `height` | 同 `element.offsetHeight`                           |
-| `top`    | 盒子上边到页面顶部（浏览器可视区域顶部）的距离，**不是文档顶部**                 |
+| 属性     | 解释                                                             |
+| -------- | ---------------------------------------------------------------- |
+| `x`      | [?] 貌似与 `left` 的作用相同                                     |
+| `y`      | [?] 貌似与 `top` 的作用相同                                      |
+| `width`  | 同 `element.offsetWidth`，包括 `padding` `border` 和滚动条       |
+| `height` | 同 `element.offsetHeight`                                        |
+| `top`    | 盒子上边到页面顶部（浏览器可视区域顶部）的距离，**不是文档顶部** |
 | `right`  | 盒子右边到**页面左边**的距离，即 `left` + `width`                |
 | `bottom` | 盒子底边到**页面顶部**的距离，即 `top` + `height`                |
-| `left`   | 盒子左边到页面左边的距离                                       |
+| `left`   | 盒子左边到页面左边的距离                                         |
 
 ### `element.offsetTop` 和 `element.offsetLeft`
 

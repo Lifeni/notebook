@@ -33,19 +33,19 @@ license: CC-BY-SA-4.0
 ### 获取基础镜像
 
 1. 由于是前端的项目，所以直接用 Node 镜像，Node 的 14 版本还有些问题，所以这里选择用 12 版本，buster 是 Debian 的版本，对应到 Ubuntu 就是 18.04：
-   
+
    ```bash
    $ docker pull node:12.18.4-buster
    ```
 
 2. 之后创建一个初始容器，配置好端口和文件映射：
-   
+
    ```bash
    $ docker run -it -p 64800:22 -p 64801:3000 --name chatcat-web-00 -v /home/chatcat-web/00:/home -d node:12.18.4-buster
    ```
 
 3. 进入容器内部：
-   
+
    ```bash
    $ docker exec -it chatcat-web-00 /bin/bash
    root@8137bef9d08e:/#
@@ -56,7 +56,7 @@ license: CC-BY-SA-4.0
 Node 的 Docker 镜像用的是 Debian，所以先更新一下 apt 和 apt 源，之后再更新 Git 等常用软件。
 
 1. 对 `/etc/apt/sources.list` 进行编辑，注释掉已有的之后添加 [debian | 镜像站使用帮助 | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror](https://mirrors.tuna.tsinghua.edu.cn/help/debian/) 数据：
-   
+
    ```bash
    $ rm /etc/apt/sources.list
    $ cat >> /etc/apt/sources.list << EOF
@@ -68,18 +68,18 @@ Node 的 Docker 镜像用的是 Debian，所以先更新一下 apt 和 apt 源�
    ```
 
 2. 更新 apt 和系统里的软件：
-   
+
    ```bash
    $ apt update
    $ apt upgrade
    ```
 
 3. 安装 SSH-Server 和 Vim，并进行配置：
-   
+
    ```bash
    $ apt install openssh-server vim
    $ vim /etc/ssh/sshd_config
-   
+
    ...
    PubkeyAuthentication yes # 把注释去掉
    PermitRootLogin yes # 注释去掉，改成 yes
@@ -89,13 +89,13 @@ Node 的 Docker 镜像用的是 Debian，所以先更新一下 apt 和 apt 源�
 ### 生成镜像
 
 1. 首先退出容器，直接输入 exit 即可：
-   
+
    ```bash
    root@8137bef9d08e:/# exit
    ```
 
 2. 打包成镜像：
-   
+
    ```bash
    $ docker commit -m "chatcat-web-v1" -a "LFN" f6e9e175015a chatcat/web:v1
    ```
@@ -148,14 +148,14 @@ $ /etc/init.d/ssh restart
 ### 尝试使用 SSH 进行连接
 
 1. VSCode 安装拓展：
-   
+
    - 名称: Remote - SSH
      ID: ms-vscode-remote.remote-ssh
      说明: Open any folder on a remote machine using SSH and take advantage of VS Code's full feature set.
      版本: 0.55.0
      发布者: Microsoft
      VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh
-   
+
    - 名称: Remote - SSH: Editing Configuration Files
      ID: ms-vscode-remote.remote-ssh-edit
      说明: Edit SSH configuration files
@@ -164,13 +164,13 @@ $ /etc/init.d/ssh restart
      VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh-edit
 
 2. 在侧边栏的远程资源管理器中添加 SSH Targets，输入：
-   
+
    ```bash
    ssh root@139.9.138.39:XXX
    ```
 
 3. 选择第一个配置文件地址：`C:\Users\Liang\.ssh\config`，打开这个文件，在里面修改刚才 VSCode 自动添加的配置，改成下面这样：
-   
+
    ```
    Host ChatCatTest
        HostName 139.9.138.39
@@ -178,7 +178,7 @@ $ /etc/init.d/ssh restart
        Port XXX
        IdentityFile  ~/.ssh/id_rsa.pub
    ```
-   
+
    可以看到 VSCode 侧栏里的名称已经自动变成 HOST 后面的名了。
 
 4. 右键列表中的名字，选择 Connect to Host in Current Window，之后 VSCode 中上可能出现一个窗口，这里选择 Linux，然后打开侧栏里的资源管理器，选择打开文件夹，输入 `/home` 打开。
@@ -186,13 +186,13 @@ $ /etc/init.d/ssh restart
 ## 配置 Git
 
 1. `ssh-keygen` 生成 Key：
-   
+
    ```bash
    $ ssh-keygen -t rsa -C "liangfengning@foxmail.com"
    Generating public/private rsa key pair.
    Enter file in which to save the key (/root/.ssh/id_rsa): /root/.ssh/github
-   Enter passphrase (empty for no passphrase): 
-   Enter same passphrase again: 
+   Enter passphrase (empty for no passphrase):
+   Enter same passphrase again:
    Your identification has been saved in /root/.ssh/github.
    Your public key has been saved in /root/.ssh/github.pub.
    The key fingerprint is:
@@ -212,7 +212,7 @@ $ /etc/init.d/ssh restart
    ```
 
 2. 查看并复制生成的 **公钥**：
-   
+
    ```bash
    $ cat /root/.ssh/github.pub
    ssh-rsa AAAAB3Nza ... jvvcZoh5ZaH liangfengning@foxmail.com
@@ -221,7 +221,7 @@ $ /etc/init.d/ssh restart
 3. 把私钥复制到 GitHub 的 [SSH and GPG keys](https://github.com/settings/keys) 中，点 Add new，Title 随便写，Key 粘贴到里面。
 
 4. 使用 `ssh -T git@github.com` 测试连接，如果出现 `git@github.com: Permission denied (publickey).`，则需要使用 `ssh-add` 命令：
-   
+
    ```bash
    $ ssh-agent bash
    $ ssh-add ~/.ssh/github
@@ -231,14 +231,14 @@ $ /etc/init.d/ssh restart
    ```
 
 5. 设置好用户名和邮箱：
-   
+
    ```bash
    $ git config --global user.name "Lifeni"
    $ git config --global user.email "liangfengning@foxmail.com"
    ```
 
 6. 尝试 Clone：
-   
+
    ```bash
    $ git clone https://github.com/ChatCat-Team/Web.git
    Cloning into 'Web'...
