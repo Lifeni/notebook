@@ -2,7 +2,7 @@
 name: windows-config
 title: Windows 的习惯配置
 create-date: 2020-08-07
-date: 2021-02-26
+date: 2021-03-02
 descriptions:
     - 记录自己配置和完善 Windows 10 的方法和问题
     - 配置方法均来自网络，可能会随系统更新而失效
@@ -162,7 +162,7 @@ set completion-ignore-case on
 2. 输入命令：
 
    ```powershell
-     set-ExecutionPolicy RemoteSigned
+   > set-ExecutionPolicy RemoteSigned
    ```
 
 3. 输入 `A`，选择“全是”，就可以了
@@ -172,12 +172,11 @@ set completion-ignore-case on
 > 这个是 WSL2 的缺陷。
 >
 > 参考：[[WSL2] File changes made by Windows apps on Windows filesystem don't trigger notifications for Linux apps · Issue #4739 · microsoft/WSL](https://github.com/microsoft/WSL/issues/4739) 与 [Comparing WSL 2 and WSL 1 | Microsoft Docs](https://docs.microsoft.com/en-us/windows/wsl/compare-versions#exceptions-for-using-wsl-1-rather-than-wsl-2) 。
->
 
 WSL2 读写 Windows 文件系统中的文件时，性能不行，也不支持热重载的特性，因此最好把 WSL2 降级成 WSL1：
 
 ```powershell
-$ wsl --set-version ubuntu 1
+> wsl --set-version ubuntu 1
 正在进行转换，这可能需要几分钟时间...
 转换完成。
 ```
@@ -189,7 +188,6 @@ $ wsl --set-version ubuntu 1
 > 这是一个 Bug，据说在下一个 WSL 版本中会修复。
 >
 > 参考：[High cpu usage of node process in Remote-WSL extension · Issue #2921 · microsoft/vscode-remote-release · GitHub](https://github.com/microsoft/vscode-remote-release/issues/2921) 与 [[WSL1] [glibc] sleep: cannot read realtime clock: Invalid argument · Issue #4898 · microsoft/WSL · GitHub](https://github.com/microsoft/WSL/issues/4898) 以及 [Ubuntu 20.04 and WSL 1 - WSL2 - Ubuntu Community Hub](https://discourse.ubuntu.com/t/ubuntu-20-04-and-wsl-1/15291/4) 。
->
 
 1. WSL1 中依次执行：
 
