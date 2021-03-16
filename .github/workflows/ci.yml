@@ -14,10 +14,10 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
       - run: git submodule update --remote
-      - run: npm ci
-      - run: npm run build
+      - run: yarn
+      - run: yarn build
         env:
           GATSBY_ALGOLIA_APP_ID: ${{ secrets.GATSBY_ALGOLIA_APP_ID }}
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
