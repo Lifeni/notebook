@@ -2,11 +2,11 @@
 name: github-actions-example
 title: GitHub Actions 的应用场景
 create-date: 2020-11-21
-date: 2020-12-31
+date: 2021-03-28
 descriptions:
-    - 记录一些常见的 GitHub Actions 配置与应用场景
+  - 记录一些常见的 GitHub Actions 配置与应用场景
 tags:
-    - GitHub Actions
+  - GitHub Actions
 license: CC-BY-SA-4.0
 ---
 
@@ -39,7 +39,7 @@ name: Build and Publish Docker Image
 
 on:
   release:
-    types: [ published ]
+    types: [published]
 
 jobs:
   push-to-registry:
@@ -105,7 +105,7 @@ CMD ["/app/server"]
 
 需求来自我的个人网站，需要使用 Gatsby.js 来把 Markdown 文件生成静态的网页文件，然后部署在服务器上。
 
-借助 GitHub Actions 可以实现在文章或者网站发生修改并进行 git commit 后，自动生成新版本的网站，并上传到自己的服务器。相比之前要手动 Build 和 SFTP上传，节省了很多操作与时间。
+借助 GitHub Actions 可以实现在文章或者网站发生修改并进行 git commit 后，自动生成新版本的网站，并上传到自己的服务器。相比之前要手动 Build 和 SFTP 上传，节省了很多操作与时间。
 
 ### 实现
 
@@ -132,8 +132,8 @@ jobs:
       # 克隆仓库及子仓库
       - uses: actions/checkout@v2
         with:
-          submodules: "true"
-	  # 设置 Node 环境
+          submodules: 'true'
+      # 设置 Node 环境
       - uses: actions/setup-node@v1
         with:
           node-version: 12
@@ -141,19 +141,19 @@ jobs:
       # 与 npm install 的区别是 npm ci 每次执行的时候会删除 node_modules
       - run: npm ci
       - run: npm run build
-        env:	# algolia 是一个页内搜索，这个 env 等同于根目录下的 .env 文件
+        env: # algolia 是一个页内搜索，这个 env 等同于根目录下的 .env 文件
           GATSBY_ALGOLIA_APP_ID: ${{ secrets.GATSBY_ALGOLIA_APP_ID }}
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
           ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
-	  # 使用 scp 命令传文件
+      # 使用 scp 命令传文件
       - uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: "public"
-          target: "/home/website"
+          source: 'public'
+          target: '/home/website'
           overwrite: true
 ```
 
@@ -179,52 +179,117 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: ssh
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd /home/server/
-          git pull
+      - name: ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/server/
+            git pull
+            yarn
+            yarn build
+            pm2 restart all
+```
+
+## 打包文件为 zip 并上传到最新的 Release
+
+### 需求
+
+做了一个浏览器扩展，需要在每次发布之后，把扩展打包为 zip 文件，给没有上架的浏览器平台使用。
+
+### 实现与配置文件
+
+关键点都有现成的 Actions，直接拿来用就行。
+
+```yml
+name: Build and Publish Zip
+
+on:
+  release: # 发布 Release 后才会运行
+    types: [published]
+
+jobs:
+  build-zip:
+    name: Build and Publish Extension Zip
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout # 克隆项目
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Install and Build # 安装依赖
+        run: |
           yarn
-          yarn build
-          pm2 restart all
+          yarn build:all
+
+      - name: Archive Release V3 # 打包文件为 zip
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: 'make-it-beautiful.manifest-v3.zip'
+          path: 'dist'
+
+      - name: Archive Release V2 # 同样打包文件为 zip，我这里需要打包两个文件，根据自己需求来改
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: 'make-it-beautiful.manifest-v2.zip'
+          path: 'dist-v2'
+
+      - name: Upload Release # 发布到 Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true # 因为之前已经创建了 Release，所以要进行更新
+          omitName: true # 更新的时候不改变 Release 的名字
+          artifacts: 'make-it-beautiful.manifest-v3.zip,make-it-beautiful.manifest-v2.zip' # 多个文件逗号分开
+          token: ${{ secrets.GIT_TOKEN }} # https://github.com/settings/tokens 只选 repo 就行
 ```
 
 ## 常用的 Actions
 
 - actions/**checkout**
 
-    用于获取 Git 仓库，默认是获取当前仓库。
+  用于获取 Git 仓库，默认是获取当前仓库。
 
-    文档：[Checkout · Actions · GitHub Marketplace](https://github.com/marketplace/actions/checkout) 。
+  文档：[Checkout · Actions · GitHub Marketplace](https://github.com/marketplace/actions/checkout) 。
 
 - actions/**setup-node**
 
-    用于设置 Node.js 环境。
+  用于设置 Node.js 环境。
 
-    文档：[Setup Node.js environment · Actions · GitHub Marketplace](https://github.com/marketplace/actions/setup-node-js-environment) 。
+  文档：[Setup Node.js environment · Actions · GitHub Marketplace](https://github.com/marketplace/actions/setup-node-js-environment) 。
 
 - appleboy/**ssh-action**
 
-    用于执行远程的 SSH 命令。
+  用于执行远程的 SSH 命令。
 
-    文档：[SSH Remote Commands · Actions · GitHub Marketplace](https://github.com/marketplace/actions/ssh-remote-commands) 。
+  文档：[SSH Remote Commands · Actions · GitHub Marketplace](https://github.com/marketplace/actions/ssh-remote-commands) 。
 
 - appleboy/**scp-action**
 
-    用于执行 SCP 命令。
+  用于执行 SCP 命令。
 
-    文档：[SCP Files · Actions · GitHub Marketplace](https://github.com/marketplace/actions/scp-files) 。
+  文档：[SCP Files · Actions · GitHub Marketplace](https://github.com/marketplace/actions/scp-files) 。
 
 - actions/**build-and-push-docker-images**
 
-    用于构建和推送 Docker 镜像。
+  用于构建和推送 Docker 镜像。
 
-    文档：[Build and push Docker images · Actions · GitHub Marketplace](https://github.com/marketplace/actions/build-and-push-docker-images) 。
+  文档：[Build and push Docker images · Actions · GitHub Marketplace](https://github.com/marketplace/actions/build-and-push-docker-images) 。
+
+- actions/**create-release**
+
+  可以创建 Release。
+
+  文档：[Create Release · Actions · GitHub Marketplace](https://github.com/marketplace/actions/create-release) 。
+
+- actions/**zip-release**
+
+  打包文件为 zip 或者 tar。
+
+  文档：[Zip Release · Actions · GitHub Marketplace](https://github.com/marketplace/actions/zip-release) 。
 
 ## 进一步了解
 
