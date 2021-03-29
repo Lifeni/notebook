@@ -1,11 +1,11 @@
 ---
-name: js-deep-copy
+name: js-deep-clone
 title: JavaScript 实现对象的深拷贝
 create-date: 2021-03-24
-date: 2021-03-28
+date: 2021-03-29
 descriptions:
-  - 用不同方法实现 JS 中对象的深拷贝功能
-  - 本文的深拷贝只考虑 JSON 支持的部分（嵌套对象和数组），不考虑函数、正则等
+  - 尝试用不同方法实现 JS 中对象的深拷贝功能
+  - 本文的深拷贝只考虑嵌套的对象和数组，不考虑函数、正则等
 tags:
   - JavaScript
 license: CC-BY-SA-4.0
@@ -13,9 +13,9 @@ license: CC-BY-SA-4.0
 
 # JavaScript 实现对象的深拷贝
 
-📌 用不同方法实现 JS 中对象的深拷贝功能
+📌 尝试用不同方法实现 JS 中对象的深拷贝功能
 
-🚧 本文的深拷贝只考虑 JSON 支持的部分（嵌套对象和数组），不考虑函数、正则等
+🚧 本文的深拷贝只考虑嵌套的对象和数组，不考虑函数、正则等
 
 ## 前提
 
@@ -144,7 +144,7 @@ cloneDeep(extend);
 };
 ```
 
-这里的代码参考了文章：[深拷贝系列 ———— 自己通过递归实现一个深拷贝](https://juejin.cn/post/6844904004170809351#heading-15)，作者还尝试实现了其他数据类型的深拷贝，想要深入了解的话可以去看看这个文章。
+这里的代码参考了文章：[深拷贝系列 ———— 自己通过递归实现一个深拷贝](https://juejin.cn/post/6844904004170809351#heading-15)，文章的作者还尝试实现了其他数据类型的深拷贝，想要深入了解的话可以去看看这个文章。
 
 ## `Object.assign`
 
@@ -178,6 +178,10 @@ Object.assign({}, extend);
 ## 深拷贝的库
 
 前端库这么多，随便找找就有深拷贝的实现，直接拿来用就好了。
+
+### rfdc
+
+[Really Fast Deep Clone](https://www.npmjs.com/package/rfdc)，npm 上下载比较多的一个库。
 
 ### `_.cloneDeep`
 
