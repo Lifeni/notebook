@@ -4,10 +4,10 @@ title: 学习 JavaScript
 create-date: 2020-02-24
 date: 2020-05-05
 descriptions:
-    - 记录学习 JavaScript 的笔记和常见问题，不定期更新
-    - 文章部分举例来自 MDN 及《ECMAScript 6 入门》
+  - 记录学习 JavaScript 的笔记和常见问题，不定期更新
+  - 文章部分举例来自 MDN 及《ECMAScript 6 入门》
 tags:
-    - JavaScript
+  - JavaScript
 license: CC-BY-SA-4.0
 ---
 
@@ -25,11 +25,11 @@ license: CC-BY-SA-4.0
 let obj = { a: 1, b: 2, c: 5 };
 let arr = [1, 5, 4];
 for (let i in obj) {
-    console.log(`${i} - ${obj[i]}`);
+  console.log(`${i} - ${obj[i]}`);
 }
 console.log('---');
 for (let i in arr) {
-    console.log(`${i} - ${arr[i]}`);
+  console.log(`${i} - ${arr[i]}`);
 }
 ```
 
@@ -49,7 +49,7 @@ c - 5
 ```js
 let arr = [1, 5, 4];
 for (let i of arr) {
-    console.log(`${i} - ${arr[i]}`);
+  console.log(`${i} - ${arr[i]}`);
 }
 ```
 
@@ -82,21 +82,21 @@ console.log([...arr].constructor);
 
 ```js
 function add(...values) {
-    let sum = 0;
-    for (var val of values) {
-        sum += val;
-    }
-    return sum;
+  let sum = 0;
+  for (var val of values) {
+    sum += val;
+  }
+  return sum;
 }
 add(2, 5, 3); // 10
 ```
 
 ```js
 function push(array, ...items) {
-    items.forEach(function (item) {
-        array.push(item);
-        console.log(item);
-    });
+  items.forEach(function (item) {
+    array.push(item);
+    console.log(item);
+  });
 }
 var a = [];
 push(a, 1, 2, 3);
@@ -126,19 +126,19 @@ Promise 是回调地狱的解决方案之一，下面的例子来自 MDN：
 
 ```js
 chooseToppings(function (toppings) {
-    placeOrder(
-        toppings,
-        function (order) {
-            collectOrder(
-                order,
-                function (pizza) {
-                    eatPizza(pizza);
-                },
-                failureCallback
-            );
+  placeOrder(
+    toppings,
+    function (order) {
+      collectOrder(
+        order,
+        function (pizza) {
+          eatPizza(pizza);
         },
         failureCallback
-    );
+      );
+    },
+    failureCallback
+  );
 }, failureCallback);
 ```
 
@@ -146,11 +146,11 @@ chooseToppings(function (toppings) {
 
 ```js
 chooseToppings()
-    .then((toppings) => placeOrder(toppings))
-    .then((order) => collectOrder(order))
-    .then((pizza) => eatPizza(pizza))
-    .catch(failureCallback)
-    .finally(something);
+  .then(toppings => placeOrder(toppings))
+  .then(order => collectOrder(order))
+  .then(pizza => eatPizza(pizza))
+  .catch(failureCallback)
+  .finally(something);
 ```
 
 下面介绍如何创建 Promise：
@@ -159,28 +159,28 @@ chooseToppings()
 
 ```js
 function timeoutPromise(message, interval) {
-    return new Promise((resolve, reject) => {
-        if (message === '' || typeof message !== 'string') {
-            reject('Message is empty or not a string');
-        } else if (interval < 0 || typeof interval !== 'number') {
-            reject('Interval is negative or not a number');
-        } else {
-            setTimeout(function () {
-                resolve(message);
-            }, interval);
-        }
-    });
+  return new Promise((resolve, reject) => {
+    if (message === '' || typeof message !== 'string') {
+      reject('Message is empty or not a string');
+    } else if (interval < 0 || typeof interval !== 'number') {
+      reject('Interval is negative or not a number');
+    } else {
+      setTimeout(function () {
+        resolve(message);
+      }, interval);
+    }
+  });
 }
 ```
 
 ```js
 timeoutPromise('Hello there!', 1000)
-    .then((message) => {
-        alert(message);
-    })
-    .catch((e) => {
-        console.log('Error: ' + e);
-    });
+  .then(message => {
+    alert(message);
+  })
+  .catch(e => {
+    console.log('Error: ' + e);
+  });
 ```
 
 这个 `timeoutPromise()` 函数传入字符串和数值，如果这两个值都合法，会在数值对应的时间之后弹出提示框，否则会抛出错误。
@@ -197,10 +197,10 @@ timeoutPromise('Hello there!', 1000)
 
 ```js
 async function hello() {
-    return 'Hello';
+  return 'Hello';
 }
 console.log(hello()); // Promise { 'Hello' }
-hello().then((value) => console.log(value)); // Hello
+hello().then(value => console.log(value)); // Hello
 hello().then(console.log); // Hello
 ```
 
@@ -208,33 +208,33 @@ hello().then(console.log); // Hello
 
 ```js
 fetch('coffee.jpg')
-    .then((response) => response.blob())
-    .then((myBlob) => {
-        let objectURL = URL.createObjectURL(myBlob);
-        let image = document.createElement('img');
-        image.src = objectURL;
-        document.body.appendChild(image);
-    })
-    .catch((e) => {
-        console.log(
-            'There has been a problem with your fetch operation: ' + e.message
-        );
-    });
+  .then(response => response.blob())
+  .then(myBlob => {
+    let objectURL = URL.createObjectURL(myBlob);
+    let image = document.createElement('img');
+    image.src = objectURL;
+    document.body.appendChild(image);
+  })
+  .catch(e => {
+    console.log(
+      'There has been a problem with your fetch operation: ' + e.message
+    );
+  });
 ```
 
 ```js
 async function myFetch() {
-    try {
-        let response = await fetch('coffee.jpg');
-        let myBlob = await response.blob();
+  try {
+    let response = await fetch('coffee.jpg');
+    let myBlob = await response.blob();
 
-        let objectURL = URL.createObjectURL(myBlob);
-        let image = document.createElement('img');
-        image.src = objectURL;
-        document.body.appendChild(image);
-    } catch (e) {
-        console.log(e);
-    }
+    let objectURL = URL.createObjectURL(myBlob);
+    let image = document.createElement('img');
+    image.src = objectURL;
+    document.body.appendChild(image);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 myFetch();
@@ -244,23 +244,23 @@ myFetch();
 
 ```js
 async function myFetch() {
-    let response = await fetch('coffee.jpg');
-    return await response.blob();
+  let response = await fetch('coffee.jpg');
+  return await response.blob();
 }
 
 myFetch()
-    .then((blob) => {
-        let objectURL = URL.createObjectURL(blob);
-        let image = document.createElement('img');
-        image.src = objectURL;
-        document.body.appendChild(image);
-    })
-    .catch((e) => console.log(e));
+  .then(blob => {
+    let objectURL = URL.createObjectURL(blob);
+    let image = document.createElement('img');
+    image.src = objectURL;
+    document.body.appendChild(image);
+  })
+  .catch(e => console.log(e));
 ```
 
 ### `Promise.all()`
 
-> `**Promise.all(iterable)**` 方法返回一个 [`Promise`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 实例，此实例在 `iterable` 参数内所有的 `promise` 都“完成（resolved）”或参数中不包含 `promise` 时回调完成（resolve）；如果参数中 `promise` 有一个失败（rejected），此实例回调失败（reject），失败原因的是第一个失败 `promise` 的结果。
+> `Promise.all(iterable)` 方法返回一个 [`Promise`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 实例，此实例在 `iterable` 参数内所有的 `promise` 都“完成（resolved）”或参数中不包含 `promise` 时回调完成（resolve）；如果参数中 `promise` 有一个失败（rejected），此实例回调失败（reject），失败原因的是第一个失败 `promise` 的结果。
 >
 > 引用来源：[Promise.all() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)。
 
@@ -268,11 +268,11 @@ myFetch()
 const promise1 = Promise.resolve(3);
 const promise2 = 42;
 const promise3 = new Promise(function (resolve, reject) {
-    setTimeout(resolve, 100, 'foo');
+  setTimeout(resolve, 100, 'foo');
 });
 
 Promise.all([promise1, promise2, promise3]).then(function (values) {
-    console.log(values);
+  console.log(values);
 });
 // expected output: Array [3, 42, "foo"]
 ```
@@ -283,11 +283,11 @@ Promise.all([promise1, promise2, promise3]).then(function (values) {
 
 ```js
 function makeFunc() {
-    var name = 'Mozilla';
-    function displayName() {
-        alert(name);
-    }
-    return displayName;
+  var name = 'Mozilla';
+  function displayName() {
+    alert(name);
+  }
+  return displayName;
 }
 
 var myFunc = makeFunc();
@@ -300,14 +300,14 @@ myFunc();
 
 ```js
 const proto = {
-    foo: 'hello',
+  foo: 'hello',
 };
 
 const obj = {
-    foo: 'world',
-    find() {
-        return super.foo;
-    },
+  foo: 'world',
+  find() {
+    return super.foo;
+  },
 };
 
 Object.setPrototypeOf(obj, proto);
@@ -316,17 +316,17 @@ obj.find(); // "hello"
 
 ```js
 const proto = {
-    x: 'hello',
-    foo() {
-        console.log(this.x);
-    },
+  x: 'hello',
+  foo() {
+    console.log(this.x);
+  },
 };
 
 const obj = {
-    x: 'world',
-    foo() {
-        super.foo();
-    },
+  x: 'world',
+  foo() {
+    super.foo();
+  },
 };
 
 Object.setPrototypeOf(obj, proto);
@@ -336,22 +336,22 @@ obj.foo(); // "world"
 
 在使用 `class` 语法时，如果出现子类继承父类的情况，则需要在子类的 `constructor` 方法中调用 `super` 方法。
 
-> 子类必须在`constructor`方法中调用`super`方法，否则新建实例时会报错。这是因为子类自己的`this`对象，必须先通过父类的构造函数完成塑造，得到与父类同样的实例属性和方法，然后再对其进行加工，加上子类自己的实例属性和方法。如果不调用`super`方法，子类就得不到`this`对象。
+> 子类必须在 `constructor` 方法中调用 `super` 方法，否则新建实例时会报错。这是因为子类自己的 `this` 对象，必须先通过父类的构造函数完成塑造，得到与父类同样的实例属性和方法，然后再对其进行加工，加上子类自己的实例属性和方法。如果不调用 `super` 方法，子类就得不到 `this` 对象。
 >
-> 另一个需要注意的地方是，在子类的构造函数中，只有调用`super`之后，才可以使用`this`关键字，否则会报错。这是因为子类实例的构建，基于父类实例，只有`super`方法才能调用父类实例。
+> 另一个需要注意的地方是，在子类的构造函数中，只有调用 `super` 之后，才可以使用 `this` 关键字，否则会报错。这是因为子类实例的构建，基于父类实例，只有 `super` 方法才能调用父类实例。
 >
 > 引用来源：[Class 的继承 - ECMAScript 6 入门](https://es6.ruanyifeng.com/#docs/class-extends)。
 
 ```js
 class ColorPoint extends Point {
-    constructor(x, y, color) {
-        super(x, y); // 调用父类的constructor(x, y)
-        this.color = color;
-    }
+  constructor(x, y, color) {
+    super(x, y); // 调用父类的 constructor(x, y)
+    this.color = color;
+  }
 
-    toString() {
-        return this.color + ' ' + super.toString(); // 调用父类的toString()
-    }
+  toString() {
+    return this.color + ' ' + super.toString(); // 调用父类的 toString()
+  }
 }
 ```
 
@@ -374,16 +374,16 @@ function.bind(thisArg[, arg1[, arg2[, ...]]])
 let name = 'abc';
 let age = 123;
 let obj = {
-    name: 'qwe',
-    age: 0,
-    fn(a, b) {
-        console.log(`${this.name} & ${this.age} : ${a} -> ${b}`);
-    },
+  name: 'qwe',
+  age: 0,
+  fn(a, b) {
+    console.log(`${this.name} & ${this.age} : ${a} -> ${b}`);
+  },
 };
 
 let plus = {
-    name: 'xyz',
-    age: '999',
+  name: 'xyz',
+  age: '999',
 };
 
 obj.fn('from', 'to'); // qwe & 0 : from -> to
@@ -415,7 +415,7 @@ var new_array = arr.map(function callback(currentValue[, index[, array]]) {
 ```js
 var numbers = [1, 4, 9];
 var roots = numbers.map(Math.sqrt);
-// roots的值为[1, 2, 3], numbers的值仍为[1, 4, 9]
+// roots 的值为 [1, 2, 3], numbers 的值仍为 [1, 4, 9]
 ```
 
 ### `filter()`
@@ -432,10 +432,10 @@ const fruits = ['apple', 'banana', 'grapes', 'mango', 'orange'];
 /**
  * Array filters items based on search criteria (query)
  */
-const filterItems = (query) => {
-    return fruits.filter(
-        (el) => el.toLowerCase().indexOf(query.toLowerCase()) > -1
-    );
+const filterItems = query => {
+  return fruits.filter(
+    el => el.toLowerCase().indexOf(query.toLowerCase()) > -1
+  );
 };
 
 console.log(filterItems('ap')); // ['apple', 'grapes']
@@ -450,20 +450,20 @@ arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue]
 
 这里引用 MDN 上的解释。
 
-> `reduce`为数组中的每一个元素依次执行`callback`函数，不包括数组中被删除或从未被赋值的元素，接受四个参数：
+> `reduce` 为数组中的每一个元素依次执行 `callback` 函数，不包括数组中被删除或从未被赋值的元素，接受四个参数：
 >
-> -   `accumulator 累计器`
-> -   `currentValue 当前值`
-> -   `currentIndex 当前索引`
-> -   `array 数组`
+> - `accumulator 累计器`
+> - `currentValue 当前值`
+> - `currentIndex 当前索引`
+> - `array 数组`
 >
-> 回调函数第一次执行时，`accumulator` 和`currentValue`的取值有两种情况：如果调用`reduce()`时提供了`initialValue`，`accumulator`取值为`initialValue`，`currentValue`取数组中的第一个值；如果没有提供 `initialValue`，那么`accumulator`取数组中的第一个值，`currentValue`取数组中的第二个值。
+> 回调函数第一次执行时，`accumulator` 和 `currentValue` 的取值有两种情况：如果调用 `reduce ()` 时提供了 `initialValue`，`accumulator` 取值为 `initialValue`，`currentValue` 取数组中的第一个值；如果没有提供 `initialValue`，那么 `accumulator` 取数组中的第一个值，`currentValue` 取数组中的第二个值。
 >
-> **注意：**如果没有提供`initialValue`，reduce 会从索引 1 的地方开始执行 callback 方法，跳过第一个索引。如果提供`initialValue`，从索引 0 开始。
+> ** 注意：** 如果没有提供 `initialValue`，reduce 会从索引 1 的地方开始执行 callback 方法，跳过第一个索引。如果提供 `initialValue`，从索引 0 开始。
 >
-> 如果数组为空且没有提供`initialValue`，会抛出[`TypeError`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypeError) 。如果数组仅有一个元素（无论位置如何）并且没有提供`initialValue`， 或者有提供`initialValue`但是数组为空，那么此唯一值将被返回并且`callback`不会被执行。
+> 如果数组为空且没有提供 `initialValue`，会抛出 [`TypeError`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypeError) 。如果数组仅有一个元素（无论位置如何）并且没有提供 `initialValue`， 或者有提供 `initialValue` 但是数组为空，那么此唯一值将被返回并且 `callback` 不会被执行。
 >
-> 引用来源：[Array.prototype.reduce() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)。
+> 引用来源：[Array.prototype.reduce () - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)。
 
 ```js
 var total = [0, 1, 2, 3].reduce((acc, cur) => acc + cur, 0);
