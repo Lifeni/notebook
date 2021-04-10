@@ -2,7 +2,7 @@
 name: js-deep-clone
 title: JavaScript 实现对象的深拷贝
 create-date: 2021-03-24
-date: 2021-03-29
+date: 2021-04-10
 descriptions:
   - 尝试用不同方法实现 JS 中对象的深拷贝功能
   - 本文的深拷贝只考虑嵌套的对象和数组，不考虑函数、正则等
@@ -175,19 +175,19 @@ Object.assign({}, extend);
 }
 ```
 
-## 深拷贝的库
+## 相关的库
 
 前端库这么多，随便找找就有深拷贝的实现，直接拿来用就好了。
 
-### rfdc
+#### rfdc
 
 [Really Fast Deep Clone](https://www.npmjs.com/package/rfdc)，npm 上下载比较多的一个库。
 
-### `_.cloneDeep`
+#### `_.cloneDeep`
 
 Loadsh 的实现，文档：[Lodash Documentation](https://lodash.com/docs/4.17.15#cloneDeep) 。
 
-### `$.extend`
+#### `$.extend`
 
 jQuery 也有，文档：[jQuery.extend() | jQuery API Documentation](https://api.jquery.com/jQuery.extend/) 。
 
