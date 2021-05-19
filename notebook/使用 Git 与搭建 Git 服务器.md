@@ -4,7 +4,7 @@ title: 使用 Git 与搭建 Git 服务器
 create-date: 2020-03-19
 date: 2020-05-05
 description: |
-  学习 Git 的用法，并尝试使用 Gitea 搭建 Git 服务器。
+  学习 Git 的基本用法，并尝试使用 Gitea 搭建 Git 服务器。
 tags:
   - Git
   - Gitea

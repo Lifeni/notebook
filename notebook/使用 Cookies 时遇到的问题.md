@@ -4,7 +4,7 @@ title: 使用 Cookies 时遇到的问题
 create-date: 2020-08-19
 date: 2020-08-19
 description: |
-  尝试解决实际开发中关于 Cookies 的一些问题。
+  尝试解决实际开发中关于 Cookies 的一些问题，可能会不定期补充一些场景与案例。
 tags:
   - Cookies
   - JavaScript

@@ -4,7 +4,7 @@ title: ECMAScript 中的新特性
 create-date: 2021-01-04
 date: 2021-03-22
 description: |
-  记录从 ES6 发布至今 ECMAScript 中出现的新特性，不包含 ES6 的内容，计划每年更新，目前已包含 ECMAScript 2016 ~ 2021 的部分新特性。
+  记录从 ES6 发布至今 ECMAScript 中出现的新特性，不包含 ES6 的内容，计划每年更新，目前已包含 ECMAScript 2016 ~ 2021 的部分新特性。不过本文只是简单概述了部分特性的用法，如果想要深入了解，可以参考相关 MDN 页面以及 GitHub 上的原始提案。
 tags:
   - ECMAScript
   - 年更

@@ -4,7 +4,7 @@ title: 安装 RIME 输入法
 create-date: 2019-12-24
 date: 2020-02-05
 description: |
-  记录 Windows 10 下 RIME 输入法自然码的安装，不过本文并没有完成详细配置，所以具体的操作方法以及配置项请看官方文档 [幫助與反饋 | RIME | 中州韻輸入法引擎](https://rime.im/docs/) 。
+  记录 Windows 10 下 RIME 输入法（双拼自然码模式）的安装，不过本文并没有完成详细配置，所以具体的操作方法以及配置项请看官方文档 [幫助與反饋 | RIME | 中州韻輸入法引擎](https://rime.im/docs/) 。
 tags:
   - Windows
 license: CC-BY-SA-4.0

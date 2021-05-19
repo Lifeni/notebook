@@ -4,7 +4,7 @@ title: Linux 中的 SCP 命令与文件传输
 create-date: 2020-10-19
 date: 2020-10-28
 description: |
-  学习 Linux 中 SCP 命令的基本用法，并使用 SCP 命令编写命令行语句，实现项目文件自动上传到远程服务器的过程。
+  简单了解 Linux 中 SCP 命令的基本用法，并使用 SCP 命令编写一些命令行语句，实现项目文件自动上传到远程服务器的过程。
 tags:
   - Linux
   - SSH
@@ -16,9 +16,7 @@ license: CC-BY-SA-4.0
 
 ## 基本用法
 
-SCP 的全称是 Secure Copy，通过 SSH 进行文件的复制。
-
-Linux 中使用 `man scp` 命令可以查看 SCP 命令的帮助信息，我把重点翻译如下（文章最后附有英文原文）。
+SCP 的全称是 Secure Copy，通过 SSH 进行文件的复制。Linux 中使用 `man scp` 命令可以查看 SCP 命令的帮助信息，我把重点翻译如下（文章最后附有英文原文）。
 
 ### 概要
 

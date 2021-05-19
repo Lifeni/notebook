@@ -4,7 +4,7 @@ title: 学习 JavaScript
 create-date: 2020-02-24
 date: 2020-05-05
 description: |
-  记录学习 JavaScript 的笔记和常见问题，不定期更新，文章部分举例来自 MDN 及 [ECMAScript 6 入门](https://es6.ruanyifeng.com/) 。
+  记录在学习 JavaScript 的过程中的笔记和常见问题，注意，这并不是一个完整的教程，只是自己的一些总结，可能会不定期更新，文章中的部分举例来自 MDN 及 [ECMAScript 6 入门](https://es6.ruanyifeng.com/) 。
 tags:
   - JavaScript
 license: CC-BY-SA-4.0

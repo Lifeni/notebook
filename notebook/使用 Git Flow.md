@@ -4,7 +4,7 @@ title: 使用 Git Flow
 create-date: 2020-07-26
 date: 2020-08-14
 description: |
-  记录学习使用 Git Flow 和 GitHub Flow 中的笔记和遇到的一些问题，需要注意的是，文中使用 Windows 环境进行测试，部分命令与其他环境存在差异。
+  记录学习使用 Git Flow 和 GitHub Flow 中的笔记和遇到的一些问题，需要注意的是，文中使用 Windows 环境进行测试，部分命令与其他环境存在差异，请根据自己的情况进行调整。
 tags:
   - Git
   - GitHub

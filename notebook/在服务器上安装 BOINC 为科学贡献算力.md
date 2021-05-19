@@ -4,7 +4,7 @@ title: 在服务器上安装 BOINC 为科学贡献算力
 create-date: 2021-02-23
 date: 2021-02-23
 description: |
-  利用 BOINC 这个平台，可以把闲置服务器的资源用于科学计算。本文使用 Docker Compose 安装，安装完成后自带 Web 图形界面。
+  利用 BOINC（伯克利开放式网络计算平台） 这个平台，可以把闲置服务器的资源用于科学计算。本文使用 Docker Compose 安装 BOINC，安装完成后使用自带 Web 图形界面进行配置。
 tags:
   - BOINC
   - Docker
