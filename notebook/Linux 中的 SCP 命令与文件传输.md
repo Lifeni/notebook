@@ -3,21 +3,16 @@ name: cmd-scp
 title: Linux 中的 SCP 命令与文件传输
 create-date: 2020-10-19
 date: 2020-10-28
-descriptions:
-    - 学习 SCP 命令的基本用法
-    - 使用 SCP 命令实现项目文件的自动部署
+description: |
+  学习 Linux 中 SCP 命令的基本用法，并使用 SCP 命令编写命令行语句，实现项目文件自动上传到远程服务器的过程。
 tags:
-    - Linux
-    - SSH
-    - SCP
+  - Linux
+  - SSH
+  - SCP
 license: CC-BY-SA-4.0
 ---
 
 # Linux 中的 SCP 命令与文件传输
-
-📌 学习 SCP 命令的基本用法
-
-📂 使用 SCP 命令实现项目文件的自动部署
 
 ## 基本用法
 
@@ -32,7 +27,7 @@ scp [-346BCpqrTv] [-c cipher] [-F ssh_config] [-i identity_file] [-l limit] [-o 
          [[user@]host2:]file2
 ```
 
-### 描述
+### 详细描述
 
 scp 在网络上的主机之间复制文件。 它使用 ssh(1) 进行数据传输，使用与 ssh(1) 相同的身份验证,并提供相同的安全性。如果身份验证需要密码，则 scp 将询问密码或者密码短语。
 
@@ -123,6 +118,9 @@ debug1: Exit status 0
 1. [Linux 小知识翻译 - 「SCP 和 SFTP」 - wang_yb - 博客园](https://www.cnblogs.com/wang_yb/p/3819441.html)
 
 ## 附录：`man scp`
+
+<details>
+<summary>点击展开附录</summary>
 
 ```
 NAME
@@ -270,3 +268,5 @@ AUTHORS
      Tatu Ylonen <ylo@cs.hut.fi>
 
 ```
+
+</details>

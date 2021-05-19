@@ -3,18 +3,16 @@ name: ssh-to-docker
 title: SSH 连接服务器中的 Docker 容器进行开发
 create-date: 2020-09-19
 date: 2020-09-20
-descriptions:
-    - 在 Docker 中搭建多个开发环境，并使用 SSH 和 VSCode 进行连接和开发
+description: |
+  记录在 Docker 中搭建多个开发环境，并使用 SSH 和 VSCode 进行连接和开发的过程，包括镜像的搭建、必要软件的安装和配置以及 SSH 的配置过程。
 tags:
-    - Linux
-    - Docker
-    - VSCode
+  - Linux
+  - Docker
+  - VSCode
 license: CC-BY-SA-4.0
 ---
 
 # SSH 连接服务器中的 Docker 容器进行开发
-
-📌 在 Docker 中搭建多个开发环境，并使用 SSH 和 VSCode 进行连接和开发
 
 ## 需求
 

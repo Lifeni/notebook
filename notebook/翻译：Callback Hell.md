@@ -3,20 +3,17 @@ name: translate-callback-hell
 title: 翻译：Callback Hell
 create-date: 2020-03-16
 date: 2020-03-18
-descriptions:
-    - 翻译文章，原文来自：http://callbackhell.com
-    - 本文采取双语对照的方式，正文内容中英语原文在上，翻译在下
+description: |
+  这是一篇翻译文章，原文来自 [Callback Hell](http://callbackhell.com)，本文采取双语对照的方式，其中正文内容中英语原文在上，翻译在下，翻译风格偏向于意译，非专业翻译，欢迎提建议。
 tags:
-    - 翻译
-    - JavaScript
+  - 翻译
+  - JavaScript
 license: CC-BY-SA-4.0
 ---
 
 # 翻译：Callback Hell
 
-📌 翻译文章，原文来自：[http://callbackhell.com](http://callbackhell.com)
-
-🤔 本文采取双语对照的方式，正文内容中英语原文在上，翻译在下
+## 术语表
 
 | 词汇         | 解释                                                      |
 | ------------ | --------------------------------------------------------- |
@@ -37,43 +34,35 @@ Asynchronous JavaScript, or JavaScript that uses callbacks, is hard to get right
 
 ```js
 fs.readdir(source, function (err, files) {
-    if (err) {
-        console.log('Error finding files: ' + err);
-    } else {
-        files.forEach(function (filename, fileIndex) {
-            console.log(filename);
-            gm(source + filename).size(function (err, values) {
-                if (err) {
-                    console.log('Error identifying file size: ' + err);
-                } else {
-                    console.log(filename + ' : ' + values);
-                    aspect = values.width / values.height;
-                    widths.forEach(
-                        function (width, widthIndex) {
-                            height = Math.round(width / aspect);
-                            console.log(
-                                'resizing ' +
-                                    filename +
-                                    'to ' +
-                                    height +
-                                    'x' +
-                                    height
-                            );
-                            this.resize(width, height).write(
-                                dest + 'w' + width + '_' + filename,
-                                function (err) {
-                                    if (err)
-                                        console.log(
-                                            'Error writing file: ' + err
-                                        );
-                                }
-                            );
-                        }.bind(this)
-                    );
+  if (err) {
+    console.log('Error finding files: ' + err);
+  } else {
+    files.forEach(function (filename, fileIndex) {
+      console.log(filename);
+      gm(source + filename).size(function (err, values) {
+        if (err) {
+          console.log('Error identifying file size: ' + err);
+        } else {
+          console.log(filename + ' : ' + values);
+          aspect = values.width / values.height;
+          widths.forEach(
+            function (width, widthIndex) {
+              height = Math.round(width / aspect);
+              console.log(
+                'resizing ' + filename + 'to ' + height + 'x' + height
+              );
+              this.resize(width, height).write(
+                dest + 'w' + width + '_' + filename,
+                function (err) {
+                  if (err) console.log('Error writing file: ' + err);
                 }
-            });
-        });
-    }
+              );
+            }.bind(this)
+          );
+        }
+      });
+    });
+  }
 });
 ```
 
@@ -122,8 +111,8 @@ Instead, you store the code that should run after the download is complete in a 
 downloadPhoto('http://coolcats.com/cat.gif', handlePhoto);
 
 function handlePhoto(error, photo) {
-    if (error) console.error('Download error!', error);
-    else console.log('Download finished', photo);
+  if (error) console.error('Download error!', error);
+  else console.log('Download finished', photo);
 }
 
 console.log('Download started');
@@ -141,10 +130,10 @@ This example is meant to illustrate two important concepts:
 
 这个例子说明了两个重要的概念：
 
--   The `handlePhoto` callback is just a way to store some things to do at a later time
--   回调函数 `handlePhoto` 只是一种存放待办事物的方法。
--   The order in which things happen does not read top-to-bottom, it jumps around based on when things complete
--   事件并不是从头到尾按顺序执行的，而是按时间完成的顺序执行。
+- The `handlePhoto` callback is just a way to store some things to do at a later time
+- 回调函数 `handlePhoto` 只是一种存放待办事物的方法。
+- The order in which things happen does not read top-to-bottom, it jumps around based on when things complete
+- 事件并不是从头到尾按顺序执行的，而是按时间完成的顺序执行。
 
 ## How do I fix callback hell? 怎样才能避免回调地狱？
 
@@ -165,19 +154,19 @@ Here is some messy browser JavaScript that uses [browser-request](https://github
 ```js
 var form = document.querySelector('form');
 form.onsubmit = function (submitEvent) {
-    var name = document.querySelector('input').value;
-    request(
-        {
-            uri: 'http://example.com/upload',
-            body: name,
-            method: 'POST',
-        },
-        function (err, response, body) {
-            var statusMessage = document.querySelector('.status');
-            if (err) return (statusMessage.value = err);
-            statusMessage.value = body;
-        }
-    );
+  var name = document.querySelector('input').value;
+  request(
+    {
+      uri: 'http://example.com/upload',
+      body: name,
+      method: 'POST',
+    },
+    function (err, response, body) {
+      var statusMessage = document.querySelector('.status');
+      if (err) return (statusMessage.value = err);
+      statusMessage.value = body;
+    }
+  );
 };
 ```
 
@@ -188,19 +177,19 @@ This code has two anonymous functions. Let's give em names!
 ```js
 var form = document.querySelector('form');
 form.onsubmit = function formSubmit(submitEvent) {
-    var name = document.querySelector('input').value;
-    request(
-        {
-            uri: 'http://example.com/upload',
-            body: name,
-            method: 'POST',
-        },
-        function postResponse(err, response, body) {
-            var statusMessage = document.querySelector('.status');
-            if (err) return (statusMessage.value = err);
-            statusMessage.value = body;
-        }
-    );
+  var name = document.querySelector('input').value;
+  request(
+    {
+      uri: 'http://example.com/upload',
+      body: name,
+      method: 'POST',
+    },
+    function postResponse(err, response, body) {
+      var statusMessage = document.querySelector('.status');
+      if (err) return (statusMessage.value = err);
+      statusMessage.value = body;
+    }
+  );
 };
 ```
 
@@ -208,12 +197,12 @@ As you can see naming functions is super easy and has some immediate benefits:
 
 如你所见，给一个函数命名非常简单，而且有几个直接的好处：
 
--   makes code easier to read thanks to the descriptive function names
--   函数名可以用来描述函数的作用，使代码更容易阅读
--   when exceptions happen you will get stacktraces that reference actual function names instead of "anonymous"
--   出现错误时，可以获得确切的堆栈跟踪信息，知道错误来自哪个函数而不是“匿名”函数
--   allows you to move the functions and reference them by their names
--   可以通过更改函数名的方式来变更函数
+- makes code easier to read thanks to the descriptive function names
+- 函数名可以用来描述函数的作用，使代码更容易阅读
+- when exceptions happen you will get stacktraces that reference actual function names instead of "anonymous"
+- 出现错误时，可以获得确切的堆栈跟踪信息，知道错误来自哪个函数而不是“匿名”函数
+- allows you to move the functions and reference them by their names
+- 可以通过更改函数名的方式来变更函数
 
 Now we can move the functions to the top level of our program:
 
@@ -223,21 +212,21 @@ Now we can move the functions to the top level of our program:
 document.querySelector('form').onsubmit = formSubmit;
 
 function formSubmit(submitEvent) {
-    var name = document.querySelector('input').value;
-    request(
-        {
-            uri: 'http://example.com/upload',
-            body: name,
-            method: 'POST',
-        },
-        postResponse
-    );
+  var name = document.querySelector('input').value;
+  request(
+    {
+      uri: 'http://example.com/upload',
+      body: name,
+      method: 'POST',
+    },
+    postResponse
+  );
 }
 
 function postResponse(err, response, body) {
-    var statusMessage = document.querySelector('.status');
-    if (err) return (statusMessage.value = err);
-    statusMessage.value = body;
+  var statusMessage = document.querySelector('.status');
+  if (err) return (statusMessage.value = err);
+  statusMessage.value = body;
 }
 ```
 
@@ -263,21 +252,21 @@ Here is a new file called `formuploader.js` that contains our two functions from
 module.exports.submit = formSubmit;
 
 function formSubmit(submitEvent) {
-    var name = document.querySelector('input').value;
-    request(
-        {
-            uri: 'http://example.com/upload',
-            body: name,
-            method: 'POST',
-        },
-        postResponse
-    );
+  var name = document.querySelector('input').value;
+  request(
+    {
+      uri: 'http://example.com/upload',
+      body: name,
+      method: 'POST',
+    },
+    postResponse
+  );
 }
 
 function postResponse(err, response, body) {
-    var statusMessage = document.querySelector('.status');
-    if (err) return (statusMessage.value = err);
-    statusMessage.value = body;
+  var statusMessage = document.querySelector('.status');
+  if (err) return (statusMessage.value = err);
+  statusMessage.value = body;
 }
 ```
 
@@ -298,10 +287,10 @@ Now our application is only two lines of code and has the following benefits:
 
 现在我们的应用程序只剩两行代码，而且还有下面的好处：
 
--   easier for new developers to understand -- they won't get bogged down by having to read through all of the `formuploader` functions
--   新加入的开发者更容易理解代码——他们不用担心要读完整个 `formuploader` 函数
--   `formuploader` can get used in other places without duplicating code and can easily be shared on github or npm
--   `formuploader` 函数可以用在其他的地方而不用再写一遍，而且这个函数可以被简单地分享在 Github 或者 NPM 上。
+- easier for new developers to understand -- they won't get bogged down by having to read through all of the `formuploader` functions
+- 新加入的开发者更容易理解代码——他们不用担心要读完整个 `formuploader` 函数
+- `formuploader` can get used in other places without duplicating code and can easily be shared on github or npm
+- `formuploader` 函数可以用在其他的地方而不用再写一遍，而且这个函数可以被简单地分享在 Github 或者 NPM 上。
 
 ### 3. Handle every single error 处理每一处错误
 
@@ -323,8 +312,8 @@ var fs = require('fs');
 fs.readFile('/Does/not/exist', handleFile);
 
 function handleFile(error, file) {
-    if (error) return console.error('Uhoh, there was an error', error);
-    // otherwise, continue on and use `file` in your code
+  if (error) return console.error('Uhoh, there was an error', error);
+  // otherwise, continue on and use `file` in your code
 }
 ```
 
@@ -355,20 +344,20 @@ Here are some rules of thumb when creating a module:
 
 下面是创建一个模块时的经验之谈：
 
--   Start by moving repeatedly used code into a function
--   从把重复使用的代码移动到一个函数里做起
--   When your function (or a group of functions related to the same theme) get big enough, move them into another file and expose them using `module.exports`. You can load this using a relative require
--   当你写的函数足够大时，把它们移动到另一个文件中，然后使用 `module.exports` 语句把接口暴露出来。然后你可以使用 require 来使用它
--   If you have some code that can be used across multiple projects give it it's own readme, tests and `package.json` and publish it to github and npm. There are too many awesome benefits to this specific approach to list here!
--   如果你写的代码被用于多个项目，那么应该给它编写 README 和测试以及 `package.json`，然后把它发布到 Github 和 NPM。这种方法有很多好处。
--   A good module is small and focuses on one problem
--   一个好的模块小巧而且专注于解决一个问题
--   Individual files in a module should not be longer than around 150 lines of JavaScript
--   对于模块中的单个文件，JavaScript 代码不应该超过 150 行左右
--   A module shouldn't have more than one level of nested folders full of JavaScript files. If it does, it is probably doing too many things
--   一个模块不应该有超过一层的嵌套文件夹，里面都是 JavaScript 文件，如果有，那么这个模块可以做了太多的事。
--   Ask more experienced coders you know to show you examples of good modules until you have a good idea of what they look like. If it takes more than a few minutes to understand what is happening, it probably isn't a very good module.
--   可以让有经验的程序员给你展示一下好的模块，知道你对好的模块有印象。如果如果你需要几分钟才能理解程序干了什么，那么这可能不是一个好的模块。
+- Start by moving repeatedly used code into a function
+- 从把重复使用的代码移动到一个函数里做起
+- When your function (or a group of functions related to the same theme) get big enough, move them into another file and expose them using `module.exports`. You can load this using a relative require
+- 当你写的函数足够大时，把它们移动到另一个文件中，然后使用 `module.exports` 语句把接口暴露出来。然后你可以使用 require 来使用它
+- If you have some code that can be used across multiple projects give it it's own readme, tests and `package.json` and publish it to github and npm. There are too many awesome benefits to this specific approach to list here!
+- 如果你写的代码被用于多个项目，那么应该给它编写 README 和测试以及 `package.json`，然后把它发布到 Github 和 NPM。这种方法有很多好处。
+- A good module is small and focuses on one problem
+- 一个好的模块小巧而且专注于解决一个问题
+- Individual files in a module should not be longer than around 150 lines of JavaScript
+- 对于模块中的单个文件，JavaScript 代码不应该超过 150 行左右
+- A module shouldn't have more than one level of nested folders full of JavaScript files. If it does, it is probably doing too many things
+- 一个模块不应该有超过一层的嵌套文件夹，里面都是 JavaScript 文件，如果有，那么这个模块可以做了太多的事。
+- Ask more experienced coders you know to show you examples of good modules until you have a good idea of what they look like. If it takes more than a few minutes to understand what is happening, it probably isn't a very good module.
+- 可以让有经验的程序员给你展示一下好的模块，知道你对好的模块有印象。如果如果你需要几分钟才能理解程序干了什么，那么这可能不是一个好的模块。
 
 ## More reading 拓展阅读
 

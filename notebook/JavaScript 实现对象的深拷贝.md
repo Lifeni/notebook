@@ -3,19 +3,14 @@ name: js-deep-clone
 title: JavaScript 实现对象的深拷贝
 create-date: 2021-03-24
 date: 2021-04-10
-descriptions:
-  - 尝试用不同方法实现 JS 中对象的深拷贝功能
-  - 本文的深拷贝只考虑嵌套的对象和数组，不考虑函数、正则等
+description: |
+  尝试用不同方法简单实现 JS 中对象的深拷贝功能，本文的深拷贝只考虑嵌套的对象和数组，不考虑函数、正则等复杂情况。
 tags:
   - JavaScript
 license: CC-BY-SA-4.0
 ---
 
 # JavaScript 实现对象的深拷贝
-
-📌 尝试用不同方法实现 JS 中对象的深拷贝功能
-
-🚧 本文的深拷贝只考虑嵌套的对象和数组，不考虑函数、正则等
 
 ## 前提
 

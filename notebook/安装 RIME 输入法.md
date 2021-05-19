@@ -3,19 +3,14 @@ name: install-rime
 title: 安装 RIME 输入法
 create-date: 2019-12-24
 date: 2020-02-05
-descriptions:
-    - 记录 Windows 10 下 RIME 输入法自然码的安装
-    - 本文并没有完成详细配置，所以具体操作方法请看官方文档
+description: |
+  记录 Windows 10 下 RIME 输入法自然码的安装，不过本文并没有完成详细配置，所以具体的操作方法以及配置项请看官方文档 [幫助與反饋 | RIME | 中州韻輸入法引擎](https://rime.im/docs/) 。
 tags:
-    - Windows
+  - Windows
 license: CC-BY-SA-4.0
 ---
 
 # 安装 RIME 输入法
-
-📌 记录 Windows 10 下 RIME 输入法自然码的安装
-
-💻 本文并没有完成详细配置，所以具体操作方法请看官方文档
 
 ## 开始之前
 
@@ -33,9 +28,9 @@ RIME 输入法主页：[RIME | 中州韻輸入法引擎](https://rime.im/)
 
 1. 下载双拼-自然码的输入方案：
 
-    我这里直接给出自然码的链接：[rime/rime-double-pinyin: 雙拼輸入方案](https://github.com/rime/rime-double-pinyin)，如果需要其他输入方案，可以参考：[rime/plum: 東風破 /plum/: Rime configuration manager and input schema repository](https://github.com/rime/plum)。
+   我这里直接给出自然码的链接：[rime/rime-double-pinyin: 雙拼輸入方案](https://github.com/rime/rime-double-pinyin)，如果需要其他输入方案，可以参考：[rime/plum: 東風破 /plum/: Rime configuration manager and input schema repository](https://github.com/rime/plum)。
 
-    再点右侧 `Clone or download`，选择 `Download ZIP`，保存到任意位置。
+   再点右侧 `Clone or download`，选择 `Download ZIP`，保存到任意位置。
 
 2. 切换到小狼毫，右键托盘“中”的图标，选择“输入法设定”，左下角“获取更多输入方案”，在弹出窗口中输入刚才下载的文件的路径，即可安装。之后回到“输入法设定”，勾上“自然码”。
 
@@ -53,17 +48,17 @@ RIME 输入法主页：[RIME | 中州韻輸入法引擎](https://rime.im/)
 
 > 用戶資料夾則包含爲用戶準備的內容，如：
 >
-> -   〔全局設定〕 `default.yaml`
-> -   〔發行版設定〕 `weasel.yaml`
-> -   〔預設輸入方案副本〕 `<方案標識>.schema.yaml`
-> -   ※〔安裝信息〕 `installation.yaml`
-> -   ※〔用戶狀態信息〕 `user.yaml`
+> - 〔全局設定〕 `default.yaml`
+> - 〔發行版設定〕 `weasel.yaml`
+> - 〔預設輸入方案副本〕 `<方案標識>.schema.yaml`
+> - ※〔安裝信息〕 `installation.yaml`
+> - ※〔用戶狀態信息〕 `user.yaml`
 >
 > 以及用戶自己設定的：
 >
-> -   ※〔用戶對全局設定的定製信息〕 `default.custom.yaml`
-> -   ※〔用戶對預設輸入方案的定製信息〕 `<方案標識>.custom.yaml`
-> -   ※〔用戶自製輸入方案〕及配套的詞典源文件
+> - ※〔用戶對全局設定的定製信息〕 `default.custom.yaml`
+> - ※〔用戶對預設輸入方案的定製信息〕 `<方案標識>.custom.yaml`
+> - ※〔用戶自製輸入方案〕及配套的詞典源文件
 >
 > 註：以上標有 ※ 號的文件，包含用戶資料，您在清理文件時要注意備份！
 >

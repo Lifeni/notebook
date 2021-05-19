@@ -3,18 +3,16 @@ name: use-git
 title: 使用 Git 与搭建 Git 服务器
 create-date: 2020-03-19
 date: 2020-05-05
-descriptions:
-    - 学习 Git 的用法，使用 Gitea 搭建 Git 服务器
+description: |
+  学习 Git 的用法，并尝试使用 Gitea 搭建 Git 服务器。
 tags:
-    - Git
-    - Gitea
-    - Linux
+  - Git
+  - Gitea
+  - Linux
 license: CC-BY-SA-4.0
 ---
 
 # 使用 Git 与搭建 Git 服务器
-
-📌 学习 Git 的用法，使用 Gitea 搭建 Git 服务器
 
 ## Git 基本用法
 
@@ -841,45 +839,45 @@ Github 上有整理好的 `.gitignore` 文件：[github/gitignore: A collection 
 version: '2'
 
 networks:
-    gitea:
-        external: false
+  gitea:
+    external: false
 
 services:
-    server:
-        image: gitea/gitea:latest
-        environment:
-            - USER_UID=1000
-            - USER_GID=1000
-            - DB_TYPE=mysql
-            - DB_HOST=db:3306
-            - DB_NAME=gitea
-            - DB_USER=gitea
-            - DB_PASSWD=gitea
-        restart: always
-        networks:
-            - gitea
-        volumes:
-            - ./gitea:/data
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-        ports:
-            - '10080:3000'
-            - '10022:22'
-        depends_on:
-            - db
+  server:
+    image: gitea/gitea:latest
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - DB_TYPE=mysql
+      - DB_HOST=db:3306
+      - DB_NAME=gitea
+      - DB_USER=gitea
+      - DB_PASSWD=gitea
+    restart: always
+    networks:
+      - gitea
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '10080:3000'
+      - '10022:22'
+    depends_on:
+      - db
 
-    db:
-        image: mysql:5.7
-        restart: always
-        environment:
-            - MYSQL_ROOT_PASSWORD=gitea
-            - MYSQL_USER=gitea
-            - MYSQL_PASSWORD=gitea
-            - MYSQL_DATABASE=gitea
-        networks:
-            - gitea
-        volumes:
-            - ./mysql:/var/lib/mysql
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=gitea
+      - MYSQL_USER=gitea
+      - MYSQL_PASSWORD=gitea
+      - MYSQL_DATABASE=gitea
+    networks:
+      - gitea
+    volumes:
+      - ./mysql:/var/lib/mysql
 ```
 
 在 `/home` 下输入以下命令安装：
@@ -920,11 +918,11 @@ $ ssh-keygen
 
 1. **用 Nginx 把网站反代部署在二级目录，但除了首页均 404。**
 
-    即，访问 `example.com/gitea`，Nginx 把请求转发到 `localhost:3000`。由于网页中使用绝对路径，如 `/img/logo.png`，实际请求时会指向 `example.com/img/logo.png` 而不是`example.com/gitea/img/logo.png`，因此产生 404 错误。
+   即，访问 `example.com/gitea`，Nginx 把请求转发到 `localhost:3000`。由于网页中使用绝对路径，如 `/img/logo.png`，实际请求时会指向 `example.com/img/logo.png` 而不是`example.com/gitea/img/logo.png`，因此产生 404 错误。
 
-    **解决方法：**[使用：反向代理 - Docs](https://docs.gitea.io/zh-cn/reverse-proxies/#%E4%BD%BF%E7%94%A8-nginx-%E4%BD%9C%E4%B8%BA%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%B9%B6%E5%B0%86-gitea-%E8%B7%AF%E7%94%B1%E8%87%B3%E4%B8%80%E4%B8%AA%E5%AD%90%E8%B7%AF%E5%BE%84) 中的第二条。
+   **解决方法：**[使用：反向代理 - Docs](https://docs.gitea.io/zh-cn/reverse-proxies/#%E4%BD%BF%E7%94%A8-nginx-%E4%BD%9C%E4%B8%BA%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%B9%B6%E5%B0%86-gitea-%E8%B7%AF%E7%94%B1%E8%87%B3%E4%B8%80%E4%B8%AA%E5%AD%90%E8%B7%AF%E5%BE%84) 中的第二条。
 
-    Nginx 配置好转发后，在 Gitea 的配置文件 `/home/gitea/gitea/conf/app.ini` 里修改：
+   Nginx 配置好转发后，在 Gitea 的配置文件 `/home/gitea/gitea/conf/app.ini` 里修改：
 
    ```ini
     [server]
@@ -933,11 +931,11 @@ $ ssh-keygen
     ...
    ```
 
-    之后重启 Nginx 和 Gitea。
+   之后重启 Nginx 和 Gitea。
 
 2. **配置好 SSH Key 之后，仍然需要输入密码，而且不知道密码是什么。**
 
-    **解决方法：**在 `git@[ip]` 之前加上 `ssh://`：
+   **解决方法：**在 `git@[ip]` 之前加上 `ssh://`：
 
    ```bash
     # Error
@@ -949,7 +947,7 @@ $ ssh-keygen
     $ git clone ssh://git@[ip]:username/example.git
    ```
 
-    或者参考 [Cloning via ssh asks for password · Issue #9267 · go-gitea/gitea](https://github.com/go-gitea/gitea/issues/9267) 里的第二种方法。
+   或者参考 [Cloning via ssh asks for password · Issue #9267 · go-gitea/gitea](https://github.com/go-gitea/gitea/issues/9267) 里的第二种方法。
 
 ## 参考资料
 

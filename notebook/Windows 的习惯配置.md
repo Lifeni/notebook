@@ -3,20 +3,15 @@ name: windows-config
 title: Windows 的习惯配置
 create-date: 2020-08-07
 date: 2021-03-02
-descriptions:
-    - 记录自己配置和完善 Windows 10 的方法和问题
-    - 配置方法均来自网络，可能会随系统更新而失效
+description: |
+  记录自己配置和完善 Windows 10 的方法和问题，所有的配置方法均来自网络，已注明参考出处，部分解决方案可能会随系统更新而失效。
 tags:
-    - Windows
-    - WSL
+  - Windows
+  - WSL
 license: CC-BY-SA-4.0
 ---
 
 # Windows 的习惯配置
-
-📌 记录自己配置和完善 Windows 10 的方法和问题
-
-🌐 配置方法均来自网络，可能会随系统更新而失效
 
 > **前排建议：**
 >
@@ -36,9 +31,9 @@ license: CC-BY-SA-4.0
 
 2. 在地址栏粘贴下面的文本，然后回车：
 
-    ```
-     HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced
-    ```
+   ```
+    HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+   ```
 
 3. 在窗口的右侧右键，新建，DWORD（32 位）值，命名为 `ShowSecondsInSystemClock`
 
@@ -59,43 +54,43 @@ license: CC-BY-SA-4.0
 
 1. 新建 `.reg` 文件，内容如下（**注意需要替换自己的用户名**）：
 
-    ```
-      Windows Registry Editor Version 5.00
+   ```
+     Windows Registry Editor Version 5.00
 
-      [HKEY_CLASSES_ROOT\Directory\Background\shell\wt]
-      @="Windows Terminal Here"
+     [HKEY_CLASSES_ROOT\Directory\Background\shell\wt]
+     @="Windows Terminal Here"
 
-      [HKEY_CLASSES_ROOT\Directory\Background\shell\wt\command]
-      @="C:\\Users\\你的用户名\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe"
-    ```
+     [HKEY_CLASSES_ROOT\Directory\Background\shell\wt\command]
+     @="C:\\Users\\你的用户名\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe"
+   ```
 
 2. 双击运行，即可添加到右键菜单
 
 3. 还需要修改 Terminal 的路径为当前路径。打开 Windows Terminal 的设置，添加下面这一行：
 
-    ```json
-     "startingDirectory": null
-    ```
+   ```json
+    "startingDirectory": null
+   ```
 
-     添加完成后是这个样子的：
+   添加完成后是这个样子的：
 
-    ```json
-     {
-         "profiles": {
-             "defaults": {},
-             "list": [
-                 {
-                     // Make changes here to the powershell.exe profile.
-                     "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                     "name": "Windows PowerShell",
-                     "commandline": "powershell.exe",
-                     "hidden": false,
-                     "startingDirectory": null
-                 }
-             ]
+   ```json
+   {
+     "profiles": {
+       "defaults": {},
+       "list": [
+         {
+           // Make changes here to the powershell.exe profile.
+           "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+           "name": "Windows PowerShell",
+           "commandline": "powershell.exe",
+           "hidden": false,
+           "startingDirectory": null
          }
+       ]
      }
-    ```
+   }
+   ```
 
 </details>
 
@@ -111,18 +106,18 @@ license: CC-BY-SA-4.0
 
 2. 在 WSL 中输入下面命令，打开 Bash 的设置：
 
-    ```bash
-     $ sudo vim ~/.bashrc
-    ```
+   ```bash
+    $ sudo vim ~/.bashrc
+   ```
 
 3. 文件最后添加：
 
-    ```bashrc
-     export http_proxy="http://192.168.1.77:10809"
-     export https_proxy="http://192.168.1.77:10809"
-    ```
+   ```bash
+    export http_proxy="http://192.168.1.77:10809"
+    export https_proxy="http://192.168.1.77:10809"
+   ```
 
-     IP 地址填上面查询的（我这里是 192.168.1.77）代理的 HTTP 端口号是 10808，代理需要开启“允许来自局域网的访问”
+   IP 地址填上面查询的（我这里是 192.168.1.77）代理的 HTTP 端口号是 10808，代理需要开启“允许来自局域网的访问”
 
 4. 重启 Terminal 进入 WSL 即可，可以输入 `curl www.google.com` 测试是否成功连接网络
 
@@ -207,4 +202,4 @@ WSL2 读写 Windows 文件系统中的文件时，性能不行，也不支持热
      LxssManager 服务已经启动成功。
    ```
 
-    以重启 WSL。
+   以重启 WSL。

@@ -3,18 +3,16 @@ name: node-proxy
 title: 使用 Node.js 进行反向代理
 create-date: 2020-04-11
 date: 2020-04-14
-descriptions:
-    - 写一个反向代理服务器，转发 API 请求到不同端口
+description: |
+  根据自己的需求，用 Node.js 写一个简单的反向代理服务器，转发 API 请求到不同端口。
 tags:
-    - Node
-    - Express
-    - JavaScript
+  - Node
+  - Express
+  - JavaScript
 license: CC-BY-SA-4.0
 ---
 
 # 使用 Node.js 进行反向代理
-
-📌 写一个反向代理服务器，转发 API 请求到不同端口
 
 ## 需求
 
@@ -55,22 +53,22 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 // 代理中间件选项
 const options = {
-    target: 'http://localhost:3001', // 目标地址
+  target: 'http://localhost:3001', // 目标地址
 
-    // 把目标主机获取到的 Host 替换成目标地址
-    // 当为 true 时，目标主机获取到的 Host 端口为 3001，反之为3000
-    changeOrigin: false,
+  // 把目标主机获取到的 Host 替换成目标地址
+  // 当为 true 时，目标主机获取到的 Host 端口为 3001，反之为3000
+  changeOrigin: false,
 
-    ws: true, // 是否代理 WebSockets
-    pathRewrite: {
-        '^/api/old-path': '/api/new-path', // 重写路径
-        '^/api/remove/path': '/path', // 移除中间的路径
-    },
-    router: {
-        // 当 request.headers.host == 'dev.localhost:3000' 时,
-        // 把目标地址 'http://www.example.org' 转换成 'http://localhost:8000'
-        'dev.localhost:3000': 'http://localhost:8000',
-    },
+  ws: true, // 是否代理 WebSockets
+  pathRewrite: {
+    '^/api/old-path': '/api/new-path', // 重写路径
+    '^/api/remove/path': '/path', // 移除中间的路径
+  },
+  router: {
+    // 当 request.headers.host == 'dev.localhost:3000' 时,
+    // 把目标地址 'http://www.example.org' 转换成 'http://localhost:8000'
+    'dev.localhost:3000': 'http://localhost:8000',
+  },
 };
 
 // 创建代理 (without context)
@@ -82,12 +80,12 @@ app.use('/api', exampleProxy);
 // ---------------
 // 符合自己需求的写法
 const optionProject = {
-    target: 'http://localhost:3001',
-    changeOrigin: false,
-    ws: true,
-    pathRewrite: {
-        '^/project-name': '/',
-    },
+  target: 'http://localhost:3001',
+  changeOrigin: false,
+  ws: true,
+  pathRewrite: {
+    '^/project-name': '/',
+  },
 };
 const myProxy = createProxyMiddleware(optionProject);
 app.use('/project-name', myProxy);
@@ -107,8 +105,8 @@ const express = require('express');
 const app = express();
 
 app.get('*', (req, res) => {
-    console.log(req);
-    res.end(req.headers.host + req.originalUrl);
+  console.log(req);
+  res.end(req.headers.host + req.originalUrl);
 });
 
 app.listen(3001);
@@ -203,11 +201,11 @@ app.listen(3001);
    * @return {Boolean}
    */
   const filter = function (pathname, req) {
-      return pathname.match('^/api') && req.method === 'GET';
+    return pathname.match('^/api') && req.method === 'GET';
   };
 
   const apiProxy = createProxyMiddleware(filter, {
-      target: 'http://www.example.org',
+    target: 'http://www.example.org',
   });
   ```
 
@@ -305,15 +303,15 @@ app.listen(3001);
   const proxy = new HttpProxy();
 
   module.exports = (req, res, next) => {
-      proxy.web(
-          req,
-          res,
-          {
-              target: 'http://localhost:4003/',
-              buffer: streamify(req.rawBody),
-          },
-          next
-      );
+    proxy.web(
+      req,
+      res,
+      {
+        target: 'http://localhost:4003/',
+        buffer: streamify(req.rawBody),
+      },
+      next
+    );
   };
   ```
 
@@ -329,7 +327,7 @@ createProxyMiddleware('http://www.example.org:8000/api/books/*/**.json');
 // createProxyMiddleware('/api/books/*/**.json', {target: 'http://www.example.org:8000'});
 
 createProxyMiddleware('http://www.example.org:8000/api', {
-    changeOrigin: true,
+  changeOrigin: true,
 });
 // createProxyMiddleware('/api', {target: 'http://www.example.org:8000', changeOrigin: true});
 ```
@@ -340,11 +338,11 @@ createProxyMiddleware('http://www.example.org:8000/api', {
 
 ```js
 app.use(
-    '/api',
-    createProxyMiddleware({
-        target: 'http://www.example.org',
-        changeOrigin: true,
-    })
+  '/api',
+  createProxyMiddleware({
+    target: 'http://www.example.org',
+    changeOrigin: true,
+  })
 );
 ```
 
@@ -373,10 +371,10 @@ createProxyMiddleware('ws://echo.websocket.org');
 
 1. **如何在访问根路径时返回静态网页？**
 
-    假设静态网页的目录是 `/pubic`，在 `app.js` 中加入下面的代码即可：
+   假设静态网页的目录是 `/pubic`，在 `app.js` 中加入下面的代码即可：
 
    ```js
-    app.use(express.static('public'));
+   app.use(express.static('public'));
    ```
 
 ## 参考资料

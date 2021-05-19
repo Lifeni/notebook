@@ -3,20 +3,15 @@ name: use-git-flow
 title: 使用 Git Flow
 create-date: 2020-07-26
 date: 2020-08-14
-descriptions:
-    - 记录学习使用 Git Flow 和 GitHub Flow 中的笔记和遇到的问题
-    - 文中使用 Windows 环境进行测试，部分命令与其他环境存在差异
+description: |
+  记录学习使用 Git Flow 和 GitHub Flow 中的笔记和遇到的一些问题，需要注意的是，文中使用 Windows 环境进行测试，部分命令与其他环境存在差异。
 tags:
-    - Git
-    - GitHub
+  - Git
+  - GitHub
 license: CC-BY-SA-4.0
 ---
 
 # 使用 Git Flow
-
-📌 记录学习使用 Git Flow 和 GitHub Flow 中的笔记和遇到的问题
-
-💿 文中使用 Windows 环境进行测试，部分命令与其他环境存在差异
 
 ## 安装
 
@@ -244,15 +239,15 @@ GitHub Flow 和 Git Flow 有些不一样，它只有一个基本分支，就是 
 
 1. Merge pull request （合并拉请求）
 
-    ![Merge pull request](https://file.lifeni.life/markdown/use-git-flow/02.jpg)
+   ![Merge pull request](https://file.lifeni.life/markdown/use-git-flow/02.jpg)
 
 2. Squash and merge（压缩并合并）
 
-    ![Squash and merge](https://file.lifeni.life/markdown/use-git-flow/03.jpg)
+   ![Squash and merge](https://file.lifeni.life/markdown/use-git-flow/03.jpg)
 
 3. Rebase and merge（变基并合并）
 
-    简单地说就是把新的分支的提交拼接到 master 分支的最后面（或者说前面，就是最新的一端）
+   简单地说就是把新的分支的提交拼接到 master 分支的最后面（或者说前面，就是最新的一端）
 
 如果有冲突，需要解决冲突再进行合并。合并完成后可以选择删除已经合并的分支。
 

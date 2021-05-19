@@ -3,18 +3,16 @@ name: cookies-issue
 title: 使用 Cookies 时遇到的问题
 create-date: 2020-08-19
 date: 2020-08-19
-descriptions:
-    - 解决实际开发中关于 Cookies 的一些问题
+description: |
+  尝试解决实际开发中关于 Cookies 的一些问题。
 tags:
-    - Cookies
-    - JavaScript
-    - Nginx
+  - Cookies
+  - JavaScript
+  - Nginx
 license: CC-BY-SA-4.0
 ---
 
 # 使用 Cookies 时遇到的问题
-
-📌 解决实际开发中关于 Cookies 的一些问题
 
 ## 场景一：跨域身份验证
 
@@ -55,21 +53,21 @@ app.use(cors());
 ```js
 // 客户端
 fetch('https://api.example.com/token', {
-    method: 'GET',
-    credentials: 'include',
+  method: 'GET',
+  credentials: 'include',
 })
-    .then((res) => res.json())
-    .then((data) => {
-        console.log(data);
-    });
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+  });
 ```
 
 ```js
 // 服务端也要修改
 app.use(
-    cors({
-        credentials: true,
-    })
+  cors({
+    credentials: true,
+  })
 );
 ```
 
@@ -83,11 +81,11 @@ app.use(
 
 ```js
 ctx.cookies.set('uuid', uuid, {
-    httpOnly: true,
-    sameSite: 'none', // 添加这一句
-    expires: dayjs()
-        .add(Number(process.env.UUID_MAX_AGE) * 1000, 'ms')
-        .toDate(),
+  httpOnly: true,
+  sameSite: 'none', // 添加这一句
+  expires: dayjs()
+    .add(Number(process.env.UUID_MAX_AGE) * 1000, 'ms')
+    .toDate(),
 });
 ```
 
@@ -105,12 +103,12 @@ ctx.cookies.set('uuid', uuid, {
 
 ```js
 ctx.cookies.set('uuid', uuid, {
-    httpOnly: true,
-    sameSite: 'none',
-    secure: true, // 添加这一句
-    expires: dayjs()
-        .add(Number(process.env.UUID_MAX_AGE) * 1000, 'ms')
-        .toDate(),
+  httpOnly: true,
+  sameSite: 'none',
+  secure: true, // 添加这一句
+  expires: dayjs()
+    .add(Number(process.env.UUID_MAX_AGE) * 1000, 'ms')
+    .toDate(),
 });
 ```
 

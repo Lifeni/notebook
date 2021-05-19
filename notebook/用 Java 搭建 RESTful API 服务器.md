@@ -3,23 +3,20 @@ name: java-restful-server
 title: 用 Java 搭建 RESTful API 服务器
 create-date: 2019-12-09
 date: 2020-02-01
-descriptions:
-    - 面向对象的程序设计课程作业，选择 Jersey 框架进行开发
-    - 本文为过程记录类文章，可能不会对代码进行详细解释，项目完整代码见 GitHub
+description: |
+  面向对象的程序设计课程作业，选择 Jersey 框架进行开发，本文为过程记录类文章，可能不会对代码进行详细解释，项目完整代码见 [Lifeni/java-restful-api-server](https://github.com/Lifeni/java-restful-api-server) 。
 tags:
-    - Java
-    - RESTful
+  - Java
+  - RESTful
 license: CC-BY-SA-4.0
 ---
 
 # 用 Java 搭建 RESTful API 服务器
 
-📌 面向对象的程序设计课程作业，选择 Jersey 框架进行开发
+## 计划
 
-📁 本文为过程记录类文章，可能不会对代码进行详细解释，项目完整代码见 [仓库](https://github.com/Lifeni/java-restful-api-server)
-
-| TODO                                    | 状态   |
-| --------------------------------------- | ------ |
+| TODO                                    | 状态    |
+| --------------------------------------- | ------- |
 | 搭建 Java 在 Windows 下的开发环境       | ✅ 完成 |
 | 实现 POST GET PUT DELETE 四种 HTTP 方法 | ✅ 完成 |
 | 连接数据库（MongoDB）                   | ✅ 完成 |

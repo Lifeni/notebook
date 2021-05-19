@@ -3,20 +3,15 @@ name: es-features
 title: ECMAScript 中的新特性
 create-date: 2021-01-04
 date: 2021-03-22
-descriptions:
-    - 记录从 ES6 发布至今 ECMAScript 中出现的新特性，每年更新
-    - 目前包含 ECMAScript 2016 ~ 2021 的部分新特性
+description: |
+  记录从 ES6 发布至今 ECMAScript 中出现的新特性，不包含 ES6 的内容，计划每年更新，目前已包含 ECMAScript 2016 ~ 2021 的部分新特性。
 tags:
-    - ECMAScript
-    - 年更
+  - ECMAScript
+  - 年更
 license: CC-BY-SA-4.0
 ---
 
 # ECMAScript 中的新特性
-
-📌 记录从 ES6 发布至今 ECMAScript 中出现的新特性，每年更新
-
-💡 目前包含 ECMAScript 2016 ~ 2021 的部分新特性
 
 ## ES 2021
 
@@ -35,26 +30,26 @@ const newStr = str.replaceAll(regexp | substr, newSubstr);
 `返回值` 替换后的字符串。
 
 ```js
-"123456123".replaceAll("123", "000") === "000456000";
-"abcdab".replaceAll(/ab/g, "000") === "000cd000";
-"abcdab".replaceAll(/ef/g, "000") === "abcdab";
+'123456123'.replaceAll('123', '000') === '000456000';
+'abcdab'.replaceAll(/ab/g, '000') === '000cd000';
+'abcdab'.replaceAll(/ef/g, '000') === 'abcdab';
 ```
 
 在搜索的字符串为空的情况下，`replace` 和 `replaceAll` 的区别如下。
 
 ```js
-"x".replace("", "_");
+'x'.replace('', '_');
 // → '_x'
-"xxx".replace(/(?:)/g, "_");
+'xxx'.replace(/(?:)/g, '_');
 // → '_x_x_x_'
-"xxx".replaceAll("", "_");
+'xxx'.replaceAll('', '_');
 // → '_x_x_x_'
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-string-replaceall: ECMAScript proposal: String.prototype.replaceAll](https://github.com/tc39/proposal-string-replaceall)
-> -   [String.prototype.replaceAll() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll)
+> - [tc39/proposal-string-replaceall: ECMAScript proposal: String.prototype.replaceAll](https://github.com/tc39/proposal-string-replaceall)
+> - [String.prototype.replaceAll() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll)
 
 ### `Promise.any` 和 `AggregateError`
 
@@ -68,10 +63,10 @@ Promise.any(iterable);
 
 ```js
 try {
-    const first = await Promise.any(promises);
-    // Any of the promises was fulfilled.
+  const first = await Promise.any(promises);
+  // Any of the promises was fulfilled.
 } catch (error) {
-    // All of the promises were rejected.
+  // All of the promises were rejected.
 }
 ```
 
@@ -79,12 +74,12 @@ Or, without `async`/`await`:
 
 ```js
 Promise.any(promises).then(
-    (first) => {
-        // Any of the promises was fulfilled.
-    },
-    (error) => {
-        // All of the promises were rejected.
-    }
+  first => {
+    // Any of the promises was fulfilled.
+  },
+  error => {
+    // All of the promises were rejected.
+  }
 );
 ```
 
@@ -92,25 +87,25 @@ Promise.any(promises).then(
 
 ```js
 Promise.any([
-    fetch("https://v8.dev/").then(() => "home"),
-    fetch("https://v8.dev/blog").then(() => "blog"),
-    fetch("https://v8.dev/docs").then(() => "docs"),
+  fetch('https://v8.dev/').then(() => 'home'),
+  fetch('https://v8.dev/blog').then(() => 'blog'),
+  fetch('https://v8.dev/docs').then(() => 'docs'),
 ])
-    .then((first) => {
-        // Any of the promises was fulfilled.
-        console.log(first);
-        // → 'home'
-    })
-    .catch((error) => {
-        // All of the promises were rejected.
-        console.log(error);
-    });
+  .then(first => {
+    // Any of the promises was fulfilled.
+    console.log(first);
+    // → 'home'
+  })
+  .catch(error => {
+    // All of the promises were rejected.
+    console.log(error);
+  });
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-promise-any: ECMAScript proposal: Promise.any](https://github.com/tc39/proposal-promise-any)
-> -   [Promise.any() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/any)
+> - [tc39/proposal-promise-any: ECMAScript proposal: Promise.any](https://github.com/tc39/proposal-promise-any)
+> - [Promise.any() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/any)
 
 ### 逻辑赋值符号 `||=` `&&=` `??=`
 
@@ -164,55 +159,55 @@ let amount = 1_234_500; // 1,234,500
 
 ```js
 class Counter {
-    constructor(element) {
-        // 记录一个弱引用到 DOM 元素
-        this.ref = new WeakRef(element);
-        this.start();
+  constructor(element) {
+    // 记录一个弱引用到 DOM 元素
+    this.ref = new WeakRef(element);
+    this.start();
+  }
+
+  start() {
+    if (this.timer) {
+      return;
     }
 
-    start() {
-        if (this.timer) {
-            return;
-        }
+    this.count = 0;
 
-        this.count = 0;
+    const tick = () => {
+      // 从弱引用中获取元素，如果存在就执行操作
+      const element = this.ref.deref();
+      if (element) {
+        element.textContent = ++this.count;
+      } else {
+        // 元素不存在时
+        console.log('The element is gone.');
+        this.stop();
+        this.ref = null;
+      }
+    };
 
-        const tick = () => {
-            // 从弱引用中获取元素，如果存在就执行操作
-            const element = this.ref.deref();
-            if (element) {
-                element.textContent = ++this.count;
-            } else {
-                // 元素不存在时
-                console.log("The element is gone.");
-                this.stop();
-                this.ref = null;
-            }
-        };
+    tick();
+    this.timer = setInterval(tick, 1000);
+  }
 
-        tick();
-        this.timer = setInterval(tick, 1000);
+  stop() {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = 0;
     }
-
-    stop() {
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = 0;
-        }
-    }
+  }
 }
 
-const counter = new Counter(document.getElementById("counter"));
+const counter = new Counter(document.getElementById('counter'));
 counter.start();
 setTimeout(() => {
-    document.getElementById("counter").remove();
+  document.getElementById('counter').remove();
 }, 5000);
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-weakrefs: WeakRefs](https://github.com/tc39/proposal-weakrefs)
-> -   [WeakRef - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakRef)
+> - [tc39/proposal-weakrefs: WeakRefs](https://github.com/tc39/proposal-weakrefs)
+> - [WeakRef - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakRef)
 
 ## ES 2020
 
@@ -230,7 +225,7 @@ str.matchAll(regexp);
 
 ```js
 const regexp = /t(e)(st(\d?))/g;
-const str = "test1test2";
+const str = 'test1test2';
 
 const array = [...str.matchAll(regexp)];
 
@@ -243,8 +238,8 @@ console.log(array[1]);
 
 > 参考资料：
 >
-> -   [tc39/proposal-string-matchall: ES Proposal, specs, tests, reference implementation, and polyfill/shim for String.prototype.matchAll](https://github.com/tc39/proposal-string-matchall)
-> -   [String.prototype.matchAll() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll)
+> - [tc39/proposal-string-matchall: ES Proposal, specs, tests, reference implementation, and polyfill/shim for String.prototype.matchAll](https://github.com/tc39/proposal-string-matchall)
+> - [String.prototype.matchAll() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll)
 
 ### `BigInt`
 
@@ -253,14 +248,14 @@ console.log(array[1]);
 ECMAScript 中 Number 类型的最大值为 `Number.MAX_SAFE_INTEGER === 2^53 - 1 `，即 9007199254740991，而 BigInt 可以表示任意大的整数。
 
 ```js
-typeof 1n === "bigint"; // true
+typeof 1n === 'bigint'; // true
 
 const theBiggestInt = 9007199254740991n;
 
 const alsoHuge = BigInt(9007199254740991);
 // ↪ 9007199254740991n
 
-const hugeButString = BigInt("9007199254740991");
+const hugeButString = BigInt('9007199254740991');
 // ↪ 9007199254740991n
 ```
 
@@ -333,9 +328,9 @@ BigInt 在转换成 Boolean 的情况下的行为类似 Number。
 
 ```js
 if (0n) {
-    console.log("Hello from the if!");
+  console.log('Hello from the if!');
 } else {
-    console.log("Hello from the else!");
+  console.log('Hello from the else!');
 }
 
 // ↪ "Hello from the else!"
@@ -363,10 +358,10 @@ Number(1n);
 不过字符串没这个限制。
 
 ```js
-1n + "2";
+1n + '2';
 // ↪ "12"
 
-"2" + 1n;
+'2' + 1n;
 // ↪ "21"
 ```
 
@@ -396,7 +391,7 @@ parseInt(900719925474099267n);
 const badPrecision = BigInt(9007199254740993);
 // ↪9007199254740992n
 
-const goodPrecision = BigInt("9007199254740993");
+const goodPrecision = BigInt('9007199254740993');
 // ↪9007199254740993n
 
 const alsoGoodPrecision = 9007199254740993n;
@@ -409,7 +404,7 @@ const alsoGoodPrecision = 9007199254740993n;
 BigInt(1.5);
 // ↪ RangeError: The number 1.5 is not a safe integer and thus cannot be converted to a BigInt
 
-BigInt("1.5");
+BigInt('1.5');
 // ↪ SyntaxError: Cannot convert 1.5 to a BigInt
 ```
 
@@ -436,8 +431,8 @@ JSON.stringify(bigObj);
 
 > 参考资料：
 >
-> -   [tc39/proposal-bigint: Arbitrary precision integers in JavaScript](https://github.com/tc39/proposal-bigint)
-> -   [BigInt - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+> - [tc39/proposal-bigint: Arbitrary precision integers in JavaScript](https://github.com/tc39/proposal-bigint)
+> - [BigInt - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
 
 ### `for-in`
 
@@ -447,7 +442,7 @@ JSON.stringify(bigObj);
 var obj = { a: 1, b: 2, c: 3 };
 
 for (var prop in obj) {
-    console.log("obj." + prop + " = " + obj[prop]);
+  console.log('obj.' + prop + ' = ' + obj[prop]);
 }
 
 // Output:
@@ -466,22 +461,22 @@ for (var prop in obj) {
 
 ```js
 const response = {
-    settings: {
-        nullValue: null,
-        height: 400,
-        animationDuration: 0,
-        headerText: "",
-        showSplashScreen: false,
-    },
+  settings: {
+    nullValue: null,
+    height: 400,
+    animationDuration: 0,
+    headerText: '',
+    showSplashScreen: false,
+  },
 };
 
-const undefinedValue = response.settings.undefinedValue ?? "some other default";
+const undefinedValue = response.settings.undefinedValue ?? 'some other default';
 // result: 'some other default'
 
-const nullValue = response.settings.nullValue ?? "some other default";
+const nullValue = response.settings.nullValue ?? 'some other default';
 // result: 'some other default'
 
-const headerText = response.settings.headerText ?? "Hello, world!";
+const headerText = response.settings.headerText ?? 'Hello, world!';
 // result: ''
 
 const animationDuration = response.settings.animationDuration ?? 300;
@@ -502,8 +497,8 @@ true || undefined ?? "foo"; // 抛出 SyntaxError
 
 > 参考资料：
 >
-> -   [tc39/proposal-nullish-coalescing: Nullish coalescing proposal x ?? y](https://github.com/tc39/proposal-nullish-coalescing)
-> -   [空值合并运算符 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator)
+> - [tc39/proposal-nullish-coalescing: Nullish coalescing proposal x ?? y](https://github.com/tc39/proposal-nullish-coalescing)
+> - [空值合并运算符 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator)
 
 ### 可选链操作符 `?.`
 
@@ -540,8 +535,8 @@ a == null ? undefined : a();
 
 > 参考资料：
 >
-> -   [tc39/proposal-optional-chaining](https://github.com/tc39/proposal-optional-chaining)
-> -   [可选链操作符 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E5%8F%AF%E9%80%89%E9%93%BE)
+> - [tc39/proposal-optional-chaining](https://github.com/tc39/proposal-optional-chaining)
+> - [可选链操作符 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E5%8F%AF%E9%80%89%E9%93%BE)
 
 ### `Promise.allSettled`
 
@@ -549,14 +544,12 @@ a == null ? undefined : a();
 
 ```js
 const promises = [
-    fetch("https://lifeni.life"),
-    fetch("https://does-not-exist/"),
+  fetch('https://lifeni.life'),
+  fetch('https://does-not-exist/'),
 ];
 
 const results = await Promise.allSettled(promises);
-const errors = results
-    .filter((p) => p.status === "rejected")
-    .map((p) => p.reason);
+const errors = results.filter(p => p.status === 'rejected').map(p => p.reason);
 
 console.log(JSON.stringify(results));
 
@@ -576,8 +569,8 @@ console.log(JSON.stringify(results));
 
 > 参考资料：
 >
-> -   [tc39/proposal-promise-allSettled: ECMAScript Proposal, specs, and reference implementation for Promise.allSettled](https://github.com/tc39/proposal-promise-allSettled)
-> -   [Promise.allSettled() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)
+> - [tc39/proposal-promise-allSettled: ECMAScript Proposal, specs, and reference implementation for Promise.allSettled](https://github.com/tc39/proposal-promise-allSettled)
+> - [Promise.allSettled() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)
 
 ### `import()`
 
@@ -586,35 +579,35 @@ console.log(JSON.stringify(results));
 ```html
 <!DOCTYPE html>
 <nav>
-    <a href="books.html" data-entry-module="books">Books</a>
-    <a href="movies.html" data-entry-module="movies">Movies</a>
-    <a href="video-games.html" data-entry-module="video-games">Video Games</a>
+  <a href="books.html" data-entry-module="books">Books</a>
+  <a href="movies.html" data-entry-module="movies">Movies</a>
+  <a href="video-games.html" data-entry-module="video-games">Video Games</a>
 </nav>
 
 <main>Content will load here!</main>
 
 <script>
-    const main = document.querySelector("main");
-    for (const link of document.querySelectorAll("nav > a")) {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
+  const main = document.querySelector('main');
+  for (const link of document.querySelectorAll('nav > a')) {
+    link.addEventListener('click', e => {
+      e.preventDefault();
 
-            import(`./section-modules/${link.dataset.entryModule}.js`)
-                .then((module) => {
-                    module.loadPageInto(main);
-                })
-                .catch((err) => {
-                    main.textContent = err.message;
-                });
+      import(`./section-modules/${link.dataset.entryModule}.js`)
+        .then(module => {
+          module.loadPageInto(main);
+        })
+        .catch(err => {
+          main.textContent = err.message;
         });
-    }
+    });
+  }
 </script>
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-dynamic-import: import() proposal for JavaScript](https://github.com/tc39/proposal-dynamic-import)
-> -   [import - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import)
+> - [tc39/proposal-dynamic-import: import() proposal for JavaScript](https://github.com/tc39/proposal-dynamic-import)
+> - [import - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import)
 
 ### `import.meta`
 
@@ -632,32 +625,32 @@ console.log(import.meta); // { url: "file:///home/user/my-module.mjs" }
 
 ```html
 <script
-    type="module"
-    src="path/to/hamster-displayer.mjs"
-    data-size="500"
+  type="module"
+  src="path/to/hamster-displayer.mjs"
+  data-size="500"
 ></script>
 ```
 
 ```js
 (async () => {
-    // new URL() 的第二个参数是相对地址（baseUrl）
-    const response = await fetch(new URL("../hamsters.jpg", import.meta.url));
-    const blob = await response.blob();
+  // new URL() 的第二个参数是相对地址（baseUrl）
+  const response = await fetch(new URL('../hamsters.jpg', import.meta.url));
+  const blob = await response.blob();
 
-    const size = import.meta.scriptElement.dataset.size || 300;
+  const size = import.meta.scriptElement.dataset.size || 300;
 
-    const image = new Image();
-    image.src = URL.createObjectURL(blob);
-    image.width = image.height = size;
+  const image = new Image();
+  image.src = URL.createObjectURL(blob);
+  image.width = image.height = size;
 
-    document.body.appendChild(image);
+  document.body.appendChild(image);
 })();
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-import-meta: import.meta proposal for JavaScript](https://github.com/tc39/proposal-import-meta)
-> -   [import.meta - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import.meta)
+> - [tc39/proposal-import-meta: import.meta proposal for JavaScript](https://github.com/tc39/proposal-import-meta)
+> - [import.meta - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import.meta)
 
 ### `globalThis`
 
@@ -667,37 +660,37 @@ console.log(import.meta); // { url: "file:///home/user/my-module.mjs" }
 
 ```js
 var getGlobal = function () {
-    if (typeof self !== "undefined") {
-        return self;
-    }
-    if (typeof window !== "undefined") {
-        return window;
-    }
-    if (typeof global !== "undefined") {
-        return global;
-    }
-    throw new Error("unable to locate global object");
+  if (typeof self !== 'undefined') {
+    return self;
+  }
+  if (typeof window !== 'undefined') {
+    return window;
+  }
+  if (typeof global !== 'undefined') {
+    return global;
+  }
+  throw new Error('unable to locate global object');
 };
 
 var globals = getGlobal();
 
-if (typeof globals.setTimeout !== "function") {
-    // 此环境中没有 setTimeout 方法！
+if (typeof globals.setTimeout !== 'function') {
+  // 此环境中没有 setTimeout 方法！
 }
 ```
 
 因此为了简化代码，可以使用 `globalThis` 来调用全局对象。
 
 ```js
-if (typeof globalThis.setTimeout !== "function") {
-    // 此环境中没有 setTimeout 方法！
+if (typeof globalThis.setTimeout !== 'function') {
+  // 此环境中没有 setTimeout 方法！
 }
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-global: ECMAScript Proposal, specs, and reference implementation for global](https://github.com/tc39/proposal-global)
-> -   [globalThis - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
+> - [tc39/proposal-global: ECMAScript Proposal, specs, and reference implementation for global](https://github.com/tc39/proposal-global)
+> - [globalThis - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
 
 ## ES 2019
 
@@ -707,8 +700,8 @@ if (typeof globalThis.setTimeout !== "function") {
 
 ```js
 obj = Object.fromEntries([
-    ["a", 0],
-    ["b", 1],
+  ['a', 0],
+  ['b', 1],
 ]); // { a: 0, b: 1 }
 ```
 
@@ -716,8 +709,8 @@ obj = Object.fromEntries([
 
 ```js
 const map = new Map([
-    ["foo", "bar"],
-    ["baz", 42],
+  ['foo', 'bar'],
+  ['baz', 42],
 ]);
 const obj = Object.fromEntries(map);
 console.log(obj); // { foo: "bar", baz: 42 }
@@ -725,9 +718,9 @@ console.log(obj); // { foo: "bar", baz: 42 }
 
 ```js
 const arr = [
-    ["0", "a"],
-    ["1", "b"],
-    ["2", "c"],
+  ['0', 'a'],
+  ['1', 'b'],
+  ['2', 'c'],
 ];
 const obj = Object.fromEntries(arr);
 console.log(obj); // { 0: "a", 1: "b", 2: "c" }
@@ -737,8 +730,8 @@ console.log(obj); // { 0: "a", 1: "b", 2: "c" }
 
 ```js
 const map = new Map([
-    [{}, "a"],
-    [{}, "b"],
+  [{}, 'a'],
+  [{}, 'b'],
 ]);
 Object.fromEntries(map);
 // → { '[object Object]': 'b' }
@@ -748,16 +741,16 @@ Object.fromEntries(map);
 
 > 参考资料：
 >
-> -   [tc39/proposal-object-from-entries: TC39 proposal for Object.fromEntries](https://github.com/tc39/proposal-object-from-entries)
-> -   [Object.fromEntries() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)
-> -   [【译】关于 Object.fromEntries](https://juejin.cn/post/6844903877301665799#heading-3)
+> - [tc39/proposal-object-from-entries: TC39 proposal for Object.fromEntries](https://github.com/tc39/proposal-object-from-entries)
+> - [Object.fromEntries() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)
+> - [【译】关于 Object.fromEntries](https://juejin.cn/post/6844903877301665799#heading-3)
 
 ### `String.prototype.{trimStart,trimEnd}`
 
 删除字符串中 开头/结尾 的连续空白符，也可以使用别名 `String.prototype.{trimLeft,trimRight}`。
 
 ```js
-var str = "   foo  ";
+var str = '   foo  ';
 
 console.log(str.length); // 8
 
@@ -772,8 +765,8 @@ console.log(str); // '   foo'
 
 > 参考资料：
 >
-> -   [String.prototype.trimStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft)
-> -   [String.prototype.trimRight() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimRight)
+> - [String.prototype.trimStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft)
+> - [String.prototype.trimRight() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimRight)
 
 ### `Array.prototype.{flat,flatMap}`
 
@@ -809,21 +802,21 @@ arr4.flat();
 ```js
 var arr1 = [1, 2, 3, 4];
 
-arr1.map((x) => [x * 2]);
+arr1.map(x => [x * 2]);
 // [[2], [4], [6], [8]]
 
-arr1.flatMap((x) => [x * 2]);
+arr1.flatMap(x => [x * 2]);
 // [2, 4, 6, 8]
 
 // 只会展开一层
-arr1.flatMap((x) => [[x * 2]]);
+arr1.flatMap(x => [[x * 2]]);
 // [[2], [4], [6], [8]]
 ```
 
 > 参考资料：
 >
-> -   [Array.prototype.flat() - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/flat)
-> -   [Array.prototype.flatMap() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap)
+> - [Array.prototype.flat() - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/flat)
+> - [Array.prototype.flatMap() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap)
 
 ### `Function.prototype.toString`
 
@@ -836,9 +829,9 @@ arr1.flatMap((x) => [[x * 2]]);
 返回 `Symbol` 的描述。
 
 ```js
-Symbol("desc").toString(); // "Symbol(desc)"
-Symbol("desc").description; // "desc"
-Symbol("").description; // ""
+Symbol('desc').toString(); // "Symbol(desc)"
+Symbol('desc').description; // "desc"
+Symbol('').description; // ""
 Symbol().description; // undefined
 
 // well-known symbols
@@ -846,8 +839,8 @@ Symbol.iterator.toString(); // "Symbol(Symbol.iterator)"
 Symbol.iterator.description; // "Symbol.iterator"
 
 // global symbols
-Symbol.for("foo").toString(); // "Symbol(foo)"
-Symbol.for("foo").description; // "foo"
+Symbol.for('foo').toString(); // "Symbol(foo)"
+Symbol.for('foo').description; // "foo"
 ```
 
 > 参考资料：[Symbol.prototype.description - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description)
@@ -859,18 +852,18 @@ Symbol.for("foo").description; // "foo"
 ```js
 // 原来的写法，不需要 Error，但仍然要绑定变量到 Error
 try {
-    // 尝试使用可能不被支持的 Web 特性
+  // 尝试使用可能不被支持的 Web 特性
 } catch (unused) {
-    // 退回到被广泛支持的 Web 特性
+  // 退回到被广泛支持的 Web 特性
 }
 ```
 
 ```js
 // 现在的写法
 try {
-    // ...
+  // ...
 } catch {
-    // ...
+  // ...
 }
 ```
 
@@ -889,8 +882,8 @@ const PS = eval('"\u2029"');
 
 > 参考资料：
 >
-> -   [tc39/proposal-json-superset: Proposal to make all JSON text valid ECMA-262](https://github.com/tc39/proposal-json-superset)
-> -   [Subsume JSON and Well-formed JSON.stringify | by Kesk -\*- | JavaScript In Plain English | Medium](https://medium.com/javascript-in-plain-english/subsume-json-and-well-formed-json-stringify-323f70c9dc36)
+> - [tc39/proposal-json-superset: Proposal to make all JSON text valid ECMA-262](https://github.com/tc39/proposal-json-superset)
+> - [Subsume JSON and Well-formed JSON.stringify | by Kesk -\*- | JavaScript In Plain English | Medium](https://medium.com/javascript-in-plain-english/subsume-json-and-well-formed-json-stringify-323f70c9dc36)
 
 ### 格式正确的 `JSON.stringify`
 
@@ -898,22 +891,22 @@ JSON 规定使用 UTF-8 进行编码，但是对于一些编码，`JSON.stringif
 
 ```js
 // Non-BMP characters still serialize to surrogate pairs.
-JSON.stringify("𝌆");
+JSON.stringify('𝌆');
 // → '"𝌆"'
-JSON.stringify("\uD834\uDF06");
+JSON.stringify('\uD834\uDF06');
 // → '"𝌆"'
 
 // Unpaired surrogate code units will serialize to escape sequences.
-JSON.stringify("\uDF06\uD834");
+JSON.stringify('\uDF06\uD834');
 // → '"\\udf06\\ud834"'
-JSON.stringify("\uDEAD");
+JSON.stringify('\uDEAD');
 // → '"\\udead"'
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-well-formed-stringify: Proposal to prevent JSON.stringify from returning ill-formed strings](https://github.com/tc39/proposal-well-formed-stringify)
-> -   [Subsume JSON and Well-formed JSON.stringify | by Kesk -\*- | JavaScript In Plain English | Medium](https://medium.com/javascript-in-plain-english/subsume-json-and-well-formed-json-stringify-323f70c9dc36)
+> - [tc39/proposal-well-formed-stringify: Proposal to prevent JSON.stringify from returning ill-formed strings](https://github.com/tc39/proposal-well-formed-stringify)
+> - [Subsume JSON and Well-formed JSON.stringify | by Kesk -\*- | JavaScript In Plain English | Medium](https://medium.com/javascript-in-plain-english/subsume-json-and-well-formed-json-stringify-323f70c9dc36)
 
 ## ES 2018
 
@@ -924,25 +917,25 @@ JSON.stringify("\uDEAD");
 ```js
 // 创建一个可迭代的异步对象
 var asyncIterable = {
-    [Symbol.asyncIterator]() {
-        return {
-            i: 0,
-            next() {
-                if (this.i < 3) {
-                    return Promise.resolve({ value: this.i++, done: false });
-                }
+  [Symbol.asyncIterator]() {
+    return {
+      i: 0,
+      next() {
+        if (this.i < 3) {
+          return Promise.resolve({ value: this.i++, done: false });
+        }
 
-                return Promise.resolve({ done: true });
-            },
-        };
-    },
+        return Promise.resolve({ done: true });
+      },
+    };
+  },
 };
 
 // 然后可以使用 for await of 遍历这个对象
 (async function () {
-    for await (num of asyncIterable) {
-        console.log(num);
-    }
+  for await (num of asyncIterable) {
+    console.log(num);
+  }
 })();
 
 // 0
@@ -952,9 +945,9 @@ var asyncIterable = {
 
 > 参考资料：
 >
-> -   [tc39/proposal-async-iteration: Asynchronous iteration for JavaScript](https://github.com/tc39/proposal-async-iteration)
-> -   [for await...of - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for-await...of)
-> -   [异步迭代和 generator](https://zh.javascript.info/async-iterators-generators)
+> - [tc39/proposal-async-iteration: Asynchronous iteration for JavaScript](https://github.com/tc39/proposal-async-iteration)
+> - [for await...of - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for-await...of)
+> - [异步迭代和 generator](https://zh.javascript.info/async-iterators-generators)
 
 ### 对象属性的 `Spread` 和 `Rest` 语法
 
@@ -976,9 +969,9 @@ n; // { x: 1, y: 2, a: 3, b: 4 }
 
 > 参考资料：
 >
-> -   [tc39/proposal-object-rest-spread: Rest/Spread Properties for ECMAScript](https://github.com/tc39/proposal-object-rest-spread)
-> -   [展开语法 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
-> -   [剩余参数 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters)
+> - [tc39/proposal-object-rest-spread: Rest/Spread Properties for ECMAScript](https://github.com/tc39/proposal-object-rest-spread)
+> - [展开语法 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+> - [剩余参数 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters)
 
 ### `Promise.prototype.finally`
 
@@ -988,28 +981,28 @@ n; // { x: 1, y: 2, a: 3, b: 4 }
 let isLoading = true;
 
 fetch(myRequest)
-    .then(function (response) {
-        var contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-            return response.json();
-        }
-        throw new TypeError("Oops, we haven't got JSON!");
-    })
-    .then(function (json) {
-        /* process your JSON further */
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
-    .finally(function () {
-        isLoading = false;
-    });
+  .then(function (response) {
+    var contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return response.json();
+    }
+    throw new TypeError("Oops, we haven't got JSON!");
+  })
+  .then(function (json) {
+    /* process your JSON further */
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .finally(function () {
+    isLoading = false;
+  });
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-promise-finally: ECMAScript Proposal, specs, and reference implementation for Promise.prototype.finally](https://github.com/tc39/proposal-promise-finally)
-> -   [Promise.prototype.finally() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally)
+> - [tc39/proposal-promise-finally: ECMAScript Proposal, specs, and reference implementation for Promise.prototype.finally](https://github.com/tc39/proposal-promise-finally)
+> - [Promise.prototype.finally() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally)
 
 ### 模板字符串的修订
 
@@ -1017,7 +1010,7 @@ fetch(myRequest)
 
 ```js
 function latex(str) {
-    return { cooked: str[0], raw: str.raw[0] };
+  return { cooked: str[0], raw: str.raw[0] };
 }
 
 latex`\unicode`;
@@ -1037,17 +1030,17 @@ let bad = `bad escape sequence: \unicode`;
 ```js
 // ES 2017 -
 
-/foo.bar/.test("foo\nbar");
+/foo.bar/.test('foo\nbar');
 // → false
 
-/foo[^]bar/.test("foo\nbar");
+/foo[^]bar/.test('foo\nbar');
 // → true
 ```
 
 ```js
 // ES 2018 +
 
-/foo.bar/s.test("foo\nbar");
+/foo.bar/s.test('foo\nbar');
 // → true
 ```
 
@@ -1059,8 +1052,8 @@ let bad = `bad escape sequence: \unicode`;
 
 ```js
 const reLookbehind = /(?<=\$)\d+(\.\d*)?/;
-const match1 = reLookbehind.exec("$123.89");
-const match2 = reLookbehind.exec("€123.89");
+const match1 = reLookbehind.exec('$123.89');
+const match2 = reLookbehind.exec('€123.89');
 
 console.log(match1[0]); // 123.89
 console.log(match2); // null
@@ -1070,8 +1063,8 @@ console.log(match2); // null
 
 ```js
 const reLookbehind = /(?<!\$)\d+(?:\.\d*)/;
-const match1 = reLookbehind.exec("$10.53");
-const match2 = reLookbehind.exec("€10.53");
+const match1 = reLookbehind.exec('$10.53');
+const match2 = reLookbehind.exec('€10.53');
 
 console.log(match1[0]); // 0.53
 console.log(match2[0]); // 10.53
@@ -1085,7 +1078,7 @@ console.log(match2[0]); // 10.53
 
 ```js
 let re = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/u;
-let result = re.exec("2015-01-02");
+let result = re.exec('2015-01-02');
 // result.groups.year === '2015';
 // result.groups.month === '01';
 // result.groups.day === '02';
@@ -1100,8 +1093,8 @@ let result = re.exec("2015-01-02");
 
 ```js
 let {
-    groups: { one, two },
-} = /^(?<one>.*):(?<two>.*)$/u.exec("foo:bar");
+  groups: { one, two },
+} = /^(?<one>.*):(?<two>.*)$/u.exec('foo:bar');
 console.log(`one: ${one}, two: ${two}`); // prints one: foo, two: bar
 ```
 
@@ -1115,7 +1108,7 @@ console.log(`one: ${one}, two: ${two}`); // prints one: foo, two: bar
 // GreekSymbol 是希腊符号的意思
 
 const regexGreekSymbol = /\p{Script=Greek}/u;
-regexGreekSymbol.test("π");
+regexGreekSymbol.test('π');
 // → true
 ```
 
@@ -1137,8 +1130,8 @@ async function name([param[, param[, ... param]]]) {
 
 > 参考资料：
 >
-> -   [async function - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/async_function)
-> -   [异步函数 - 提高 Promise 的易用性 | Web | Google Developers](https://developers.google.com/web/fundamentals/primers/async-functions)
+> - [async function - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/async_function)
+> - [异步函数 - 提高 Promise 的易用性 | Web | Google Developers](https://developers.google.com/web/fundamentals/primers/async-functions)
 
 ### `Object.{values,entries}`
 
@@ -1147,39 +1140,39 @@ async function name([param[, param[, ... param]]]) {
 `Object.entries` 返回一个对象所有可枚举的 **键值对** 组成的数组。
 
 ```js
-var obj = { foo: "bar", baz: 42 };
+var obj = { foo: 'bar', baz: 42 };
 Object.values(obj); // ['bar', 42]
 Object.entries(obj); // [ ['foo', 'bar'], ['baz', 42] ]
 
 // 类似数组的对象
-var obj = { 0: "a", 1: "b", 2: "c" };
+var obj = { 0: 'a', 1: 'b', 2: 'c' };
 Object.values(obj); // ['a', 'b', 'c']
 Object.entries(obj); // [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]
 
 // 乱序的类似数组的对象
 // 当使用数字作为键时，值将会按照键的数字顺序返回
-var an_obj = { 100: "a", 2: "b", 7: "c" };
+var an_obj = { 100: 'a', 2: 'b', 7: 'c' };
 Object.values(an_obj); // ['b', 'c', 'a']
 Object.entries(an_obj); // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
 
 // getFoo 是一个不可枚举的属性
 var my_obj = Object.create(
-    {},
-    {
-        getFoo: {
-            value: function () {
-                return this.foo;
-            },
-        },
-    }
+  {},
+  {
+    getFoo: {
+      value: function () {
+        return this.foo;
+      },
+    },
+  }
 );
-my_obj.foo = "bar";
+my_obj.foo = 'bar';
 Object.values(my_obj); // ['bar']
 Object.entries(my_obj); // [ ['foo', 'bar']
 
 // 非对象的参数将会强制转换成对象
-Object.values("foo"); // ['f', 'o', 'o']
-Object.entries("foo"); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
+Object.values('foo'); // ['f', 'o', 'o']
+Object.entries('foo'); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
 ```
 
 `Object.entries` 还有很多用法。
@@ -1188,25 +1181,25 @@ Object.entries("foo"); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
 // 优雅地遍历 key-value
 const obj = { a: 5, b: 7, c: 9 };
 for (const [key, value] of Object.entries(obj)) {
-    console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
 }
 
 // 或者使用数组遍历对象
 Object.entries(obj).forEach(([key, value]) => {
-    console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
 });
 
 // 将 Object 转换成 Map
-var obj = { foo: "bar", baz: 42 };
+var obj = { foo: 'bar', baz: 42 };
 var map = new Map(Object.entries(obj));
 console.log(map); // Map { foo: "bar", baz: 42 }
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-object-values-entries: ECMAScript Proposal, specs, and reference implementation for Object.values/Object.entries](https://github.com/tc39/proposal-object-values-entries)
-> -   [Object.values() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values)
-> -   [Object.entries() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
+> - [tc39/proposal-object-values-entries: ECMAScript Proposal, specs, and reference implementation for Object.values/Object.entries](https://github.com/tc39/proposal-object-values-entries)
+> - [Object.values() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values)
+> - [Object.entries() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
 
 ### `String.prototype.{padStart,padEnd}`
 
@@ -1221,27 +1214,27 @@ str.padStart(targetLength [, padString])
 `padString` 要填充的字符串，超出的部分会被截断。默认填充空格 ` ` 。
 
 ```js
-"abc".padStart(10); // "       abc"
-"abc".padStart(10, "foo"); // "foofoofabc"
-"abc".padStart(6, "123465"); // "123abc"
-"abc".padStart(8, "0"); // "00000abc"
-"abc".padStart(1); // "abc"
+'abc'.padStart(10); // "       abc"
+'abc'.padStart(10, 'foo'); // "foofoofabc"
+'abc'.padStart(6, '123465'); // "123abc"
+'abc'.padStart(8, '0'); // "00000abc"
+'abc'.padStart(1); // "abc"
 ```
 
 `String.prototype.padEnd` 同理。
 
 ```js
-"abc".padEnd(10); // "abc       "
-"abc".padEnd(10, "foo"); // "abcfoofoof"
-"abc".padEnd(6, "123456"); // "abc123"
-"abc".padEnd(1); // "abc"
+'abc'.padEnd(10); // "abc       "
+'abc'.padEnd(10, 'foo'); // "abcfoofoof"
+'abc'.padEnd(6, '123456'); // "abc123"
+'abc'.padEnd(1); // "abc"
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-string-pad-start-end: ECMAScript spec proposal for String.prototype.{padStart,padEnd}](https://github.com/tc39/proposal-string-pad-start-end)
-> -   [String.prototype.padStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padStart)
-> -   [String.prototype.padEnd() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd)
+> - [tc39/proposal-string-pad-start-end: ECMAScript spec proposal for String.prototype.{padStart,padEnd}](https://github.com/tc39/proposal-string-pad-start-end)
+> - [String.prototype.padStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padStart)
+> - [String.prototype.padEnd() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd)
 
 ### 允许在函数参数中添加末尾逗号
 
@@ -1249,17 +1242,17 @@ str.padStart(targetLength [, padString])
 
 ```js
 function clownPuppiesEverywhere(
-    param1,
-    param2, // updated to add a comma
-    param3 // updated to add new parameter
+  param1,
+  param2, // updated to add a comma
+  param3 // updated to add new parameter
 ) {
-    /* ... */
+  /* ... */
 }
 
 clownPuppiesEverywhere(
-    "foo",
-    "bar", // updated to add a comma
-    "baz" // updated to add new parameter
+  'foo',
+  'bar', // updated to add a comma
+  'baz' // updated to add new parameter
 );
 ```
 
@@ -1267,15 +1260,15 @@ clownPuppiesEverywhere(
 
 ```js
 function clownPuppiesEverywhere(
-    param1,
-    param2 // 添加下一个参数时只会修改下面这一行，而不会修改这一行
+  param1,
+  param2 // 添加下一个参数时只会修改下面这一行，而不会修改这一行
 ) {
-    /* ... */
+  /* ... */
 }
 
 clownPuppiesEverywhere(
-    "foo",
-    "bar" // 添加下一个参数时只会修改下面这一行，而不会修改这一行
+  'foo',
+  'bar' // 添加下一个参数时只会修改下面这一行，而不会修改这一行
 );
 
 // 这样也是可以的
@@ -1286,8 +1279,8 @@ obj(1, 2, 3);
 
 > 参考资料：
 >
-> -   [tc39/proposal-trailing-function-commas](https://github.com/tc39/proposal-trailing-function-commas)
-> -   [尾后逗号 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Trailing_commas)
+> - [tc39/proposal-trailing-function-commas](https://github.com/tc39/proposal-trailing-function-commas)
+> - [尾后逗号 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Trailing_commas)
 
 ### `Object.getOwnPropertyDescriptors`
 
@@ -1311,15 +1304,15 @@ __proto__: Object
 
 ```js
 Object.create(
-    Object.getPrototypeOf(obj),
-    Object.getOwnPropertyDescriptors(obj)
+  Object.getPrototypeOf(obj),
+  Object.getOwnPropertyDescriptors(obj)
 );
 ```
 
 > 参考资料：
 >
-> -   [tc39/proposal-object-getownpropertydescriptors: ECMAScript proposal for Object.getOwnPropertyDescriptors](https://github.com/tc39/proposal-object-getownpropertydescriptors)
-> -   [Object.getOwnPropertyDescriptors() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors)
+> - [tc39/proposal-object-getownpropertydescriptors: ECMAScript proposal for Object.getOwnPropertyDescriptors](https://github.com/tc39/proposal-object-getownpropertydescriptors)
+> - [Object.getOwnPropertyDescriptors() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors)
 
 ### 共享内存和 `Atomics`
 
@@ -1329,10 +1322,10 @@ Object.create(
 
 > 参考资料：
 >
-> -   [tc39/ecmascript_sharedmem: Shared memory and atomics for ECMAscript](https://github.com/tc39/ecmascript_sharedmem)
-> -   [ecmascript_sharedmem/TUTORIAL.md at master · tc39/ecmascript_sharedmem](https://github.com/tc39/ecmascript_sharedmem/blob/master/TUTORIAL.md)
-> -   [SharedArrayBuffer - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
-> -   [Atomics - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Atomics)
+> - [tc39/ecmascript_sharedmem: Shared memory and atomics for ECMAscript](https://github.com/tc39/ecmascript_sharedmem)
+> - [ecmascript_sharedmem/TUTORIAL.md at master · tc39/ecmascript_sharedmem](https://github.com/tc39/ecmascript_sharedmem/blob/master/TUTORIAL.md)
+> - [SharedArrayBuffer - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
+> - [Atomics - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Atomics)
 
 ## ES 2016
 
@@ -1359,17 +1352,17 @@ arr.includes(value[, fromIndex])
 [1, 2, -0].includes(+0) === true;
 [1, 2, +0].includes(-0) === true;
 
-["a", "b", "c"].includes("a") === true;
-["a", "b", "c"].includes("a", 1) === false;
+['a', 'b', 'c'].includes('a') === true;
+['a', 'b', 'c'].includes('a', 1) === false;
 ```
 
 `String.prototype.includes` 与这个方法类似。
 
 > 参考资料：
 >
-> -   [tc39/proposal-Array.prototype.includes: Spec, tests, reference implementation, and docs for ESnext-track Array.prototype.includes](https://github.com/tc39/proposal-Array.prototype.includes)
-> -   [Array.prototype.includes() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)
-> -   [String.prototype.includes() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/includes)
+> - [tc39/proposal-Array.prototype.includes: Spec, tests, reference implementation, and docs for ESnext-track Array.prototype.includes](https://github.com/tc39/proposal-Array.prototype.includes)
+> - [Array.prototype.includes() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)
+> - [String.prototype.includes() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/includes)
 
 ### 指数运算符 `x ** y`
 
@@ -1394,6 +1387,6 @@ a **= 2;
 
 ## 其他参考资料
 
--   所有进入标准的提案汇总：[proposals/finished-proposals.md at master · tc39/proposals](https://github.com/tc39/proposals/blob/master/finished-proposals.md)
--   MDN 上的文档：[JavaScript 参考 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference)
--   ECMAScript 2021 标准：[ECMAScript® 2021 Language Specification](https://tc39.es/ecma262/)
+- 所有进入标准的提案汇总：[proposals/finished-proposals.md at master · tc39/proposals](https://github.com/tc39/proposals/blob/master/finished-proposals.md)
+- MDN 上的文档：[JavaScript 参考 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference)
+- ECMAScript 2021 标准：[ECMAScript® 2021 Language Specification](https://tc39.es/ecma262/)

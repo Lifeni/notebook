@@ -3,19 +3,14 @@ name: learn-javascript
 title: 学习 JavaScript
 create-date: 2020-02-24
 date: 2020-05-05
-descriptions:
-  - 记录学习 JavaScript 的笔记和常见问题，不定期更新
-  - 文章部分举例来自 MDN 及《ECMAScript 6 入门》
+description: |
+  记录学习 JavaScript 的笔记和常见问题，不定期更新，文章部分举例来自 MDN 及 [ECMAScript 6 入门](https://es6.ruanyifeng.com/) 。
 tags:
   - JavaScript
 license: CC-BY-SA-4.0
 ---
 
 # 学习 JavaScript
-
-📌 记录学习 JavaScript 的常见问题，不定期更新
-
-🔗 文章部分举例来自 MDN 及 [ECMAScript 6 入门](https://es6.ruanyifeng.com/)
 
 ## `for...in` `for...of` 的区别
 

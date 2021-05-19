@@ -3,20 +3,15 @@ name: use-docker
 title: 使用 Docker 搭建开发环境
 create-date: 2019-12-10
 date: 2020-03-19
-descriptions:
-    - 学习 Docker 的用法，记录常用配置过程
-    - 以下均以 CentOS 7.6 64 位 为例，命令均以 root 执行
+description: |
+  学习 Docker 的用法，记录常用配置过程，文中的操作均以 CentOS 7.6 64 位 为例，命令均以 root 执行，注意，在生产环境或重要服务器上应谨慎使用 root 身份执行命令。
 tags:
-    - Docker
-    - Linux
+  - Docker
+  - Linux
 license: CC-BY-SA-4.0
 ---
 
 # 使用 Docker 搭建开发环境
-
-📌 学习 Docker 的用法，记录常用配置过程
-
-💿 以下均以 CentOS 7.6 64 位 为例，命令均以 root 执行
 
 ## 安装 Docker
 
@@ -501,7 +496,7 @@ $ docker pull centos
        $ yum install dnf
      ```
 
-       之后可以选择更新系统组件：
+     之后可以选择更新系统组件：
 
      ```bash
        $ dnf upgrade
@@ -521,7 +516,7 @@ $ docker pull centos
 
 3. 生成镜像：
 
-    输入 `exit` 退回主机后，输入下面命令获取容器 ID 并创建镜像
+   输入 `exit` 退回主机后，输入下面命令获取容器 ID 并创建镜像
 
    ```bash
     $ docker ps -a

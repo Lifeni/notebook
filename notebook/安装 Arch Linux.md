@@ -3,19 +3,14 @@ name: install-arch-linux
 title: 安装 Arch Linux
 create-date: 2020-02-03
 date: 2020-02-03
-descriptions:
-    - 记录在旧的笔记本上安装和简单配置 Arch Linux 的过程
-    - 这里只给出一种解决方案，请结合其他资料进行安装与配置
+description: |
+  记录在旧的笔记本（联想 G460）上安装和简单配置 Arch Linux 的过程，需要注意的是，本文只给出了一种解决方案，也可以结合其他资料，根据自己的需求进行安装与配置。
 tags:
-    - Linux
+  - Linux
 license: CC-BY-SA-4.0
 ---
 
 # 安装 Arch Linux
-
-📌 记录在旧的笔记本上安装和简单配置 Arch Linux 的过程
-
-💻 这里只给出一种解决方案，请结合其他资料进行安装与配置
 
 ## 准备工作
 
@@ -94,19 +89,19 @@ $ timedatectl status
 
 1. 使用下面的命令查看硬盘设备：
 
-    ```bash
-    $ fdisk -l
-    ```
+   ```bash
+   $ fdisk -l
+   ```
 
-    白色字体以 `Disk` 开头的设备中，路径以 `loop` 结尾的不用管，我这里还剩两个。第一个 `/dev/sda` 是 U 盘，第二个 `/dev/sdb` 是硬盘。
+   白色字体以 `Disk` 开头的设备中，路径以 `loop` 结尾的不用管，我这里还剩两个。第一个 `/dev/sda` 是 U 盘，第二个 `/dev/sdb` 是硬盘。
 
-    当然也可以用 `lsblk` 命令查看。
+   当然也可以用 `lsblk` 命令查看。
 
 2. 使用 cfdisk 工具进行操作，UEFI 引导的可以用 cgdisk 工具。
 
-    ```bash
-    $ cfdisk /dev/sdb
-    ```
+   ```bash
+   $ cfdisk /dev/sdb
+   ```
 
 3. 因为我要格盘重装，所以先选中每一项然后 `Delete`，最后剩下 `free space`。
 
@@ -138,20 +133,20 @@ $ mount /dev/sdb1 /mnt
 
 1. 使用 `vim` 打开文件：
 
-    ```bash
-    $ vim /etc/pacman.d/mirrorlist
-    ```
+   ```bash
+   $ vim /etc/pacman.d/mirrorlist
+   ```
 
 2. 按 `i` 进行编辑，在文件开头输入：
 
-    ```
-    ## 清华大学
-    Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
-    ## 网易
-    Server = https://mirrors.163.com/archlinux/$repo/os/$arch
-    ```
+   ```
+   ## 清华大学
+   Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+   ## 网易
+   Server = https://mirrors.163.com/archlinux/$repo/os/$arch
+   ```
 
-    `##` 开头的注释可以不输。
+   `##` 开头的注释可以不输。
 
 3. 按 `esc`，再输入 `:wq` 保存并退出。
 
@@ -215,65 +210,65 @@ $ hwclock --systohc
 
 1. 由于没装 Vim，所以先装 Vim：
 
-    ```bash
-    $ pacman -S vim
-    ```
+   ```bash
+   $ pacman -S vim
+   ```
 
 2. 编辑 `/etc/locale.gen` 文件：
 
-    ```bash
-    $ vim /etc/locale.gen
-    ```
+   ```bash
+   $ vim /etc/locale.gen
+   ```
 
 3. 找到下面的字段，并把前面的 `#` 去掉，然后保存并退出：
 
-    ```
-    #en_US.UTF-8 UTF-8
-    ……
-    #zh_CN.UTF-8 UTF-8
-    #zh_HK.UTF-8 UTF-8
-    #zh_TW.UTF-8 UTF-8
-    ```
+   ```
+   #en_US.UTF-8 UTF-8
+   ……
+   #zh_CN.UTF-8 UTF-8
+   #zh_HK.UTF-8 UTF-8
+   #zh_TW.UTF-8 UTF-8
+   ```
 
 4. 之后执行下面命令：
 
-    ```bash
-    $ locale-gen
-    ```
+   ```bash
+   $ locale-gen
+   ```
 
 5. 打开 `/etc/locale.conf` 文件：
 
-    ```bash
-    $ vim /etc/locale.conf
-    ```
+   ```bash
+   $ vim /etc/locale.conf
+   ```
 
 6. 加入以下内容，保存并退出：
 
-    ```bash
-    $ LANG=en_US.UTF-8
-    ```
+   ```bash
+   $ LANG=en_US.UTF-8
+   ```
 
 ### 主机名和 hosts 文件
 
 1. 打开 `/etc/hostname`，输入自定义的主机名：
 
-    ```bash
-    $ vim /etc/hostname
-    ```
+   ```bash
+   $ vim /etc/hostname
+   ```
 
 2. 打开 `/etc/hosts`，并添加下面的信息：
 
-    ```bash
-    $ vim /etc/hosts
-    ```
+   ```bash
+   $ vim /etc/hosts
+   ```
 
-    ```
-    127.0.0.1	localhost
-    ::1		localhost
-    127.0.1.1	myhostname.localdomain	myhostname
-    ```
+   ```
+   127.0.0.1	localhost
+   ::1		localhost
+   127.0.1.1	myhostname.localdomain	myhostname
+   ```
 
-    `myhostname` 换成刚才的主机名。
+   `myhostname` 换成刚才的主机名。
 
 ### 设置 root 密码
 
@@ -287,27 +282,27 @@ $ passwd
 
 1. 电脑是 Intel 的 CPU，需要安装 `intel-ucode`：
 
-    ```bash
-    $ pacman -S intel-ucode
-    ```
+   ```bash
+   $ pacman -S intel-ucode
+   ```
 
 2. 安装 `grub`：
 
-    ```bash
-    $ pacman -S grub
-    ```
+   ```bash
+   $ pacman -S grub
+   ```
 
 3. 部署 `grub`：
 
-    ```bash
-    $ grub-install --target=i386-pc /dev/sdb
-    ```
+   ```bash
+   $ grub-install --target=i386-pc /dev/sdb
+   ```
 
 4. 生成配置文件：
 
-    ```bash
-    $ grub-mkconfig -o /boot/grub/grub.cfg
-    ```
+   ```bash
+   $ grub-mkconfig -o /boot/grub/grub.cfg
+   ```
 
 5. 提示 `done` 则已完成。
 
@@ -315,15 +310,15 @@ $ passwd
 
 1. 退回启动盘：
 
-    ```bash
-    $ exit
-    ```
+   ```bash
+   $ exit
+   ```
 
 2. 重启：
 
-    ```bash
-    $ reboot
-    ```
+   ```bash
+   $ reboot
+   ```
 
 ## 常用操作
 
@@ -392,13 +387,13 @@ $ startxfce4
 
 2. 输入命令：
 
-    ```bash
-    $ mount /dev/sda1 /mnt  # sda 为主硬盘
-    ```
+   ```bash
+   $ mount /dev/sda1 /mnt  # sda 为主硬盘
+   ```
 
-    ```bash
-    $ arch-chroot /mnt
-    ```
+   ```bash
+   $ arch-chroot /mnt
+   ```
 
 3. 之后输入 pacman 命令即可。
 

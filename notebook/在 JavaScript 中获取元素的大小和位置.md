@@ -3,17 +3,15 @@ name: js-size-position
 title: 在 JavaScript 中获取元素的大小和位置
 create-date: 2020-03-12
 date: 2020-03-12
-descriptions:
-    - 本文对常见的几种写法进行区分和总结
+description: |
+  本文对用 JS 获取 DOM 元素大小和位置的常见的几种写法进行区分和总结。
 tags:
-    - JavaScript
-    - CSS
+  - JavaScript
+  - CSS
 license: CC-BY-SA-4.0
 ---
 
 # 在 JavaScript 中获取元素的大小和位置
-
-📌 本文对常见的几种写法进行区分和总结
 
 ## 需要注意的地方
 
@@ -26,28 +24,28 @@ license: CC-BY-SA-4.0
 
 ```html
 <div class="box">
-    <div class="inner content-box"></div>
-    <div class="inner border-box"></div>
+  <div class="inner content-box"></div>
+  <div class="inner border-box"></div>
 </div>
 ```
 
 ```css
 .box {
-    width: 200px;
-    border: solid 10px blue;
+  width: 200px;
+  border: solid 10px blue;
 }
 .inner {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
 }
 .content-box {
-    box-sizing: content-box;
-    border: solid 10px red;
+  box-sizing: content-box;
+  border: solid 10px red;
 }
 .border-box {
-    box-sizing: border-box;
-    border: solid 10px yellow;
+  box-sizing: border-box;
+  border: solid 10px yellow;
 }
 ```
 

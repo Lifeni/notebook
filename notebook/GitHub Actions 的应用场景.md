@@ -3,8 +3,8 @@ name: github-actions-example
 title: GitHub Actions 的应用场景
 create-date: 2020-11-21
 date: 2021-03-28
-descriptions:
-  - 记录一些常见的 GitHub Actions 配置与应用场景
+description: |
+  记录一些常见的 GitHub Actions 配置与应用场景，之前写过一个类似的文章，[用 GitHub Actions 部署 Vue 项目到 GitHub Pages | 记录干杯](https://lifeni.life/article/deploy-with-github-actions)，这次做一个补充。
 tags:
   - GitHub Actions
 license: CC-BY-SA-4.0
@@ -12,19 +12,13 @@ license: CC-BY-SA-4.0
 
 # GitHub Actions 的应用场景
 
-📌 记录一些常见的 GitHub Actions 配置与应用场景
-
-👀 之前写过一个类似的文章，[用 GitHub Actions 部署 Vue 项目到 GitHub Pages | 记录干杯](https://lifeni.life/article/deploy-with-github-actions)
-
 ## 制作并发布 Docker 镜像
-
-### 需求
 
 我做了一个可以自托管的文字展示与分享应用（[Lifeni/i-show-you: A self-hosted web application for data presentation and sharing.](https://github.com/Lifeni/i-show-you)），并把它制作成了 Docker 镜像（[Docker Hub](https://hub.docker.com/repository/docker/lifeni/i-show-you/general)），然后用户可以通过 Docker Compose 进行应用的搭建。应用采用前后端分离，前端用的 React，后端用的 Golang，所以最后打包的镜像中要包含前端静态文件和后端的可执行二进制文件。
 
 为了节省时间、避免网络问题带来的影响，我选择使用 GitHub Actions 进行应用的构建以及 Docker 镜像的构建与上传，具体流程及配置文件如下。
 
-### 实现
+### 实现方式
 
 直接根据 Docker 官方提供的 Actions，按照文档（[Build and push Docker images · Actions · GitHub Marketplace](https://github.com/marketplace/actions/build-and-push-docker-images)）修改即可。基本流程是根据写好的 Dockerfile 生成镜像，然后发布到 Docker Hub。
 
@@ -101,13 +95,11 @@ CMD ["/app/server"]
 
 ## 构建与部署 Node.js 应用
 
-### 需求
-
 需求来自我的个人网站，需要使用 Gatsby.js 来把 Markdown 文件生成静态的网页文件，然后部署在服务器上。
 
 借助 GitHub Actions 可以实现在文章或者网站发生修改并进行 git commit 后，自动生成新版本的网站，并上传到自己的服务器。相比之前要手动 Build 和 SFTP 上传，节省了很多操作与时间。
 
-### 实现
+### 实现方式
 
 由于自己的服务器在国内，连接 npm 很慢，所以考虑直接在 GitHub 的服务器上进行 build 操作，然后把生成的静态文件通过 SCP 命令传输到自己的服务器上。
 
@@ -157,9 +149,7 @@ jobs:
           overwrite: true
 ```
 
-## 使用 SSH
-
-### 需求
+## 使用 SSH 远程执行命令
 
 有一些私密项目或者其他原因，我们可能不希望把代码文件放在 GitHub Actions 上执行，我也有这样一个仓库，是我的 API 服务器，一个使用 Nest.js 编写的项目，需要 Build 后使用 pm2 执行。
 
@@ -194,11 +184,9 @@ jobs:
             pm2 restart all
 ```
 
-## 打包文件为 zip 并上传到最新的 Release
+## 打包文件为 zip 并上传到 Releases
 
-### 需求
-
-做了一个浏览器扩展，需要在每次发布之后，把扩展打包为 zip 文件，给没有上架的浏览器平台使用。
+因为做了一个浏览器扩展，所以需要在每次发布之后，把扩展打包为 zip 文件，给没有上架的浏览器平台使用。
 
 ### 实现与配置文件
 
