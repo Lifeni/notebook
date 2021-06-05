@@ -3,11 +3,7 @@ name: windows-config
 title: Windows 的习惯配置
 create-date: 2020-08-07
 date: 2021-03-02
-description: |
-  记录自己配置和完善 Windows 10（以及 WSL）的方法和问题，所有的配置方法均来自网络，已注明参考出处，部分解决方案可能会随系统更新而失效，也有部分解决方案会随更新而加入到应用中，对于这种情况文中会对旧的方案进行折叠处理。
-tags:
-  - Windows
-  - WSL
+description: 记录自己配置和完善 Windows 10（以及 WSL）的方法和问题，部分解决方案可能会随系统更新而失效。
 license: CC-BY-SA-4.0
 ---
 

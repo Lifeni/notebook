@@ -3,11 +3,7 @@ name: js-size-position
 title: 在 JavaScript 中获取元素的大小和位置
 create-date: 2020-03-12
 date: 2020-03-12
-description: |
-  本文对用 JavaScript 获取 DOM 元素大小和位置的常见的几种写法进行区分和总结，文中没有使用第三方库，仅包含原生 API，而且没有考虑到不同浏览器之间的差异，如果要在生产环境使用，请自行查询浏览器兼容性，或使用 Babel 进行处理。
-tags:
-  - JavaScript
-  - CSS
+description: 本文对用 JavaScript 获取 DOM 元素大小和位置的常见的几种写法进行区分和总结。
 license: CC-BY-SA-4.0
 ---
 

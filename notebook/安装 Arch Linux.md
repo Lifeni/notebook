@@ -3,10 +3,7 @@ name: install-arch-linux
 title: 安装 Arch Linux
 create-date: 2020-02-03
 date: 2020-02-03
-description: |
-  记录在旧的笔记本（联想 G460）上安装和简单配置 Arch Linux 的过程，需要注意的是，本文只给出了一种解决方案，也可以结合其他资料，根据自己的需求进行安装与配置。注意，随着系统更新，安装流程可能发生变化，请以最新的官方文档为准。
-tags:
-  - Linux
+description: 记录在旧的笔记本（联想 G460）上安装和简单配置 Arch Linux 的过程。
 license: CC-BY-SA-4.0
 ---
 

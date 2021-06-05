@@ -3,10 +3,7 @@ name: github-actions-example
 title: GitHub Actions 的应用场景
 create-date: 2020-11-21
 date: 2021-03-28
-description: |
-  记录一些常见的 GitHub Actions 配置与应用场景，之前写过一个类似的文章，[用 GitHub Actions 部署 Vue 项目到 GitHub Pages | 记录干杯](https://lifeni.life/article/deploy-with-github-actions)，这次做一个相关配置的补充和整合。
-tags:
-  - GitHub Actions
+description: 记录一些常见的 GitHub Actions 配置与应用场景，之前写过一个类似的文章，这次做一个相关配置的补充和整合。
 license: CC-BY-SA-4.0
 ---
 

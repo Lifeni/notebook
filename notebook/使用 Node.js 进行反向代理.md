@@ -3,12 +3,7 @@ name: node-proxy
 title: 使用 Node.js 进行反向代理
 create-date: 2020-04-11
 date: 2020-04-14
-description: |
-  根据自己的需求，用 Node.js 写一个简单的反向代理服务器，转发 API 请求到不同端口。
-tags:
-  - Node
-  - Express
-  - JavaScript
+description: 根据自己的需求，用 Node.js 写一个简单的反向代理服务器，转发 API 请求到不同端口。
 license: CC-BY-SA-4.0
 ---
 

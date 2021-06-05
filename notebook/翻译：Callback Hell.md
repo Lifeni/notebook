@@ -3,11 +3,7 @@ name: translate-callback-hell
 title: 翻译：Callback Hell
 create-date: 2020-03-16
 date: 2020-03-18
-description: |
-  这是一篇翻译文章，原文来自 [Callback Hell](http://callbackhell.com)，本文采取双语对照的方式，其中正文内容中英语原文在上，翻译在下，翻译风格偏向于意译，非专业翻译，欢迎提建议。
-tags:
-  - 翻译
-  - JavaScript
+description: 这是一篇翻译文章，原文来自 http://callbackhell.com ，本文采取双语对照的方式，其中正文内容中英语原文在上，翻译在下。
 license: CC-BY-SA-4.0
 ---
 
@@ -48,15 +44,10 @@ fs.readdir(source, function (err, files) {
           widths.forEach(
             function (width, widthIndex) {
               height = Math.round(width / aspect);
-              console.log(
-                'resizing ' + filename + 'to ' + height + 'x' + height
-              );
-              this.resize(width, height).write(
-                dest + 'w' + width + '_' + filename,
-                function (err) {
-                  if (err) console.log('Error writing file: ' + err);
-                }
-              );
+              console.log('resizing ' + filename + 'to ' + height + 'x' + height);
+              this.resize(width, height).write(dest + 'w' + width + '_' + filename, function (err) {
+                if (err) console.log('Error writing file: ' + err);
+              });
             }.bind(this)
           );
         }
