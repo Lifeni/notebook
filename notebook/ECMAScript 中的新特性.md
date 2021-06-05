@@ -2,7 +2,7 @@
 name: es-features
 title: ECMAScript 中的新特性
 create-date: 2021-01-04
-date: 2021-03-22
+date: 2021-06-05
 description: 记录从 ES6 发布至今 ECMAScript 中出现的新特性，不包含 ES6 的内容，计划每年更新。
 license: CC-BY-SA-4.0
 ---
@@ -19,11 +19,9 @@ license: CC-BY-SA-4.0
 const newStr = str.replaceAll(regexp | substr, newSubstr);
 ```
 
-`regexp|substr` 匹配的正则表达式（必须为全局模式，即 `/abc/g`）或者字符串。
-
-`newSubstr` 用于替换的字符串。
-
-`返回值` 替换后的字符串。
+- `regexp|substr` 匹配的正则表达式（必须为全局模式，即 `/abc/g`）或者字符串。
+- `newSubstr` 用于替换的字符串。
+- `返回值` 替换后的字符串。
 
 ```js
 '123456123'.replaceAll('123', '000') === '000456000';
@@ -215,9 +213,8 @@ setTimeout(() => {
 str.matchAll(regexp);
 ```
 
-`regexp` 要匹配的正则表达式，必须为 `g` 全局模式。
-
-`返回值` 一个可迭代对象，不可重用，可以使用 `[...data]` 语法转换成数组。
+- `regexp` 要匹配的正则表达式，必须为 `g` 全局模式。
+- `返回值` 一个可迭代对象，不可重用，可以使用 `[...data]` 语法转换成数组。
 
 ```js
 const regexp = /t(e)(st(\d?))/g;
@@ -1124,9 +1121,8 @@ async function name([param[, param[, ... param]]]) {
 
 ### `Object.{values,entries}`
 
-`Object.values` 返回一个对象所有可枚举的 **属性值** 的数组。
-
-`Object.entries` 返回一个对象所有可枚举的 **键值对** 组成的数组。
+- `Object.values` 返回一个对象所有可枚举的 **属性值** 的数组。
+- `Object.entries` 返回一个对象所有可枚举的 **键值对** 组成的数组。
 
 ```js
 var obj = { foo: 'bar', baz: 42 };
@@ -1198,9 +1194,8 @@ console.log(map); // Map { foo: "bar", baz: 42 }
 str.padStart(targetLength [, padString])
 ```
 
-`targetLength` 要填充到的长度，如果小于当前字符串的长度，则返回当前字符串。
-
-`padString` 要填充的字符串，超出的部分会被截断。默认填充空格 ` ` 。
+- `targetLength` 要填充到的长度，如果小于当前字符串的长度，则返回当前字符串。
+- `padString` 要填充的字符串，超出的部分会被截断。默认填充空格 ` ` 。
 
 ```js
 'abc'.padStart(10); // "       abc"
@@ -1323,11 +1318,9 @@ Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj))
 arr.includes(value[, fromIndex])
 ```
 
-`value` 要查找的值。
-
-`fromIndex` 开始查找的位置，默认为 0。
-
-`返回值` Boolean。
+- `value` 要查找的值。
+- `fromIndex` 开始查找的位置，默认为 0。
+- `返回值` Boolean。
 
 ```js
 [1, 2, 3].includes(2) === true;
