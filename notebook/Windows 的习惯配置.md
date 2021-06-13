@@ -9,11 +9,10 @@ license: CC-BY-SA-4.0
 
 # Windows 的习惯配置
 
-> **前排建议：**
->
-> - 在下载 WSL 的时候，最好按照版本下载，比如下载 Ubuntu-18.04 而不是 Ubuntu
->
-> - WSL1 与 Ubuntu 20.04 之间的兼容性存在问题，用 WSL1 最好使用 Ubuntu-18.04
+## 前排建议
+
+- 在下载 WSL 的时候，最好按照版本下载，比如下载 Ubuntu-18.04 而不是 Ubuntu
+- WSL1 与 Ubuntu 20.04 之间的兼容性存在问题，用 WSL1 最好使用 Ubuntu-18.04
 
 ## 配置
 
