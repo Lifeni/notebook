@@ -1,13 +1,13 @@
 ---
 name: windows-config
-title: Windows 的习惯配置
+title: 一些 Windows 的习惯配置
 create-date: 2020-08-07
 date: 2021-03-02
 description: 记录自己配置和完善 Windows 10（以及 WSL）的方法和问题，部分解决方案可能会随系统更新而失效。
 license: CC-BY-SA-4.0
 ---
 
-# Windows 的习惯配置
+# 一些 Windows 的习惯配置
 
 ## 前排建议
 
