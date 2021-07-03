@@ -2,9 +2,9 @@
 path: about
 ---
 
-## 关于我和这个网站
+# 关于我和这个网站
 
-#### 你好
+## 你好
 
 这是我的个人网站「记录干杯」，我会在这里记录一些文章或者是想法，也会在网站上尝试一些新的技术。
 
@@ -12,7 +12,7 @@ path: about
 
 如果你有一些问题或者好的想法，可以通过 [邮箱](mailto:liangfengning@foxmail.com "liangfengning@foxmail.com") 联系我。
 
-#### 朋友
+## 朋友
 
 <div class="friends">
 
