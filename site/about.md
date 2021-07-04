@@ -21,3 +21,7 @@ path: about
 - [![GluttonK](https://file.lifeni.life/avatar/friends/GluttonK.jpg "GluttonK")](https://blog.csdn.net/GluttonK/ "GluttonK")
 
 </div>
+
+## 其他要说的
+
+如果没有特殊说明，所有的文章都是根据 [署名-相同方式共享 4.0 国际 (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/deed.zh) 协议共享，请规范转载或使用。
