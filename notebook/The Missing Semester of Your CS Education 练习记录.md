@@ -2,7 +2,7 @@
 name: missing-semester
 title: The Missing Semester of Your CS Education 练习记录
 create-date: 2021-03-28
-date: 2021-05-20
+date: 2021-07-06
 description: 记录学习 The Missing Semester of Your CS Education 课程时做的一些练习，只包含部分自己觉得比较有意义的题。
 license: CC-BY-SA-4.0
 ---
@@ -11,21 +11,20 @@ license: CC-BY-SA-4.0
 
 ## 前排提示
 
+- 英文官网：https://missing.csail.mit.edu/ ，中文翻译：https://missing-semester-cn.github.io/
 - 我用的是 WSL2 (Ubuntu-20.04)，下面的代码均在此环境上测试通过
-- 文章中练习题均有中英对照，部分练习只截取前面第一句作为标题，其余部分在正文
+- 文章中练习题采用中文翻译版本，部分练习只截取前面第一句作为标题，其余部分在正文
 
-## [Course overview + the shell](https://missing.csail.mit.edu/2020/course-shell/)
+## [课程概览与 shell](https://missing-semester-cn.github.io/2020/course-shell/)
 
-### 5. Write the following into that file, one line at a time ...
+### 5. 将以下内容一行一行地写入 semester 文件 ...
+
+将以下内容一行一行地写入 semester 文件，第一行可能有点棘手，`#` 在 Bash 中表示注释，而 `!` 即使被双引号（`"`）包裹也具有特殊的含义。 单引号（`'`）则不一样，此处利用这一点解决输入问题。更多信息请参考 [Bash quoting 手册](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)。
 
 ```bash
 #!/bin/sh
 curl --head --silent https://missing.csail.mit.edu
 ```
-
-The first line might be tricky to get working. It’s helpful to know that `#` starts a comment in Bash, and `!` has a special meaning even within double-quoted (`"`) strings. Bash treats single-quoted strings (`'`) differently: they will do the trick in this case. See the Bash [quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html) manual page for more information.
-
-将以下内容一行一行地写入 semester 文件，第一行可能有点棘手，`#` 在 Bash 中表示注释，而 `!` 即使被双引号（`"`）包裹也具有特殊的含义。 单引号（`'`）则不一样，此处利用这一点解决输入问题。更多信息请参考 [Bash quoting 手册](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)。
 
 #### ✅ 解决方法
 
@@ -36,7 +35,7 @@ echo "curl --head --silent https://missing.csail.mit.edu" >> /tmp/missing/semest
 
 包含 `!` 则需要用单引号而不是双引号。
 
-### 9. Use `chmod` to make it possible to run the command `./semester` rather than having to type `sh semester`.
+### 9. 使用 `chmod` 命令改变权限 ...
 
 使用 `chmod` 命令改变权限，使 `./semester` 能够成功执行，不要使用 `sh semester` 来执行该程序。
 
@@ -48,7 +47,7 @@ chmod 744 semester
 
 744 对应 `rwxr-xr-x` 也就是先转换成二进制 `111101101` 再分成三个三位二进制数 `111` `101` `101`，最后转换成十进制也就是 744。
 
-### 10. Use `|` and `>` to write the “last modified” date output by `semester` into a file called `last-modified.txt` in your home directory.
+### 10. 使用 `|` 和 `>` ...
 
 使用 `|` 和 `>` ，将 `semester` 文件输出的最后更改日期信息，写入 `/home` 目录下的 `last-modified.txt` 的文件中
 
@@ -60,13 +59,11 @@ ls -l semester | cut -d" " -f6,7,8 > ~/last-modified.txt
 
 `cut` 命令把 `-rwxr--r-- 1 focal focal 61 Mar 28 18:36 semester` 按空格分割，选择第 6、7、8 段输出，也就是 `Mar 28 18:36`。
 
-## [Shell Tools and Scripting](https://missing.csail.mit.edu/2020/shell-tools/)
+## [Shell 工具和脚本](https://missing-semester-cn.github.io/2020/shell-tools/)
 
-### 3. Say you have a command that fails rarely ...
+### 3. 假设您有一个命令，它很少出错 ...
 
-In order to debug it you need to capture its output but it can be time consuming to get a failure run. Write a bash script that runs the following script until it fails and captures its standard output and error streams to files and prints everything at the end. Bonus points if you can also report how many runs it took for the script to fail.
-
-假设您有一个命令，它很少出错。因此为了在出错时能够对其进行调试，需要花费大量的时间重现错误并捕获输出。 编写一段 bash 脚本，运行如下的脚本直到它出错，将它的标准输出和标准错误流记录到文件，并在最后输出所有内容。 加分项：报告脚本在失败前共运行了多少次。
+假设您有一个命令，它很少出错。因此为了在出错时能够对其进行调试，需要花费大量的时间重现错误并捕获输出。 编写一段 bash 脚本，运行如下的脚本直到它出错，将它的标准输出和标准错误流记录到文件，并在最后输出所有内容。加分项：报告脚本在失败前共运行了多少次。
 
 ```bash
 #!/usr/bin/env bash
@@ -105,11 +102,7 @@ echo "运行次数 $count"
 
 `1>>` 代表标准输出流，`2>>` 代表错误输出流，`$?` 代表前一个命令的返回值，把变量 +1 需要在语句前加上 `let`。
 
-### 4. As we covered in the lecture `find`’s `-exec` can be very powerful for performing operations over the files we are searching for ...
-
-However, what if we want to do something with **all** the files, like creating a zip file? As you have seen so far commands will take input from both arguments and STDIN. When piping commands, we are connecting STDOUT to STDIN, but some commands like `tar` take inputs from arguments. To bridge this disconnect there’s the [`xargs`](https://www.man7.org/linux/man-pages/man1/xargs.1.html) command which will execute a command using STDIN as arguments. For example `ls | xargs rm` will delete the files in the current directory.
-
-Your task is to write a command that recursively finds all HTML files in the folder and makes a zip with them. Note that your command should work even if the files have spaces (hint: check `-d` flag for `xargs`).
+### 4. 本节课我们讲解的 `find` 命令中的 `-exec` 参数非常强大 ...
 
 本节课我们讲解的 `find` 命令中的 `-exec` 参数非常强大，它可以对我们查找的文件进行操作。但是，如果我们要对所有文件进行操作呢？例如创建一个 zip 压缩文件？我们已经知道，命令行可以从参数或标准输入接受输入。在用管道连接命令时，我们将标准输出和标准输入连接起来，但是有些命令，例如 `tar` 则需要从参数接受输入。这里我们可以使用 [`xargs`](https://www.man7.org/linux/man-pages/man1/xargs.1.html) 命令，它可以使用标准输入中的内容作为参数。 例如 `ls | xargs rm` 会删除当前目录中的所有文件。
 
@@ -151,7 +144,7 @@ Archive:  t.zip
        21                     4 files
 ```
 
-### 5. Write a command or script to recursively find the most recently modified file in a directory. More generally, can you list all files by recency?
+### 5. 编写一个命令或脚本递归的查找文件夹中最近使用的文件 ...
 
 编写一个命令或脚本递归的查找文件夹中最近使用的文件。更通用的做法，你可以按照最近的使用时间列出文件吗？
 
@@ -163,30 +156,30 @@ find . -type f | xargs ls -lt
 
 `find` 命令查找所有文件，`xargs` 可以把前面的输出转换成参数传给后面的命令，`ls -t` 负责按最近修改时间显示。
 
-## [Editors (Vim)](https://missing.csail.mit.edu/2020/editors/)
+## [编辑器 (Vim)](https://missing-semester-cn.github.io/2020/editors/)
+
+> 这节课的练习都是实践的形式，没有标准答案 🧐
+
+## [数据整理](https://missing-semester-cn.github.io/2020/data-wrangling/)
 
 TODO
 
-## [Data Wrangling](https://missing.csail.mit.edu/2020/data-wrangling/)
+## [命令行环境](https://missing-semester-cn.github.io/2020/command-line/)
 
 TODO
 
-## [Command-line Environment](https://missing.csail.mit.edu/2020/command-line/)
+## [版本控制(Git)](https://missing-semester-cn.github.io/2020/version-control/)
 
 TODO
 
-## [Version Control (Git)](https://missing.csail.mit.edu/2020/version-control/)
+## [调试及性能分析](https://missing-semester-cn.github.io/2020/debugging-profiling/)
 
 TODO
 
-## [Debugging and Profiling](https://missing.csail.mit.edu/2020/debugging-profiling/)
+## [元编程](https://missing-semester-cn.github.io/2020/metaprogramming/)
 
 TODO
 
-## [Metaprogramming](https://missing.csail.mit.edu/2020/metaprogramming/)
-
-TODO
-
-## [Security and Cryptography](https://missing.csail.mit.edu/2020/security/)
+## [安全和密码学](https://missing-semester-cn.github.io/2020/security/)
 
 TODO
