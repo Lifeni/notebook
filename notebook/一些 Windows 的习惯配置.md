@@ -34,7 +34,7 @@ license: CC-BY-SA-4.0
 
 4. 双击建好的列表项，将值改为 1
 
-5. 在任务管理器里重启“Windows 资源管理器”，或者直接重启电脑就可以了
+5. 在任务管理器里重启「Windows 资源管理器」，或者直接重启电脑就可以了
 
 ### 右键菜单添加 Windows Terminal
 
@@ -112,7 +112,7 @@ license: CC-BY-SA-4.0
     export https_proxy="http://192.168.1.77:10809"
    ```
 
-   IP 地址填上面查询的（我这里是 192.168.1.77）代理的 HTTP 端口号是 10808，代理需要开启“允许来自局域网的访问”
+   IP 地址填上面查询的（我这里是 192.168.1.77）代理的 HTTP 端口号是 10808，代理需要开启「允许来自局域网的访问」
 
 4. 重启 Terminal 进入 WSL 即可，可以输入 `curl www.google.com` 测试是否成功连接网络
 
@@ -153,7 +153,7 @@ set completion-ignore-case on
    > set-ExecutionPolicy RemoteSigned
    ```
 
-3. 输入 `A`，选择“全是”，就可以了
+3. 输入 `A`，选择「全是」，就可以了
 
 ### 使用 WSL2 时，Webpack 无法 Hot Reloading
 

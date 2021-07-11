@@ -52,7 +52,7 @@ $ ls: cannot access '/sys/firmware/efi/efivars': No such file or directory
 
 ### 联网
 
-我这里选择 WiFi 联网，使用有线的可以参考最后“参考文章”里的链接。
+我这里选择 WiFi 联网，使用有线的可以参考最后「参考文章」里的链接。
 
 输入下面命令连接无线网：
 
@@ -331,7 +331,7 @@ WiFi 没有搞明白怎么连。。`wifi-menu` 装不上。
 $ dhcpcd
 ```
 
-如果没安装，参考后面的“错误处理”部分。
+如果没安装，参考后面的「错误处理」部分。
 
 ### 安装社区仓库
 

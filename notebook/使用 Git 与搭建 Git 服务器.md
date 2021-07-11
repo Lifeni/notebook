@@ -123,7 +123,7 @@ your local commits)
  create mode 100644 untracked.txt
 ```
 
-`git commit -a` 对于已跟踪过的文件，可以“省略”`git add` 步骤，相当于同时执行 `add` 和 `commit` 。
+`git commit -a` 对于已跟踪过的文件，可以「省略」`git add` 步骤，相当于同时执行 `add` 和 `commit` 。
 
 ```bash
 $ git status -s

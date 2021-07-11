@@ -1,13 +1,13 @@
 ---
 name: javascript-intl
-title: 了解 JavaScript 中的 Intl 对象
+title: 了解 JS 中的 Intl 对象
 create-date: 2021-03-16
 date: 2021-03-16
-description: 学习和使用 Intl 这个 JS 自带的对象，了解其在中文环境下可用的一些方法及其语法。
+description: 学习和使用 Intl 这个 JS 自带的对象，了解其在中文环境下的一些方法及其语法。
 license: CC-BY-SA-4.0
 ---
 
-# 了解 JavaScript 中的 Intl 对象
+# 了解 JS 中的 Intl 对象
 
 ## `Intl` 对象
 
@@ -173,7 +173,7 @@ new Intl.ListFormat('zh-CN').format(['Hello', '你好', '123456', '@@@']);
 // 'Hello、你好、123456和@@@'
 ```
 
-这个方法的 Option 分为 `style` 和 `type`，前者还是输出日期的格式，这里不再展示，后者代表列表的关系是“和”还是“或”。
+这个方法的 Option 分为 `style` 和 `type`，前者还是输出日期的格式，这里不再展示，后者代表列表的关系是「和」还是「或」。
 
 ```js
 new Intl.ListFormat('zh-CN', { type: 'disjunction' }).format(['Hello', '你好', '123456']);

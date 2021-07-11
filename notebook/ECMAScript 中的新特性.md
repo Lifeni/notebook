@@ -3,7 +3,7 @@ name: es-features
 title: ECMAScript 中的新特性
 create-date: 2021-01-04
 date: 2021-06-05
-description: 记录从 ES6 发布至今 ECMAScript 中出现的新特性，不包含 ES6 的内容，计划每年更新。
+description: 记录从 ES6 发布至今 ECMAScript 中出现的新特性，计划每年更新。
 license: CC-BY-SA-4.0
 ---
 

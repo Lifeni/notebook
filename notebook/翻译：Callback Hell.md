@@ -22,7 +22,7 @@ _A guide to writing asynchronous JavaScript programs_
 
 _一份用于编写异步的 JavaScript 程序的指南_
 
-## What is "_callback hell_"? “_回调地狱_”是什么？
+## What is "_callback hell_"? 「_回调地狱_」是什么？
 
 Asynchronous JavaScript, or JavaScript that uses callbacks, is hard to get right intuitively. A lot of code ends up looking like this:
 
@@ -63,13 +63,13 @@ See the pyramid shape and all the `})` at the end? Eek! This is affectionately k
 
 The cause of callback hell is when people try to write JavaScript in a way where execution happens visually from top to bottom. Lots of people make this mistake! In other languages like C, Ruby or Python there is the expectation that whatever happens on line 1 will finish before the code on line 2 starts running and so on down the file. As you will learn, JavaScript is different.
 
-当程序员们试图用一种“理所当然”的写法，从上到下把代码写出来时，就产生了回调地狱。很多程序员都犯过这种错误！在 C、Ruby 或 Python 等其他编程语言中，程序员知道在第二行的代码运行之前，第一行代码就已经运行完了，所有的代码都是这样。但是 JavaScript 不一样。
+当程序员们试图用一种「理所当然」的写法，从上到下把代码写出来时，就产生了回调地狱。很多程序员都犯过这种错误！在 C、Ruby 或 Python 等其他编程语言中，程序员知道在第二行的代码运行之前，第一行代码就已经运行完了，所有的代码都是这样。但是 JavaScript 不一样。
 
 ## What are callbacks? 什么是回调？
 
 Callbacks are just the name of a convention for using JavaScript functions. There isn't a special thing called a 'callback' in the JavaScript language, it's just a convention. Instead of immediately returning some result like most functions, functions that use callbacks take some time to produce a result. The word 'asynchronous', aka 'async' just means 'takes some time' or 'happens in the future, not right now'. Usually callbacks are only used when doing I/O, e.g. downloading things, reading files, talking to databases, etc.
 
-回调只是 JavaScript 中某些函数的习惯叫法。JavaScript 中没有回调这种东西，这个名字真的只是一种习惯叫法。回调函数不同于大多数可以立即返回结果的函数，它需要一些时间执行才能返回结果。英语单词“asynchronous”，简称“async”，在这里的意思是“做这件事需要花一些时间”或者“事件发生在未来，而不是现在”。一般来说，回调只在执行 I/O 操作时使用，例如下载东西、读取文件、与数据库通信等。
+回调只是 JavaScript 中某些函数的习惯叫法。JavaScript 中没有回调这种东西，这个名字真的只是一种习惯叫法。回调函数不同于大多数可以立即返回结果的函数，它需要一些时间执行才能返回结果。英语单词「asynchronous」，简称「async」，在这里的意思是「做这件事需要花一些时间」或者「事件发生在未来，而不是现在」。一般来说，回调只在执行 I/O 操作时使用，例如下载东西、读取文件、与数据库通信等。
 
 When you call a normal function you can use its return value:
 
@@ -92,11 +92,11 @@ var photo = downloadPhoto('http://coolcats.com/cat.gif');
 
 In this case the gif might take a very long time to download, and you don't want your program to pause (aka 'block') while waiting for the download to finish.
 
-某些情况下，这个图片文件可能需要很长时间才能下载完成，但是你不想让你的程序在等待下载的过程中暂停运行（也就是“block”）。
+某些情况下，这个图片文件可能需要很长时间才能下载完成，但是你不想让你的程序在等待下载的过程中暂停运行（也就是「block」）。
 
 Instead, you store the code that should run after the download is complete in a function. This is the callback! You give it to the `downloadPhoto` function and it will run your callback (e.g. 'call you back later') when the download is complete, and pass in the photo (or an error if something went wrong).
 
-为了解决这个问题，你把下载完成后要执行的代码放在一个函数里。这就是回调！你把回调函数放进 `downloadPhoto` 函数，这个函数会在下载完成后运行回调函数（像是“一会叫你回来”那样），然后传入照片（如果出错了，那么会传入错误信息）。
+为了解决这个问题，你把下载完成后要执行的代码放在一个函数里。这就是回调！你把回调函数放进 `downloadPhoto` 函数，这个函数会在下载完成后运行回调函数（像是「一会叫你回来」那样），然后传入照片（如果出错了，那么会传入错误信息）。
 
 ```js
 downloadPhoto('http://coolcats.com/cat.gif', handlePhoto);
@@ -191,7 +191,7 @@ As you can see naming functions is super easy and has some immediate benefits:
 - makes code easier to read thanks to the descriptive function names
 - 函数名可以用来描述函数的作用，使代码更容易阅读
 - when exceptions happen you will get stacktraces that reference actual function names instead of "anonymous"
-- 出现错误时，可以获得确切的堆栈跟踪信息，知道错误来自哪个函数而不是“匿名”函数
+- 出现错误时，可以获得确切的堆栈跟踪信息，知道错误来自哪个函数而不是「匿名」函数
 - allows you to move the functions and reference them by their names
 - 可以通过更改函数名的方式来变更函数
 
@@ -229,7 +229,7 @@ Note that the `function` declarations here are defined at the bottom of the file
 
 This is the most important part: **Anyone is capable of creating modules** (aka libraries). To quote [Isaac Schlueter](http://twitter.com/izs) (of the node.js project): _"Write small modules that each do one thing, and assemble them into other modules that do a bigger thing. You can't get into callback hell if you don't go there."_
 
-这句话非常重要：**任何人都可以（应该）创建模块**（类似库）。引用 [Isaac Schlueter](http://twitter.com/izs)（有关 Node.js 项目）中的一句话：“_编写只做一件事的小模块，然后把它们组装成做更多事情的大模块。如果你能做到这一点，那么你就不会陷入回调地狱。_”
+这句话非常重要：**任何人都可以（应该）创建模块**（类似库）。引用 [Isaac Schlueter](http://twitter.com/izs)（有关 Node.js 项目）中的一句话：「_编写只做一件事的小模块，然后把它们组装成做更多事情的大模块。如果你能做到这一点，那么你就不会陷入回调地狱。_」
 
 Let's take out the boilerplate code from above and turn it into a module by splitting it up into a couple of files. I'll show a module pattern that works for either browser code or server code (or code that works in both):
 
@@ -376,7 +376,7 @@ If you _really_ want your async code to read top-to-bottom, there are some fancy
 
 **Generators** let you 'pause' individual functions without pausing the state of the whole program, which at the cost of slightly more complex to understand code lets your async code appear to execute in a top-down fashion. Check out [watt](https://github.com/mappum/watt) for an example of this approach.
 
-**Generous** 可以让你“暂停”单个函数而不用暂停整个程序，这以稍微复杂的代码理解为代价，换取异步代码从上到下的执行风格。这种方法的一个例子：[watt](https://github.com/mappum/watt) 。
+**Generous** 可以让你「暂停」单个函数而不用暂停整个程序，这以稍微复杂的代码理解为代价，换取异步代码从上到下的执行风格。这种方法的一个例子：[watt](https://github.com/mappum/watt) 。
 
 **Async functions** are a proposed ES7 feature that will further wrap generators and promises in a higher level syntax. Check them out if that sounds interesting to you.
 

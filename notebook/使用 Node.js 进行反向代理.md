@@ -3,7 +3,7 @@ name: node-proxy
 title: 使用 Node.js 进行反向代理
 create-date: 2020-04-11
 date: 2020-04-14
-description: 根据自己的需求，用 Node.js 写一个简单的反向代理服务器，转发 API 请求到不同端口。
+description: 根据自己的需求，用 Node.js 写一个简单的反向代理服务器。
 license: CC-BY-SA-4.0
 ---
 
@@ -242,7 +242,7 @@ app.listen(3001);
 
 - **option.autoRewrite**: 根据请求的主机/端口在（301/302/307/308）重定向上重写本地主机/端口。Default: false.
 
-- **option.protocolRewrite**: 在（301/302/307/308）上将本地协议重写为“ http”或“ https”。Default: null.
+- **option.protocolRewrite**: 在（301/302/307/308）上将本地协议重写为「http」或「https」。Default: null.
 
 - **option.cookieDomainRewrite**: rewrites domain of `set-cookie` headers. Possible values:
 
@@ -250,7 +250,7 @@ app.listen(3001);
 
   - String: 新域, for example `cookieDomainRewrite: "new.domain"`. 移除域使用 `cookieDomainRewrite: ""`.
 
-  - Object: 域到新域的映射，请使用“ \*”来匹配所有域
+  - Object: 域到新域的映射，请使用「 \*」来匹配所有域
 
     例如，保持一个域不变，重写一个域并删除其他域：
 
@@ -288,7 +288,7 @@ app.listen(3001);
 
 - **option.selfHandleResponse** true/false, if set to true, none of the webOutgoing passes are called and it's your responsibility to appropriately return the response by listening and acting on the `proxyRes` event
 
-- **option.buffer**: 要作为请求正文发送的数据流。也许您有一些中间件在请求代理之前消耗了请求流，例如如果您将请求的主体读入名为“ req.rawbody”的字段中，则可以在 buffer 选项中重新传输该字段：
+- **option.buffer**: 要作为请求正文发送的数据流。也许您有一些中间件在请求代理之前消耗了请求流，例如如果您将请求的主体读入名为「req.rawbody」的字段中，则可以在 buffer 选项中重新传输该字段：
 
   ```js
   'use strict';
