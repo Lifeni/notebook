@@ -1,4 +1,4 @@
-name: GitHub Actions Build and Deploy
+name: Publish Article
 on:
   push:
     paths:
@@ -27,6 +27,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: 'public'
-          target: '/home/ubuntu/webapp/blog'
+          source: 'public/*'
+          target: '/home/github/blog'
           overwrite: true
