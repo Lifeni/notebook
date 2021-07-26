@@ -2,8 +2,7 @@ name: GitHub Actions Build and Deploy
 on:
   push:
     paths:
-      - "notebook/*.md"
-      - "site/*.md"
+      - 'articles/*.md'
 
 jobs:
   build-and-deploy:
@@ -11,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: 'Lifeni-Site/Website'
+          repository: 'Lifeni-Space/Blog'
           submodules: 'true'
 
       - uses: actions/setup-node@v1
@@ -29,5 +28,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: 'public'
-          target: '/home/website'
+          target: '/home/ubuntu/webapp/blog'
           overwrite: true
