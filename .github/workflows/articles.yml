@@ -30,3 +30,5 @@ jobs:
           source: 'public/*'
           target: '/home/github/blog'
           overwrite: true
+          rm: true
+          strip_components: 1

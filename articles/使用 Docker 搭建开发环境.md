@@ -18,35 +18,35 @@ license: CC-BY-SA-4.0
 1. 安装必要的包。
 
    ```bash
-    $ yum install -y yum-utils \
-    device-mapper-persistent-data \
-    lvm2
+   $ yum install -y yum-utils \
+   device-mapper-persistent-data \
+   lvm2
    ```
 
 2. 设定 Repository。
 
    ```bash
-    $ yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
+   $ yum-config-manager \
+   --add-repo \
+   https://download.docker.com/linux/centos/docker-ce.repo
    ```
 
 3. 安装 Docker Engine - Community。
 
    ```bash
-    $ yum install docker-ce docker-ce-cli containerd.io
+   $ yum install docker-ce docker-ce-cli containerd.io
    ```
 
 4. 启动 Docker。
 
    ```bash
-    $ systemctl start docker
+   $ systemctl start docker
    ```
 
 5. 使用 hello-world 镜像测试。
 
    ```bash
-    $ docker run hello-world
+   $ docker run hello-world
    ```
 
 ## 基本操作
