@@ -22,7 +22,7 @@ license: CC-BY-SA-4.0
 服务端用的是 Koa，所以直接用 `@koa/cors`，文档：[@koa/cors - npm](https://www.npmjs.com/package/@koa/cors) 。
 
 ```bash
-$ npm i @koa/cors
+npm i @koa/cors
 ```
 
 然后在服务端的文件里添加：

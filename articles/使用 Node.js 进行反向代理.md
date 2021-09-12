@@ -30,8 +30,8 @@ http-proxy-middleware 是用于处理代理的中间件，Github 链接：[chimu
 ### 1. 安装必要的模块
 
 ```bash
-$ npm i express
-$ npm i http-proxy-middleware
+npm i express
+npm i http-proxy-middleware
 ```
 
 ### 2. 主要代码

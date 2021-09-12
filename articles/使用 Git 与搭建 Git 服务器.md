@@ -274,7 +274,7 @@ Date:   Sat Mar 28 19:39:15 2020 +0800
 `git log -p` 可以查看每次提交的详细改动，`git log -2` 只展示最近两条提交：
 
 ```bash
-t$ git log -p -2
+$ git log -p -2
 commit 6b2ad042395e6bd74bf4187677955383c79b017d (HEAD -> master)
 Author: liangfengning <liangfengning@foxmail.com>
 Date:   Sat Mar 28 19:39:15 2020 +0800

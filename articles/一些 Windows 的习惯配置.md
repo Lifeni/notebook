@@ -102,14 +102,14 @@ license: CC-BY-SA-4.0
 2. 在 WSL 中输入下面命令，打开 Bash 的设置：
 
    ```bash
-    $ sudo vim ~/.bashrc
+   sudo vim ~/.bashrc
    ```
 
 3. 文件最后添加：
 
    ```bash
-    export http_proxy="http://192.168.1.77:10809"
-    export https_proxy="http://192.168.1.77:10809"
+   export http_proxy="http://192.168.1.77:10809"
+   export https_proxy="http://192.168.1.77:10809"
    ```
 
    IP 地址填上面查询的（我这里是 192.168.1.77）代理的 HTTP 端口号是 10808，代理需要开启「允许来自局域网的访问」
@@ -121,8 +121,8 @@ license: CC-BY-SA-4.0
 输入下面两条命令，IP 地址和上面的一样（我这里是 192.168.1.77），端口用的是代理软件的 HTTP 端口：
 
 ```bash
-$ npm config set proxy http://192.168.1.77:10809
-$ npm config set https-proxy http://192.168.1.77:10809
+npm config set proxy http://192.168.1.77:10809
+npm config set https-proxy http://192.168.1.77:10809
 ```
 
 ### 让 WSL 中的 bash 自动补全忽略大小写
@@ -150,7 +150,7 @@ set completion-ignore-case on
 2. 输入命令：
 
    ```powershell
-   > set-ExecutionPolicy RemoteSigned
+   set-ExecutionPolicy RemoteSigned
    ```
 
 3. 输入 `A`，选择「全是」，就可以了
@@ -164,7 +164,7 @@ set completion-ignore-case on
 WSL2 读写 Windows 文件系统中的文件时，性能不行，也不支持热重载的特性，因此最好把 WSL2 降级成 WSL1：
 
 ```powershell
-> wsl --set-version ubuntu 1
+wsl --set-version ubuntu 1
 正在进行转换，这可能需要几分钟时间...
 转换完成。
 ```
@@ -180,21 +180,21 @@ WSL2 读写 Windows 文件系统中的文件时，性能不行，也不支持热
 1. WSL1 中依次执行：
 
    ```bash
-     $ cd ~
-     $ wget "https://launchpadlibrarian.net/474302949/libc6_2.31-0ubuntu8+lp1871129~1_amd64.deb"
-     $ sudo dpkg -i libc6_2.31-0ubuntu8+lp1871129~1_amd64.deb
+   cd ~
+   wget "https://launchpadlibrarian.net/474302949/libc6_2.31-0ubuntu8+lp1871129~1_amd64.deb"
+   sudo dpkg -i libc6_2.31-0ubuntu8+lp1871129~1_amd64.deb
    ```
 
 2. 管理员模式的 PowerShell 中执行：
 
    ```powershell
-     > net stop LxssManager
-     LxssManager 服务正在停止.
-     LxssManager 服务已成功停止。
+   net stop LxssManager
+   LxssManager 服务正在停止.
+   LxssManager 服务已成功停止。
 
-     > net start LxssManager
-     LxssManager 服务正在启动 .
-     LxssManager 服务已经启动成功。
+   net start LxssManager
+   LxssManager 服务正在启动 .
+   LxssManager 服务已经启动成功。
    ```
 
    以重启 WSL。
