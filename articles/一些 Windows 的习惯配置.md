@@ -11,8 +11,7 @@ license: CC-BY-SA-4.0
 
 ## 前排建议
 
-- 在下载 WSL 的时候，最好按照版本下载，比如下载 Ubuntu-18.04 而不是 Ubuntu
-- WSL1 与 Ubuntu 20.04 之间的兼容性存在问题，用 WSL1 最好使用 Ubuntu-18.04
+在下载 WSL 的时候，最好按照版本下载，比如下载 Ubuntu-18.04 而不是 Ubuntu 这种不带后缀的。而且，WSL1 与 Ubuntu 20.04 之间的兼容性存在问题，用 WSL1 最好使用 Ubuntu-18.04 这个版本。
 
 ## 配置
 
