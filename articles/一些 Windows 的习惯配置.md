@@ -40,7 +40,7 @@ license: CC-BY-SA-4.0
 > **Windows Terminal 已经自带这个功能了。**
 
 <details>
- <summary>点击查看之前的解决方案</summary>
+<summary>点击查看之前的解决方案</summary>
 
 > 在 Windows 10 2004 测试通过。
 >
