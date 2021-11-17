@@ -9,11 +9,11 @@ license: CC-BY-SA-4.0
 
 # The Missing Semester of Your CS Education 练习记录
 
-## 前排提示
+## 相关链接与说明
 
 - 英文官网：https://missing.csail.mit.edu/ ，中文翻译：https://missing-semester-cn.github.io/
 - 我用的是 WSL2 (Ubuntu-20.04)，下面的代码均在此环境上测试通过
-- 文章中练习题采用中文翻译版本，部分练习只截取前面第一句作为标题，其余部分在正文
+- 文章中练习题采用中文翻译版本，部分练习只截取前面第一句作为标题
 
 ## [课程概览与 shell](https://missing-semester-cn.github.io/2020/course-shell/)
 

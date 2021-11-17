@@ -3,7 +3,7 @@ name: translate-callback-hell
 title: 翻译：Callback Hell
 create-date: 2020-03-16
 date: 2020-03-18
-description: 这是一篇翻译文章，原文来自 http://callbackhell.com ，本文采取双语对照的方式，其中正文内容中英语原文在上，翻译在下。
+description: 这是一篇翻译文章，原文来自 http://callbackhell.com/ ，本文采取双语对照的方式，其中正文内容中英语原文在上，翻译在下。
 license: CC-BY-SA-4.0
 ---
 

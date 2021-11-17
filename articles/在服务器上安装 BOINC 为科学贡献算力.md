@@ -15,7 +15,7 @@ license: CC-BY-SA-4.0
 >
 > 引用来源：[BOINC - 维基百科，自由的百科全书](https://zh.wikipedia.org/wiki/BOINC)
 
-## 安装 BOINC 客户端
+## 安装 BOINC
 
 ### 用 Docker Compose 安装
 

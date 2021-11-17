@@ -3,7 +3,7 @@ name: js-object-intl
 title: 了解 JavaScript 中的 Intl 对象
 create-date: 2021-03-16
 date: 2021-03-16
-description: 学习和使用 Intl 这个 JavaScript 自带的对象，了解其在中文环境下的一些方法及其语法。
+description: 学习和使用 Intl 这个 JavaScript 对象，了解其在中文环境下的一些方法及其语法。
 license: CC-BY-SA-4.0
 ---
 
