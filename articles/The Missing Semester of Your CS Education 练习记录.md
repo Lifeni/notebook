@@ -1,15 +1,15 @@
 ---
 name: missing-semester
-title: The Missing Semester of Your CS Education 练习记录
+title: The Missing Semester of Your CS Education 练习
 create-date: 2021-03-28
 date: 2021-11-16
 description: 记录学习 The Missing Semester of Your CS Education 课程时做的一些练习，不是全部，只包含部分自己觉得比较有意义的题。
 license: CC-BY-SA-4.0
 ---
 
-# The Missing Semester of Your CS Education 练习记录
+# The Missing Semester of Your CS Education 练习
 
-## 相关链接与说明
+## 前言
 
 - 英文官网：https://missing.csail.mit.edu/ ，中文翻译：https://missing-semester-cn.github.io/
 - 我用的是 WSL2 (Ubuntu-20.04)，下面的代码均在此环境上测试通过
