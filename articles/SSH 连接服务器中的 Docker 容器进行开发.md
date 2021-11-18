@@ -3,7 +3,7 @@ name: ssh-to-docker
 title: SSH 连接服务器中的 Docker 容器进行开发
 create-date: 2020-09-19
 date: 2020-09-20
-description: 记录在 Docker 中搭建多个前端开发环境，并使用 SSH 和 VSCode 进行远程连接和开发的过程。
+description: 记录在 Docker 中搭建多个前端开发环境，并使用 SSH 和 Visual Studio Code 进行远程连接和开发的过程。
 license: CC-BY-SA-4.0
 ---
 

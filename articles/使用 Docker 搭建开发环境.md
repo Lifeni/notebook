@@ -3,7 +3,7 @@ name: use-docker
 title: 使用 Docker 搭建开发环境
 create-date: 2019-12-10
 date: 2020-03-19
-description: 学习 Docker 的用法，记录常用配置过程，文中的操作均以 CentOS 7.6 64 位 为例，命令均以 root 执行。
+description: 学习 Docker 的用法，记录常用的配置过程，文中的操作均以 CentOS 7.6 64 位系统为例，命令均以 root 身份执行。
 license: CC-BY-SA-4.0
 ---
 
