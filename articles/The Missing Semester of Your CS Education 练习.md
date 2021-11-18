@@ -168,7 +168,7 @@ TODO
 
 TODO
 
-## [版本控制(Git)](https://missing-semester-cn.github.io/2020/version-control/)
+## [版本控制 (Git)](https://missing-semester-cn.github.io/2020/version-control/)
 
 TODO
 
