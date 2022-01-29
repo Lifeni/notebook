@@ -1098,7 +1098,7 @@ regexGreekSymbol.test('π');
 // → true
 ```
 
-> 参考资料：[tc39/proposal-regexp-unicode-property-escapes: Proposal to add Unicode property escapes \p{…} and \P{…} to regular expressions in ECMAScript.](https://github.com/tc39/proposal-regexp-unicode-property-escapes)
+> 参考资料：[tc39/proposal-regexp-unicode-property-escapes: Proposal to add Unicode property escapes `\p{…}` and `\P{…}` to regular expressions in ECMAScript.](https://github.com/tc39/proposal-regexp-unicode-property-escapes)
 
 ## ES 2017
 
