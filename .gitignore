@@ -1,4 +1,8 @@
-**/Pictures
-**/Recycle Bin
+node_modules
+dist
+build
 
-TODO.md
+.env
+.DS_Store
+*.log
+
