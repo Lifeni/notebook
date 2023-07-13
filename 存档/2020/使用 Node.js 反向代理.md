@@ -1,13 +1,13 @@
 ---
 name: node-proxy
-title: 使用 Node.js 进行反向代理
+title: 使用 Node.js 反向代理
 create-date: 2020-04-11
 date: 2020-04-14
 description: 根据自己的需求，用 Node.js 写一个简单的反向代理服务器。
 license: CC-BY-SA-4.0
 ---
 
-# 使用 Node.js 进行反向代理
+# 使用 Node.js 反向代理
 
 ## 需求
 

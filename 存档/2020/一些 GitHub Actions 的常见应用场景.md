@@ -1,13 +1,13 @@
 ---
 name: github-actions-example
-title: GitHub Actions 的应用场景
+title: 一些 GitHub Actions 的常见应用场景
 create-date: 2020-11-21
 date: 2021-03-28
 description: 记录一些常见的 GitHub Actions 配置与应用场景，之前写过一个类似的文章《 用 GitHub Actions 部署 Vue 项目到 GitHub Pages 》，这次做一个补充和整合。
 license: CC-BY-SA-4.0
 ---
 
-# GitHub Actions 的应用场景
+# 一些 GitHub Actions 的常见应用场景
 
 ## 制作并发布 Docker 镜像
 
