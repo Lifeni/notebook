@@ -1,13 +1,13 @@
 ---
 name: js-object-intl
-title: 了解 JavaScript 中的 Intl 对象
+title: 学习 JavaScript 中的 Intl 对象
 create-date: 2021-03-16
 date: 2021-03-16
 description: 学习和使用 Intl 这个 JavaScript 对象，了解其在中文环境下的一些方法。
 license: CC-BY-SA-4.0
 ---
 
-# 了解 JavaScript 中的 Intl 对象
+# 学习 JavaScript 中的 Intl 对象
 
 ## `Intl` 对象
 
@@ -28,17 +28,17 @@ license: CC-BY-SA-4.0
 用来格式化日期。
 
 ```js
-const date = new Date();
-const locale = window.navigator.language;
+const date = new Date()
+const locale = window.navigator.language
 // locale: zh-CN
 
-new Intl.DateTimeFormat(locale).format(date);
+new Intl.DateTimeFormat(locale).format(date)
 // "2021/3/16"
 
-new Intl.DateTimeFormat('en-US').format(date);
+new Intl.DateTimeFormat('en-US').format(date)
 // "3/16/2021"
 
-new Intl.DateTimeFormat('ja-JP-u-ca-japanese').format(date);
+new Intl.DateTimeFormat('ja-JP-u-ca-japanese').format(date)
 // "R3/3/16"
 ```
 
@@ -53,7 +53,7 @@ new Intl.DateTimeFormat('en-US', {
   minute: 'numeric',
   weekday: 'long',
   hour12: true,
-}).format(new Date());
+}).format(new Date())
 // Tuesday, Mar 16, 21, 4:49 PM
 ```
 
@@ -66,7 +66,7 @@ new Intl.DateTimeFormat('zh-CN', {
   minute: 'numeric',
   weekday: 'short',
   hour12: false,
-}).format(new Date());
+}).format(new Date())
 // '2021/3/16周二 16:53'
 ```
 
@@ -124,12 +124,12 @@ new Intl.DateTimeFormat('zh-CN', {
 const rtf = new Intl.RelativeTimeFormat('en-US', {
   numeric: 'always',
   style: 'long',
-});
+})
 
-rtf.format(-1, 'day');
+rtf.format(-1, 'day')
 // "1 day ago"
 
-rtf.format(1, 'day');
+rtf.format(1, 'day')
 // "in 1 day"
 ```
 
@@ -139,13 +139,13 @@ rtf.format(1, 'day');
 new Intl.RelativeTimeFormat('zh-CN', {
   numeric: 'always',
   style: 'long',
-}).format(-1, 'day');
+}).format(-1, 'day')
 // '1天前'
 
 new Intl.RelativeTimeFormat('zh-CN', {
   numeric: 'auto',
   style: 'long',
-}).format(-1, 'day');
+}).format(-1, 'day')
 // '昨天'
 ```
 
@@ -155,7 +155,7 @@ new Intl.RelativeTimeFormat('zh-CN', {
 new Intl.RelativeTimeFormat('zh-CN', {
   numeric: 'auto',
   style: 'long',
-}).format(0, 'second');
+}).format(0, 'second')
 // '现在'
 ```
 
@@ -166,20 +166,28 @@ new Intl.RelativeTimeFormat('zh-CN', {
 用来格式化一个自然语言描述的列表，比如苹果、橘子和香蕉这种。
 
 ```js
-new Intl.ListFormat('en-US').format(['Hello', '你好', '123456', '@@@']);
+new Intl.ListFormat('en-US').format(['Hello', '你好', '123456', '@@@'])
 // 'Hello, 你好, 123456, and @@@'
 
-new Intl.ListFormat('zh-CN').format(['Hello', '你好', '123456', '@@@']);
+new Intl.ListFormat('zh-CN').format(['Hello', '你好', '123456', '@@@'])
 // 'Hello、你好、123456和@@@'
 ```
 
 这个方法的 Option 分为 `style` 和 `type`，前者还是输出日期的格式，这里不再展示，后者代表列表的关系是「和」还是「或」。
 
 ```js
-new Intl.ListFormat('zh-CN', { type: 'disjunction' }).format(['Hello', '你好', '123456']);
+new Intl.ListFormat('zh-CN', { type: 'disjunction' }).format([
+  'Hello',
+  '你好',
+  '123456',
+])
 // 'Hello、你好或123456'
 
-new Intl.ListFormat('zh-CN', { type: 'conjunction' }).format(['Hello', '你好', '123456']);
+new Intl.ListFormat('zh-CN', { type: 'conjunction' }).format([
+  'Hello',
+  '你好',
+  '123456',
+])
 // 'Hello、你好和123456'
 ```
 
@@ -190,24 +198,28 @@ new Intl.ListFormat('zh-CN', { type: 'conjunction' }).format(['Hello', '你好',
 格式化数字相关的内容，比如货币、数字分隔符、单位等等。
 
 ```js
-new Intl.NumberFormat('zh-CN').format(1234567890);
+new Intl.NumberFormat('zh-CN').format(1234567890)
 // '1,234,567,890'
 
-new Intl.NumberFormat('zh-Hans-CN-u-nu-hanidec').format(1234567890);
+new Intl.NumberFormat('zh-Hans-CN-u-nu-hanidec').format(1234567890)
 // '一,二三四,五六七,八九〇'
 
-new Intl.NumberFormat('en-US').format(1234567890);
+new Intl.NumberFormat('en-US').format(1234567890)
 // '1,234,567,890'
 
-new Intl.NumberFormat('de-DE').format(1234567890);
+new Intl.NumberFormat('de-DE').format(1234567890)
 // '1.234.567.890'
 ```
 
 ```js
-new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(123465.789);
+new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+  123465.789
+)
 // '$123,465.79'
 
-new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY' }).format(123465.789);
+new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY' }).format(
+  123465.789
+)
 // '¥123,465.79'
 ```
 
@@ -222,10 +234,10 @@ new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY' }).format(12
 把某些字符转换成指定语言。
 
 ```js
-new Intl.DisplayNames(['en'], { type: 'region' }).of('JP');
+new Intl.DisplayNames(['en'], { type: 'region' }).of('JP')
 // 'Japan'
 
-new Intl.DisplayNames(['zh-CN'], { type: 'region' }).of('JP');
+new Intl.DisplayNames(['zh-CN'], { type: 'region' }).of('JP')
 // '日本'
 ```
 

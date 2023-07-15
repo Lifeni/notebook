@@ -1,13 +1,13 @@
 ---
 name: js-deep-clone
-title: 用 JavaScript 简单实现对象深拷贝
+title: 使用 JavaScript 简单实现对象深拷贝
 create-date: 2021-03-24
 date: 2021-04-10
 description: 尝试用不同方法简单实现 JavaScript 中对象的深拷贝功能。本文的深拷贝只考虑嵌套的对象和数组，不考虑函数、正则等复杂情况。
 license: CC-BY-SA-4.0
 ---
 
-# 用 JavaScript 简单实现对象深拷贝
+# 使用 JavaScript 简单实现对象深拷贝
 
 ## 前提
 
@@ -33,14 +33,14 @@ const obj = {
   emoji: '🚀',
   中文: '测试',
   is_null: null,
-};
+}
 ```
 
 ```js
 const extend = {
   regex: /123/,
   func: function () {
-    console.log('hello');
+    console.log('hello')
   },
   date: new Date(),
   symbol: Symbol(),
@@ -48,7 +48,7 @@ const extend = {
   set: new Set(),
   is_undefined: undefined,
   not_a_num: NaN,
-};
+}
 ```
 
 ## `JSON.parse` 和 `JSON.stringify`
@@ -83,23 +83,23 @@ const cloneDeep = target => {
   // 判断如果不是 Object 或者 Array 就返回
   // 需要注意 typeof [] === 'object'
   if (typeof target !== 'object') {
-    return target;
+    return target
   }
 
   // 判断整体上是对象还是数组，之后往里面拷贝属性
-  let newTarget = Array.isArray(target) ? [] : {};
+  let newTarget = Array.isArray(target) ? [] : {}
 
   // 遍历对象或者数组中的每一项（属性）
   for (let key in target) {
     // 只对对象本身的属性进行拷贝，而不拷贝集成的属性（也就是原型链中的东西）
     if (target.hasOwnProperty(key)) {
       // 这里 target[key] 既包含对象，也包含数字字符串等，因为函数开头判断过了，不是对象和数组的直接返回
-      newTarget[key] = cloneDeep(target[key]);
+      newTarget[key] = cloneDeep(target[key])
     }
   }
 
-  return newTarget;
-};
+  return newTarget
+}
 ```
 
 ```js
@@ -143,11 +143,11 @@ cloneDeep(extend);
 ES6 中新加入的方法，可以把一个或多个对象的属性拷贝到一个对象中，实现的是浅拷贝（或者说是只有一层的深拷贝）。
 
 ```js
-let justCopy = obj;
-justCopy.obj === obj.obj; // true
+let justCopy = obj
+justCopy.obj === obj.obj // true
 
-let assignClone = Object.assign({}, obj);
-assignClone.obj === obj.obj; // true
+let assignClone = Object.assign({}, obj)
+assignClone.obj === obj.obj // true
 ```
 
 `Object.assign` 的优点是可以拷贝多种类型的数据。
