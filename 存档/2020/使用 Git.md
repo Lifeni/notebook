@@ -1,13 +1,13 @@
 ---
 name: use-git
-title: 使用 Git 与搭建 Git 服务器
+title: 使用 Git
 create-date: 2020-03-19
 date: 2020-05-05
 description: 学习 Git 的基本用法，并尝试使用 Gitea 搭建 Git 服务器。
 license: CC-BY-SA-4.0
 ---
 
-# 使用 Git 与搭建 Git 服务器
+# 使用 Git
 
 ## Git 基本用法
 

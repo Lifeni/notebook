@@ -1,7 +1,7 @@
 ---
 name: missing-semester
 title: The Missing Semester of Your CS Education 练习
-create-date: 2021-03-28
+create-date: 2021-03-20
 date: 2021-11-16
 description: 记录学习 The Missing Semester of Your CS Education 课程时做的一些练习，不是全部，只包含部分自己觉得比较有意义的题。
 license: CC-BY-SA-4.0

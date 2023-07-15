@@ -1,13 +1,13 @@
 ---
 name: es-features
-title: ECMAScript 中的新特性（2015-2021）
+title: ECMAScript 中的新特性
 create-date: 2021-01-04
 date: 2021-06-05
 description: 记录从 ES6 发布至今 ECMAScript 中出现的新特性，计划每年更新。
 license: CC-BY-SA-4.0
 ---
 
-# ECMAScript 中的新特性（2015-2021）
+# ECMAScript 中的新特性
 
 ## ES 2021
 
@@ -16,7 +16,7 @@ license: CC-BY-SA-4.0
 替换字符串中所有匹配项。
 
 ```js
-const newStr = str.replaceAll(regexp | substr, newSubstr);
+const newStr = str.replaceAll(regexp | substr, newSubstr)
 ```
 
 - `regexp|substr` 匹配的正则表达式（必须为全局模式，即 `/abc/g`）或者字符串。
@@ -24,19 +24,19 @@ const newStr = str.replaceAll(regexp | substr, newSubstr);
 - `返回值` 替换后的字符串。
 
 ```js
-'123456123'.replaceAll('123', '000') === '000456000';
-'abcdab'.replaceAll(/ab/g, '000') === '000cd000';
-'abcdab'.replaceAll(/ef/g, '000') === 'abcdab';
+'123456123'.replaceAll('123', '000') === '000456000'
+'abcdab'.replaceAll(/ab/g, '000') === '000cd000'
+'abcdab'.replaceAll(/ef/g, '000') === 'abcdab'
 ```
 
 在搜索的字符串为空的情况下，`replace` 和 `replaceAll` 的区别如下。
 
 ```js
-'x'.replace('', '_');
+'x'.replace('', '_')
 // → '_x'
-'xxx'.replace(/(?:)/g, '_');
+'xxx'.replace(/(?:)/g, '_')
 // → '_x_x_x_'
-'xxx'.replaceAll('', '_');
+'xxx'.replaceAll('', '_')
 // → '_x_x_x_'
 ```
 
@@ -50,14 +50,14 @@ const newStr = str.replaceAll(regexp | substr, newSubstr);
 当传入的所有 Promise 中有一个成功时，就返回那个成功的 Promise，然后终止操作，不会等待其他 Promise。如果所有 Promise 都被拒绝，则会返回 `AggregateError`。
 
 ```js
-Promise.any(iterable);
+Promise.any(iterable)
 ```
 
 `iterable` 可迭代对象，比如 Array。
 
 ```js
 try {
-  const first = await Promise.any(promises);
+  const first = await Promise.any(promises)
   // Any of the promises was fulfilled.
 } catch (error) {
   // All of the promises were rejected.
@@ -74,7 +74,7 @@ Promise.any(promises).then(
   error => {
     // All of the promises were rejected.
   }
-);
+)
 ```
 
 下面有一个例子。
@@ -87,13 +87,13 @@ Promise.any([
 ])
   .then(first => {
     // Any of the promises was fulfilled.
-    console.log(first);
+    console.log(first)
     // → 'home'
   })
   .catch(error => {
     // All of the promises were rejected.
-    console.log(error);
-  });
+    console.log(error)
+  })
 ```
 
 > 参考资料：
@@ -107,16 +107,16 @@ Promise.any([
 
 ```js
 // "Or Or Equals" (or, the Mallet operator :wink:)
-a ||= b;
-a || (a = b);
+a ||= b
+a || (a = b)
 
 // "And And Equals"
-a &&= b;
-a && (a = b);
+a &&= b
+a && (a = b)
 
 // "QQ Equals"
-a ??= b;
-a ?? (a = b);
+a ??= b
+a ?? (a = b)
 ```
 
 > 参考资料：[tc39/proposal-logical-assignment: A proposal to combine Logical Operators and Assignment Expressions](https://github.com/tc39/proposal-logical-assignment)
@@ -126,19 +126,19 @@ a ?? (a = b);
 就是英文里用于分隔很长的数字的 `,` 在这里以下划线 `_` 的形式出现。
 
 ```js
-1_000_000_000; // Ah, so a billion
-101_475_938.38; // And this is hundreds of millions
+1_000_000_000 // Ah, so a billion
+101_475_938.38 // And this is hundreds of millions
 
-let fee = 123_00; // $123 (12300 cents, apparently)
-let fee = 12_300; // $12,300 (woah, that fee!)
-let amount = 12345_00; // 12,345 (1234500 cents, apparently)
-let amount = 123_4500; // 123.45 (4-fixed financial)
-let amount = 1_234_500; // 1,234,500
+let fee = 123_00 // $123 (12300 cents, apparently)
+let fee = 12_300 // $12,300 (woah, that fee!)
+let amount = 12345_00 // 12,345 (1234500 cents, apparently)
+let amount = 123_4500 // 123.45 (4-fixed financial)
+let amount = 1_234_500 // 1,234,500
 ```
 
 ```js
-0.000_001; // 1 millionth
-1e10_000; // 10^10000 -- granted, far less useful / in-range...
+0.000_001 // 1 millionth
+1e10_000 // 10^10000 -- granted, far less useful / in-range...
 ```
 
 更多用法可以看提案里的 [Examples](https://github.com/tc39/proposal-numeric-separator#examples)。
@@ -155,47 +155,47 @@ let amount = 1_234_500; // 1,234,500
 class Counter {
   constructor(element) {
     // 记录一个弱引用到 DOM 元素
-    this.ref = new WeakRef(element);
-    this.start();
+    this.ref = new WeakRef(element)
+    this.start()
   }
 
   start() {
     if (this.timer) {
-      return;
+      return
     }
 
-    this.count = 0;
+    this.count = 0
 
     const tick = () => {
       // 从弱引用中获取元素，如果存在就执行操作
-      const element = this.ref.deref();
+      const element = this.ref.deref()
       if (element) {
-        element.textContent = ++this.count;
+        element.textContent = ++this.count
       } else {
         // 元素不存在时
-        console.log('The element is gone.');
-        this.stop();
-        this.ref = null;
+        console.log('The element is gone.')
+        this.stop()
+        this.ref = null
       }
-    };
+    }
 
-    tick();
-    this.timer = setInterval(tick, 1000);
+    tick()
+    this.timer = setInterval(tick, 1000)
   }
 
   stop() {
     if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = 0;
+      clearInterval(this.timer)
+      this.timer = 0
     }
   }
 }
 
-const counter = new Counter(document.getElementById('counter'));
-counter.start();
+const counter = new Counter(document.getElementById('counter'))
+counter.start()
 setTimeout(() => {
-  document.getElementById('counter').remove();
-}, 5000);
+  document.getElementById('counter').remove()
+}, 5000)
 ```
 
 > 参考资料：
@@ -210,22 +210,22 @@ setTimeout(() => {
 匹配正则表达式，并返回结果的迭代器。
 
 ```js
-str.matchAll(regexp);
+str.matchAll(regexp)
 ```
 
 - `regexp` 要匹配的正则表达式，必须为 `g` 全局模式。
 - `返回值` 一个可迭代对象，不可重用，可以使用 `[...data]` 语法转换成数组。
 
 ```js
-const regexp = /t(e)(st(\d?))/g;
-const str = 'test1test2';
+const regexp = /t(e)(st(\d?))/g
+const str = 'test1test2'
 
-const array = [...str.matchAll(regexp)];
+const array = [...str.matchAll(regexp)]
 
-console.log(array[0]);
+console.log(array[0])
 // expected output: Array ["test1", "e", "st1", "1"]
 
-console.log(array[1]);
+console.log(array[1])
 // expected output: Array ["test2", "e", "st2", "2"]
 ```
 
@@ -241,14 +241,14 @@ console.log(array[1]);
 ECMAScript 中 Number 类型的最大值为 `Number.MAX_SAFE_INTEGER === 2^53 - 1 `，即 9007199254740991，而 BigInt 可以表示任意大的整数。
 
 ```js
-typeof 1n === 'bigint'; // true
+typeof 1n === 'bigint' // true
 
-const theBiggestInt = 9007199254740991n;
+const theBiggestInt = 9007199254740991n
 
-const alsoHuge = BigInt(9007199254740991);
+const alsoHuge = BigInt(9007199254740991)
 // ↪ 9007199254740991n
 
-const hugeButString = BigInt('9007199254740991');
+const hugeButString = BigInt('9007199254740991')
 // ↪ 9007199254740991n
 ```
 
@@ -281,39 +281,39 @@ bigN * -1n
 ```
 
 ```js
-1n + 2;
+1n + 2
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
-1n * 2;
+1n * 2
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 ```
 
 除号 `/` 会向零取整。
 
 ```js
-const expected = 4n / 2n;
+const expected = 4n / 2n
 // ↪ 2n
 
-const rounded = 5n / 2n;
+const rounded = 5n / 2n
 // ↪ 2n, not 2.5n
 ```
 
 BigInt 在比较的时候不严格等于 Number，两者可以比较大小，也可以混合排序。
 
 ```js
-0n === 0; // ↪ false
-0n == 0; // ↪ true
+0n === 0 // ↪ false
+0n == 0 // ↪ true
 
-1n < 2; // ↪ true
-2n > 1; // ↪ true
-2 > 2; // ↪ false
-2n > 2; // ↪ false
-2n >= 2; // ↪ true
+1n < 2 // ↪ true
+2n > 1 // ↪ true
+2 > 2 // ↪ false
+2n > 2 // ↪ false
+2n >= 2 // ↪ true
 
-const mixed = [4n, 6, -12n, 10, 4, 0, 0n];
+const mixed = [4n, 6, -12n, 10, 4, 0, 0n]
 // ↪  [4n, 6, -12n, 10, 4, 0, 0n]
 
-mixed.sort();
+mixed.sort()
 // ↪ [-12n, 0, 0n, 10, 4n, 4, 6]
 ```
 
@@ -321,104 +321,104 @@ BigInt 在转换成 Boolean 的情况下的行为类似 Number。
 
 ```js
 if (0n) {
-  console.log('Hello from the if!');
+  console.log('Hello from the if!')
 } else {
-  console.log('Hello from the else!');
+  console.log('Hello from the else!')
 }
 
 // ↪ "Hello from the else!"
 
-0n || 12n; // ↪ 12n
-0n && 12n; // ↪ 0n
+0n || 12n // ↪ 12n
+0n && 12n // ↪ 0n
 
-Boolean(0n); // ↪ false
-Boolean(12n); // ↪ true
+Boolean(0n) // ↪ false
+Boolean(12n) // ↪ true
 
-!12n; // ↪ false
-!0n; // ↪ true
+!12n // ↪ false
+!0n // ↪ true
 ```
 
 BigInt 需要使用 `Number()` 手动转换类型到 Number，不能使用隐形类型转换。
 
 ```js
-+1n;
+;+1n
 // ↪ TypeError: Cannot convert a BigInt value to a number
 
-Number(1n);
+Number(1n)
 // ↪ 1
 ```
 
 不过字符串没这个限制。
 
 ```js
-1n + '2';
+1n + '2'
 // ↪ "12"
 
-'2' + 1n;
+'2' + 1n
 // ↪ "21"
 ```
 
 试图把 BigInt 直接转换成 Number 可能会造成精度丢失。
 
 ```js
-const largeFriend = 900719925474099267n;
-const alsoLarge = largeFriend + 2n;
+const largeFriend = 900719925474099267n
+const alsoLarge = largeFriend + 2n
 
-const sendMeTheBiggest = (n, m) => Math.max(Number(n), Number(m));
+const sendMeTheBiggest = (n, m) => Math.max(Number(n), Number(m))
 
-sendMeTheBiggest(largeFriend, alsoLarge);
+sendMeTheBiggest(largeFriend, alsoLarge)
 // ↪900719925474099300  // This is neither argument!
 ```
 
 ```js
-Number(151851850485185185047n);
+Number(151851850485185185047n)
 // ↪ 151851850485185200000
 
-parseInt(900719925474099267n);
+parseInt(900719925474099267n)
 // ↪900719925474099300
 ```
 
 可以使用 `BigInt(number|string)` 来生成一个大整数，不过同样需要注意精度的问题，传入的如果是 Number，则要小心不要超出范围，建议直接传入字符串作为参数或者直接数字后面加 `n`。
 
 ```js
-const badPrecision = BigInt(9007199254740993);
+const badPrecision = BigInt(9007199254740993)
 // ↪9007199254740992n
 
-const goodPrecision = BigInt('9007199254740993');
+const goodPrecision = BigInt('9007199254740993')
 // ↪9007199254740993n
 
-const alsoGoodPrecision = 9007199254740993n;
+const alsoGoodPrecision = 9007199254740993n
 // ↪9007199254740993n
 ```
 
 `BigInt()` 的参数不能是小数，字符串表示的小数也不行。
 
 ```js
-BigInt(1.5);
+BigInt(1.5)
 // ↪ RangeError: The number 1.5 is not a safe integer and thus cannot be converted to a BigInt
 
-BigInt('1.5');
+BigInt('1.5')
 // ↪ SyntaxError: Cannot convert 1.5 to a BigInt
 ```
 
 BigInt 不能使用 `Math` 中的方法。
 
 ```js
-Math.round(1n);
+Math.round(1n)
 // ↪ TypeError: Cannot convert a BigInt value to a number
 
-Math.max(1n, 10n);
+Math.max(1n, 10n)
 // ↪ TypeError: Cannot convert a BigInt value to a number
 
-1n | 0;
+1n | 0
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 ```
 
 还有一点需要注意的是，`JSON.stringify` 不能序列化 BigInt。
 
 ```js
-const bigObj = { a: BigInt(10n) };
-JSON.stringify(bigObj);
+const bigObj = { a: BigInt(10n) }
+JSON.stringify(bigObj)
 // ↪TypeError: Do not know how to serialize a BigInt
 ```
 
@@ -432,10 +432,10 @@ JSON.stringify(bigObj);
 遍历对象中的可枚举属性。
 
 ```js
-var obj = { a: 1, b: 2, c: 3 };
+var obj = { a: 1, b: 2, c: 3 }
 
 for (var prop in obj) {
-  console.log('obj.' + prop + ' = ' + obj[prop]);
+  console.log('obj.' + prop + ' = ' + obj[prop])
 }
 
 // Output:
@@ -461,21 +461,21 @@ const response = {
     headerText: '',
     showSplashScreen: false,
   },
-};
+}
 
-const undefinedValue = response.settings.undefinedValue ?? 'some other default';
+const undefinedValue = response.settings.undefinedValue ?? 'some other default'
 // result: 'some other default'
 
-const nullValue = response.settings.nullValue ?? 'some other default';
+const nullValue = response.settings.nullValue ?? 'some other default'
 // result: 'some other default'
 
-const headerText = response.settings.headerText ?? 'Hello, world!';
+const headerText = response.settings.headerText ?? 'Hello, world!'
 // result: ''
 
-const animationDuration = response.settings.animationDuration ?? 300;
+const animationDuration = response.settings.animationDuration ?? 300
 // result: 0
 
-const showSplashScreen = response.settings.showSplashScreen ?? true;
+const showSplashScreen = response.settings.showSplashScreen ?? true
 // result: false
 ```
 
@@ -498,28 +498,28 @@ true || undefined ?? "foo"; // 抛出 SyntaxError
 如果操作符左侧为 `undefined` 或者 `null` 则表达式为 `undefined`，否则正常执行操作符右侧的属性、方法和函数调用。
 
 ```js
-obj?.prop; // 调用可选的静态属性
-obj?.[expr]; // 调用可选的动态属性
-func?.(...args); // 调用可选的函数或者方法
-arr?.[index]; // 调用可能的数组项
+obj?.prop // 调用可选的静态属性
+obj?.[expr] // 调用可选的动态属性
+func?.(...args) // 调用可选的函数或者方法
+arr?.[index] // 调用可能的数组项
 ```
 
 这其实是一种简化的写法，请看下面的例子。
 
 ```js
-a?.b; // 如果 a 是 null/undefined 则返回 undefined 否则返回 a.b
-a == null ? undefined : a.b;
+a?.b // 如果 a 是 null/undefined 则返回 undefined 否则返回 a.b
+a == null ? undefined : a.b
 
-a?.[x]; // 如果 a 是 null/undefined 则返回 undefined 否则返回 a[x]
-a == null ? undefined : a[x];
+a?.[x] // 如果 a 是 null/undefined 则返回 undefined 否则返回 a[x]
+a == null ? undefined : a[x]
 
-a?.b(); // 如果 a 是 null/undefined 则返回 undefined
-a == null ? undefined : a.b();
+a?.b() // 如果 a 是 null/undefined 则返回 undefined
+a == null ? undefined : a.b()
 // 如果 a.b 不是函数，则抛出 TypeError
 // 否则执行 a.b()
 
-a?.(); // 如果 a 是 null/undefined 则返回 undefined
-a == null ? undefined : a();
+a?.() // 如果 a 是 null/undefined 则返回 undefined
+a == null ? undefined : a()
 // 如果 a 不是 null/undefined 也不是函数，则抛出 TypeError
 // 否则调用函数 a
 ```
@@ -536,12 +536,15 @@ a == null ? undefined : a();
 所有 Promise 都完成时（无论是 `fulfilled` 还是 `reject`），返回结果的数组。
 
 ```js
-const promises = [fetch('https://lifeni.life'), fetch('https://does-not-exist/')];
+const promises = [
+  fetch('https://lifeni.life'),
+  fetch('https://does-not-exist/'),
+]
 
-const results = await Promise.allSettled(promises);
-const errors = results.filter(p => p.status === 'rejected').map(p => p.reason);
+const results = await Promise.allSettled(promises)
+const errors = results.filter(p => p.status === 'rejected').map(p => p.reason)
 
-console.log(JSON.stringify(results));
+console.log(JSON.stringify(results))
 
 /** output
 [
@@ -577,19 +580,19 @@ console.log(JSON.stringify(results));
 <main>Content will load here!</main>
 
 <script>
-  const main = document.querySelector('main');
+  const main = document.querySelector('main')
   for (const link of document.querySelectorAll('nav > a')) {
     link.addEventListener('click', e => {
-      e.preventDefault();
+      e.preventDefault()
 
       import(`./section-modules/${link.dataset.entryModule}.js`)
         .then(module => {
-          module.loadPageInto(main);
+          module.loadPageInto(main)
         })
         .catch(err => {
-          main.textContent = err.message;
-        });
-    });
+          main.textContent = err.message
+        })
+    })
   }
 </script>
 ```
@@ -608,29 +611,33 @@ console.log(JSON.stringify(results));
 ```
 
 ```js
-console.log(import.meta); // { url: "file:///home/user/my-module.mjs" }
+console.log(import.meta) // { url: "file:///home/user/my-module.mjs" }
 ```
 
 下面是一个例子。
 
 ```html
-<script type="module" src="path/to/hamster-displayer.mjs" data-size="500"></script>
+<script
+  type="module"
+  src="path/to/hamster-displayer.mjs"
+  data-size="500"
+></script>
 ```
 
 ```js
-(async () => {
+;(async () => {
   // new URL() 的第二个参数是相对地址（baseUrl）
-  const response = await fetch(new URL('../hamsters.jpg', import.meta.url));
-  const blob = await response.blob();
+  const response = await fetch(new URL('../hamsters.jpg', import.meta.url))
+  const blob = await response.blob()
 
-  const size = import.meta.scriptElement.dataset.size || 300;
+  const size = import.meta.scriptElement.dataset.size || 300
 
-  const image = new Image();
-  image.src = URL.createObjectURL(blob);
-  image.width = image.height = size;
+  const image = new Image()
+  image.src = URL.createObjectURL(blob)
+  image.width = image.height = size
 
-  document.body.appendChild(image);
-})();
+  document.body.appendChild(image)
+})()
 ```
 
 > 参考资料：
@@ -647,18 +654,18 @@ console.log(import.meta); // { url: "file:///home/user/my-module.mjs" }
 ```js
 var getGlobal = function () {
   if (typeof self !== 'undefined') {
-    return self;
+    return self
   }
   if (typeof window !== 'undefined') {
-    return window;
+    return window
   }
   if (typeof global !== 'undefined') {
-    return global;
+    return global
   }
-  throw new Error('unable to locate global object');
-};
+  throw new Error('unable to locate global object')
+}
 
-var globals = getGlobal();
+var globals = getGlobal()
 
 if (typeof globals.setTimeout !== 'function') {
   // 此环境中没有 setTimeout 方法！
@@ -688,7 +695,7 @@ if (typeof globalThis.setTimeout !== 'function') {
 obj = Object.fromEntries([
   ['a', 0],
   ['b', 1],
-]); // { a: 0, b: 1 }
+]) // { a: 0, b: 1 }
 ```
 
 可以将 Map 或者 Array 转化为 Object。
@@ -697,9 +704,9 @@ obj = Object.fromEntries([
 const map = new Map([
   ['foo', 'bar'],
   ['baz', 42],
-]);
-const obj = Object.fromEntries(map);
-console.log(obj); // { foo: "bar", baz: 42 }
+])
+const obj = Object.fromEntries(map)
+console.log(obj) // { foo: "bar", baz: 42 }
 ```
 
 ```js
@@ -707,9 +714,9 @@ const arr = [
   ['0', 'a'],
   ['1', 'b'],
   ['2', 'c'],
-];
-const obj = Object.fromEntries(arr);
-console.log(obj); // { 0: "a", 1: "b", 2: "c" }
+]
+const obj = Object.fromEntries(arr)
+console.log(obj) // { 0: "a", 1: "b", 2: "c" }
 ```
 
 如果键或者值不是字符串，则可能会出现意料之外的结果。
@@ -718,8 +725,8 @@ console.log(obj); // { 0: "a", 1: "b", 2: "c" }
 const map = new Map([
   [{}, 'a'],
   [{}, 'b'],
-]);
-Object.fromEntries(map);
+])
+Object.fromEntries(map)
 // → { '[object Object]': 'b' }
 // Note: the value 'a' is nowhere to be found, since both keys
 // stringify to the same value of '[object Object]'.
@@ -736,17 +743,17 @@ Object.fromEntries(map);
 删除字符串中 开头/结尾 的连续空白符，也可以使用别名 `String.prototype.{trimLeft,trimRight}`。
 
 ```js
-var str = '   foo  ';
+var str = '   foo  '
 
-console.log(str.length); // 8
+console.log(str.length) // 8
 
-str = str.trimStart(); // 等同于 str = str.trimLeft();
-console.log(str.length); // 5
-console.log(str); // "foo  "
+str = str.trimStart() // 等同于 str = str.trimLeft();
+console.log(str.length) // 5
+console.log(str) // "foo  "
 
-str = str.trimRight(); // 或写成str = str.trimEnd();
-console.log(str.length); // 6
-console.log(str); // '   foo'
+str = str.trimRight() // 或写成str = str.trimEnd();
+console.log(str.length) // 6
+console.log(str) // '   foo'
 ```
 
 > 参考资料：
@@ -759,43 +766,43 @@ console.log(str); // '   foo'
 `Array.prototype.flat` 用来把一个嵌套的数组展开成一个一维的数组。
 
 ```js
-var newArray = arr.flat([depth]);
+var newArray = arr.flat([depth])
 ```
 
 `depth` 展开的深度，默认为 1。
 
 ```js
-var arr1 = [1, 2, [3, 4]];
-arr1.flat();
+var arr1 = [1, 2, [3, 4]]
+arr1.flat()
 // [1, 2, 3, 4]
 
-var arr2 = [1, 2, [3, 4, [5, 6]]];
-arr2.flat();
+var arr2 = [1, 2, [3, 4, [5, 6]]]
+arr2.flat()
 // [1, 2, 3, 4, [5, 6]]
 
-var arr3 = [1, 2, [3, 4, [5, 6]]];
-arr3.flat(2);
+var arr3 = [1, 2, [3, 4, [5, 6]]]
+arr3.flat(2)
 // [1, 2, 3, 4, 5, 6]
 
 // flat 会去除空元素
-var arr4 = [1, 2, , 4, 5];
-arr4.flat();
+var arr4 = [1, 2, , 4, 5]
+arr4.flat()
 // [1, 2, 4, 5]
 ```
 
 `Array.prototype.flatMap` 相当于把 `map()` 的结果进行 `flat()`，展开深度为 1。
 
 ```js
-var arr1 = [1, 2, 3, 4];
+var arr1 = [1, 2, 3, 4]
 
-arr1.map(x => [x * 2]);
+arr1.map(x => [x * 2])
 // [[2], [4], [6], [8]]
 
-arr1.flatMap(x => [x * 2]);
+arr1.flatMap(x => [x * 2])
 // [2, 4, 6, 8]
 
 // 只会展开一层
-arr1.flatMap(x => [[x * 2]]);
+arr1.flatMap(x => [[x * 2]])
 // [[2], [4], [6], [8]]
 ```
 
@@ -815,18 +822,18 @@ arr1.flatMap(x => [[x * 2]]);
 返回 `Symbol` 的描述。
 
 ```js
-Symbol('desc').toString(); // "Symbol(desc)"
-Symbol('desc').description; // "desc"
-Symbol('').description; // ""
-Symbol().description; // undefined
+Symbol('desc').toString() // "Symbol(desc)"
+Symbol('desc').description // "desc"
+Symbol('').description // ""
+Symbol().description // undefined
 
 // well-known symbols
-Symbol.iterator.toString(); // "Symbol(Symbol.iterator)"
-Symbol.iterator.description; // "Symbol.iterator"
+Symbol.iterator.toString() // "Symbol(Symbol.iterator)"
+Symbol.iterator.description // "Symbol.iterator"
 
 // global symbols
-Symbol.for('foo').toString(); // "Symbol(foo)"
-Symbol.for('foo').description; // "foo"
+Symbol.for('foo').toString() // "Symbol(foo)"
+Symbol.for('foo').description // "foo"
 ```
 
 > 参考资料：[Symbol.prototype.description - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description)
@@ -861,7 +868,7 @@ try {
 
 ```js
 // A raw U+2029 character, produced by eval:
-const PS = eval('"\u2029"');
+const PS = eval('"\u2029"')
 // ES 2018: SyntaxError
 // ES 2019: ok!
 ```
@@ -877,15 +884,15 @@ JSON 规定使用 UTF-8 进行编码，但是对于一些编码，`JSON.stringif
 
 ```js
 // Non-BMP characters still serialize to surrogate pairs.
-JSON.stringify('𝌆');
+JSON.stringify('𝌆')
 // → '"𝌆"'
-JSON.stringify('\uD834\uDF06');
+JSON.stringify('\uD834\uDF06')
 // → '"𝌆"'
 
 // Unpaired surrogate code units will serialize to escape sequences.
-JSON.stringify('\uDF06\uD834');
+JSON.stringify('\uDF06\uD834')
 // → '"\\udf06\\ud834"'
-JSON.stringify('\uDEAD');
+JSON.stringify('\uDEAD')
 // → '"\\udead"'
 ```
 
@@ -908,21 +915,21 @@ var asyncIterable = {
       i: 0,
       next() {
         if (this.i < 3) {
-          return Promise.resolve({ value: this.i++, done: false });
+          return Promise.resolve({ value: this.i++, done: false })
         }
 
-        return Promise.resolve({ done: true });
+        return Promise.resolve({ done: true })
       },
-    };
+    }
   },
-};
+}
 
 // 然后可以使用 for await of 遍历这个对象
-(async function () {
+;(async function () {
   for await (num of asyncIterable) {
-    console.log(num);
+    console.log(num)
   }
-})();
+})()
 
 // 0
 // 1
@@ -941,16 +948,16 @@ var asyncIterable = {
 
 ```js
 // 把剩余的属性赋值给 z
-let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
-x; // 1
-y; // 2
-z; // { a: 3, b: 4 }
+let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 }
+x // 1
+y // 2
+z // { a: 3, b: 4 }
 ```
 
 ```js
 // 展开 z 中的属性
-let n = { x, y, ...z };
-n; // { x: 1, y: 2, a: 3, b: 4 }
+let n = { x, y, ...z }
+n // { x: 1, y: 2, a: 3, b: 4 }
 ```
 
 > 参考资料：
@@ -964,25 +971,25 @@ n; // { x: 1, y: 2, a: 3, b: 4 }
 无论 Promise 的结果如何，都会执行回调函数。
 
 ```js
-let isLoading = true;
+let isLoading = true
 
 fetch(myRequest)
   .then(function (response) {
-    var contentType = response.headers.get('content-type');
+    var contentType = response.headers.get('content-type')
     if (contentType && contentType.includes('application/json')) {
-      return response.json();
+      return response.json()
     }
-    throw new TypeError("Oops, we haven't got JSON!");
+    throw new TypeError("Oops, we haven't got JSON!")
   })
   .then(function (json) {
     /* process your JSON further */
   })
   .catch(function (error) {
-    console.log(error);
+    console.log(error)
   })
   .finally(function () {
-    isLoading = false;
-  });
+    isLoading = false
+  })
 ```
 
 > 参考资料：
@@ -996,15 +1003,15 @@ fetch(myRequest)
 
 ```js
 function latex(str) {
-  return { cooked: str[0], raw: str.raw[0] };
+  return { cooked: str[0], raw: str.raw[0] }
 }
 
-latex`\unicode`;
+latex`\unicode`
 // 非法转义序列变成了 undefined
 // { cooked: undefined, raw: "\\unicode" }
 
 // 不带标签的没事
-let bad = `bad escape sequence: \unicode`;
+let bad = `bad escape sequence: \unicode`
 ```
 
 > 参考资料：[模板字符串 - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings)
@@ -1016,17 +1023,17 @@ let bad = `bad escape sequence: \unicode`;
 ```js
 // ES 2017 -
 
-/foo.bar/.test('foo\nbar');
+;/foo.bar/.test('foo\nbar')
 // → false
 
-/foo[^]bar/.test('foo\nbar');
+;/foo[^]bar/.test('foo\nbar')
 // → true
 ```
 
 ```js
 // ES 2018 +
 
-/foo.bar/s.test('foo\nbar');
+;/foo.bar/s.test('foo\nbar')
 // → true
 ```
 
@@ -1037,23 +1044,23 @@ let bad = `bad escape sequence: \unicode`;
 肯定的反向断言使用 `(?<=...)` 的格式。
 
 ```js
-const reLookbehind = /(?<=\$)\d+(\.\d*)?/;
-const match1 = reLookbehind.exec('$123.89');
-const match2 = reLookbehind.exec('€123.89');
+const reLookbehind = /(?<=\$)\d+(\.\d*)?/
+const match1 = reLookbehind.exec('$123.89')
+const match2 = reLookbehind.exec('€123.89')
 
-console.log(match1[0]); // 123.89
-console.log(match2); // null
+console.log(match1[0]) // 123.89
+console.log(match2) // null
 ```
 
 否定的反向断言使用 `(?<!...)` 的格式。
 
 ```js
-const reLookbehind = /(?<!\$)\d+(?:\.\d*)/;
-const match1 = reLookbehind.exec('$10.53');
-const match2 = reLookbehind.exec('€10.53');
+const reLookbehind = /(?<!\$)\d+(?:\.\d*)/
+const match1 = reLookbehind.exec('$10.53')
+const match2 = reLookbehind.exec('€10.53')
 
-console.log(match1[0]); // 0.53
-console.log(match2[0]); // 10.53
+console.log(match1[0]) // 0.53
+console.log(match2[0]) // 10.53
 ```
 
 > 参考资料：[tc39/proposal-regexp-lookbehind: RegExp lookbehind assertions](https://github.com/tc39/proposal-regexp-lookbehind)
@@ -1063,8 +1070,8 @@ console.log(match2[0]); // 10.53
 在正则表达式中使用 `?<name>` 的形式可以给一个匹配组进行命名。
 
 ```js
-let re = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/u;
-let result = re.exec('2015-01-02');
+let re = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/u
+let result = re.exec('2015-01-02')
 // result.groups.year === '2015';
 // result.groups.month === '01';
 // result.groups.day === '02';
@@ -1080,8 +1087,8 @@ let result = re.exec('2015-01-02');
 ```js
 let {
   groups: { one, two },
-} = /^(?<one>.*):(?<two>.*)$/u.exec('foo:bar');
-console.log(`one: ${one}, two: ${two}`); // prints one: foo, two: bar
+} = /^(?<one>.*):(?<two>.*)$/u.exec('foo:bar')
+console.log(`one: ${one}, two: ${two}`) // prints one: foo, two: bar
 ```
 
 > 参考资料：[tc39/proposal-regexp-named-groups: Named capture groups for JavaScript RegExps](https://github.com/tc39/proposal-regexp-named-groups)
@@ -1093,8 +1100,8 @@ console.log(`one: ${one}, two: ${two}`); // prints one: foo, two: bar
 ```js
 // GreekSymbol 是希腊符号的意思
 
-const regexGreekSymbol = /\p{Script=Greek}/u;
-regexGreekSymbol.test('π');
+const regexGreekSymbol = /\p{Script=Greek}/u
+regexGreekSymbol.test('π')
 // → true
 ```
 
@@ -1125,20 +1132,20 @@ async function name([param[, param[, ... param]]]) {
 - `Object.entries` 返回一个对象所有可枚举的 **键值对** 组成的数组。
 
 ```js
-var obj = { foo: 'bar', baz: 42 };
-Object.values(obj); // ['bar', 42]
-Object.entries(obj); // [ ['foo', 'bar'], ['baz', 42] ]
+var obj = { foo: 'bar', baz: 42 }
+Object.values(obj) // ['bar', 42]
+Object.entries(obj) // [ ['foo', 'bar'], ['baz', 42] ]
 
 // 类似数组的对象
-var obj = { 0: 'a', 1: 'b', 2: 'c' };
-Object.values(obj); // ['a', 'b', 'c']
-Object.entries(obj); // [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]
+var obj = { 0: 'a', 1: 'b', 2: 'c' }
+Object.values(obj) // ['a', 'b', 'c']
+Object.entries(obj) // [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]
 
 // 乱序的类似数组的对象
 // 当使用数字作为键时，值将会按照键的数字顺序返回
-var an_obj = { 100: 'a', 2: 'b', 7: 'c' };
-Object.values(an_obj); // ['b', 'c', 'a']
-Object.entries(an_obj); // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
+var an_obj = { 100: 'a', 2: 'b', 7: 'c' }
+Object.values(an_obj) // ['b', 'c', 'a']
+Object.entries(an_obj) // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
 
 // getFoo 是一个不可枚举的属性
 var my_obj = Object.create(
@@ -1146,38 +1153,38 @@ var my_obj = Object.create(
   {
     getFoo: {
       value: function () {
-        return this.foo;
+        return this.foo
       },
     },
   }
-);
-my_obj.foo = 'bar';
-Object.values(my_obj); // ['bar']
-Object.entries(my_obj); // [ ['foo', 'bar']
+)
+my_obj.foo = 'bar'
+Object.values(my_obj) // ['bar']
+Object.entries(my_obj) // [ ['foo', 'bar']
 
 // 非对象的参数将会强制转换成对象
-Object.values('foo'); // ['f', 'o', 'o']
-Object.entries('foo'); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
+Object.values('foo') // ['f', 'o', 'o']
+Object.entries('foo') // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
 ```
 
 `Object.entries` 还有很多用法。
 
 ```js
 // 优雅地遍历 key-value
-const obj = { a: 5, b: 7, c: 9 };
+const obj = { a: 5, b: 7, c: 9 }
 for (const [key, value] of Object.entries(obj)) {
-  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+  console.log(`${key} ${value}`) // "a 5", "b 7", "c 9"
 }
 
 // 或者使用数组遍历对象
 Object.entries(obj).forEach(([key, value]) => {
-  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
-});
+  console.log(`${key} ${value}`) // "a 5", "b 7", "c 9"
+})
 
 // 将 Object 转换成 Map
-var obj = { foo: 'bar', baz: 42 };
-var map = new Map(Object.entries(obj));
-console.log(map); // Map { foo: "bar", baz: 42 }
+var obj = { foo: 'bar', baz: 42 }
+var map = new Map(Object.entries(obj))
+console.log(map) // Map { foo: "bar", baz: 42 }
 ```
 
 > 参考资料：
@@ -1198,20 +1205,20 @@ str.padStart(targetLength [, padString])
 - `padString` 要填充的字符串，超出的部分会被截断。默认填充空格 ` ` 。
 
 ```js
-'abc'.padStart(10); // "       abc"
-'abc'.padStart(10, 'foo'); // "foofoofabc"
-'abc'.padStart(6, '123465'); // "123abc"
-'abc'.padStart(8, '0'); // "00000abc"
-'abc'.padStart(1); // "abc"
+'abc'.padStart(10) // "       abc"
+'abc'.padStart(10, 'foo') // "foofoofabc"
+'abc'.padStart(6, '123465') // "123abc"
+'abc'.padStart(8, '0') // "00000abc"
+'abc'.padStart(1) // "abc"
 ```
 
 `String.prototype.padEnd` 同理。
 
 ```js
-'abc'.padEnd(10); // "abc       "
-'abc'.padEnd(10, 'foo'); // "abcfoofoof"
-'abc'.padEnd(6, '123456'); // "abc123"
-'abc'.padEnd(1); // "abc"
+'abc'.padEnd(10) // "abc       "
+'abc'.padEnd(10, 'foo') // "abcfoofoof"
+'abc'.padEnd(6, '123456') // "abc123"
+'abc'.padEnd(1) // "abc"
 ```
 
 > 参考资料：
@@ -1237,7 +1244,7 @@ clownPuppiesEverywhere(
   'foo',
   'bar', // updated to add a comma
   'baz' // updated to add new parameter
-);
+)
 ```
 
 但是如果允许默认情况下在最后一个参数后加上逗号，那么未来添加新的参数时，要修改的代码就只有一行。
@@ -1253,10 +1260,10 @@ function clownPuppiesEverywhere(
 clownPuppiesEverywhere(
   'foo',
   'bar' // 添加下一个参数时只会修改下面这一行，而不会修改这一行
-);
+)
 
 // 这样也是可以的
-obj(1, 2, 3);
+obj(1, 2, 3)
 ```
 
 其实不止函数的参数可以这样做，数组、对象的末尾逗号也是可以的，并且在 ECMAScript 5 中就已经得到了支持。但是在 JSON 中是不行的。
@@ -1271,7 +1278,7 @@ obj(1, 2, 3);
 返回指定对象的所有自身属性的描述符。
 
 ```js
-Object.getOwnPropertyDescriptors(Date);
+Object.getOwnPropertyDescriptors(Date)
 
 /** output
 UTC: {writable: true, enumerable: false, configurable: true, value: ƒ}
@@ -1287,7 +1294,7 @@ __proto__: Object
 可以用来进行浅拷贝。
 
 ```js
-Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
+Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj))
 ```
 
 > 参考资料：
@@ -1323,16 +1330,16 @@ arr.includes(value[, fromIndex])
 - `返回值` Boolean。
 
 ```js
-[1, 2, 3].includes(2) === true;
-[1, 2, 3].includes(4) === false;
+;[1, 2, 3].includes(2) === true
+;[1, 2, 3].includes(4) === false
 
-[1, 2, NaN].includes(NaN) === true;
+;[1, 2, NaN].includes(NaN) === true
 
-[1, 2, -0].includes(+0) === true;
-[1, 2, +0].includes(-0) === true;
+;[1, 2, -0].includes(+0) === true
+;[1, 2, +0].includes(-0) === true
 
-['a', 'b', 'c'].includes('a') === true;
-['a', 'b', 'c'].includes('a', 1) === false;
+;['a', 'b', 'c'].includes('a') === true
+;['a', 'b', 'c'].includes('a', 1) === false
 ```
 
 `String.prototype.includes` 与这个方法类似。
@@ -1350,15 +1357,15 @@ arr.includes(value[, fromIndex])
 ```js
 // x ** y
 
-let cubed = 2 ** 3;
+let cubed = 2 ** 3
 // 相当于 2 * 2 * 2
 ```
 
 ```js
 // x **= y
 
-let a = 2;
-a **= 2;
+let a = 2
+a **= 2
 // 相当于 a = a * a;
 ```
 
