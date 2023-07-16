@@ -1,13 +1,13 @@
 ---
 name: java-restful-server
-title: 用 Java 搭建 RESTful API 服务器
+title: 使用 Java 搭建 RESTful API 服务器
 create-date: 2019-12-09
 date: 2020-02-01
 description: 面向对象的程序设计课程作业，实现了一个简单的 CRUD  服务器和一个用于调试的 GUI 程序，服务器部分选择 Jersey 框架进行开发。
 license: CC-BY-SA-4.0
 ---
 
-# 用 Java 搭建 RESTful API 服务器
+# 使用 Java 搭建 RESTful API 服务器
 
 ## 计划
 

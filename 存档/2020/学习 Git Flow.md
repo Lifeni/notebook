@@ -1,13 +1,13 @@
 ---
 name: use-git-flow
-title: 使用 Git Flow
+title: 学习 Git Flow
 create-date: 2020-07-26
 date: 2020-08-14
 description: 记录学习使用 Git Flow 和 GitHub Flow 中的笔记和遇到的一些问题。
 license: CC-BY-SA-4.0
 ---
 
-# 使用 Git Flow
+# 学习 Git Flow
 
 ## 安装
 
