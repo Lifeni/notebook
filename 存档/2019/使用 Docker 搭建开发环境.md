@@ -276,7 +276,7 @@ Dockerfile 的常用命令如下，详细用法见官方文档：[| Docker Docum
   >
   > 根据上面的 Dockerfile 构建镜像, 不带任何参数运行 docker run 命令
   >
-  > ```text
+  > ```bash
   > $ docker build -t ping .
   > [truncated]
   >
@@ -297,7 +297,7 @@ Dockerfile 的常用命令如下，详细用法见官方文档：[| Docker Docum
   >
   > 上面执行的命令是 ENTRYPOINT 和 CMD 指令拼接而成. ENTRYPOINT 和 CMD 同时存在时, docker 把 CMD 的命令拼接到 ENTRYPOINT 命令之后, 拼接后的命令才是最终执行的命令. 但是由于上文说 docker run 命令行执行时, 可以覆盖 CMD 指令的值. 如果你希望这个 docker 镜像启动后不是 ping localhost, 而是 ping 其他服务器,, 可以这样执行 docker run:
   >
-  > ```text
+  > ```bash
   > $ docker run ping docker.io
   > PING docker.io (162.242.195.84) 56(84) bytes of data.
   > 64 bytes from 162.242.195.84: icmp_seq=1 ttl=61 time=76.7 ms
