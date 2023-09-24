@@ -5,6 +5,7 @@ const articles = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
+    subtitle: z.string().optional(),
     id: z.string(),
     cover: z.object({
       caption: z.string(),
