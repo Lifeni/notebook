@@ -11,7 +11,9 @@ const articles = defineCollection({
       caption: z.string(),
       image: z.string(),
     }),
-    draft: z.boolean(),
+    draft: z.boolean().optional(),
+    group: z.boolean().optional(),
+    star: z.boolean().optional(),
     license: z.string(),
     tags: z.array(z.string()),
     date: z.object({
@@ -21,34 +23,19 @@ const articles = defineCollection({
   }),
 })
 
-const stories = defineCollection({
-  type: 'content',
-  schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    id: z.string(),
-    cover: z.object({
-      caption: z.string(),
-      image: z.string(),
-    }),
-    draft: z.boolean(),
-    license: z.string(),
-    date: z.object({
-      created: z.date(),
-      updated: z.date(),
-    }),
-  }),
-})
+const stories = articles
 
 const archives = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
+    subtitle: z.string().optional(),
     description: z.string(),
     name: z.string(),
     'create-date': z.date(),
     date: z.date(),
     license: z.string(),
+    star: z.boolean().optional(),
   }),
 })
 

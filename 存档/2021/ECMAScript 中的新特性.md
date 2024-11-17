@@ -570,7 +570,7 @@ console.log(JSON.stringify(results))
 也就是动态导入，返回一个 Promise。
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <nav>
   <a href="books.html" data-entry-module="books">Books</a>
   <a href="movies.html" data-entry-module="movies">Movies</a>
@@ -1025,7 +1025,6 @@ let bad = `bad escape sequence: \unicode`
 
 ;/foo.bar/.test('foo\nbar')
 // → false
-
 ;/foo[^]bar/.test('foo\nbar')
 // → true
 ```
@@ -1332,12 +1331,9 @@ arr.includes(value[, fromIndex])
 ```js
 ;[1, 2, 3].includes(2) === true
 ;[1, 2, 3].includes(4) === false
-
 ;[1, 2, NaN].includes(NaN) === true
-
 ;[1, 2, -0].includes(+0) === true
 ;[1, 2, +0].includes(-0) === true
-
 ;['a', 'b', 'c'].includes('a') === true
 ;['a', 'b', 'c'].includes('a', 1) === false
 ```
