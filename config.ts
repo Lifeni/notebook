@@ -11,9 +11,10 @@ const articles = defineCollection({
       caption: z.string(),
       image: z.string(),
     }),
-    draft: z.boolean().optional(),
-    group: z.boolean().optional(),
     star: z.boolean().optional(),
+    draft: z.boolean().optional(),
+    hide: z.boolean().optional(),
+    group: z.boolean().optional(),
     license: z.string(),
     tags: z.array(z.string()),
     date: z.object({
