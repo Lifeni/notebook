@@ -15,7 +15,7 @@ _本文仅探讨经典数独的求解与生成。_
 
 数独的形式是下面这样的，一共有 81 个格子。
 
-![数独](https://file.lifeni.life/markdown/algorithm-sudoku/sudoku.svg)
+![数独](https://file.lifeni.life/notebook/存档/algorithm-sudoku/sudoku.svg)
 
 解数独时需要根据 9×9 盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫（3×3）内的数字均含 1-9，不重复。
 
@@ -56,7 +56,7 @@ _本文仅探讨经典数独的求解与生成。_
    const getPossibleNumber = (
      row: Array<string>,
      col: Array<string>,
-     box: Array<string>
+     box: Array<string>,
    ) => {
      // 数组中每个位置对应一个数字，位置上的数值代表数字出现的次数
      const arr: Array<number> = Array(9).fill(0)

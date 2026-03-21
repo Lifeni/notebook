@@ -73,7 +73,7 @@ Promise.any(promises).then(
   },
   error => {
     // All of the promises were rejected.
-  }
+  },
 )
 ```
 
@@ -1155,7 +1155,7 @@ var my_obj = Object.create(
         return this.foo
       },
     },
-  }
+  },
 )
 my_obj.foo = 'bar'
 Object.values(my_obj) // ['bar']
@@ -1222,7 +1222,7 @@ str.padStart(targetLength [, padString])
 
 > 参考资料：
 >
-> - [tc39/proposal-string-pad-start-end: ECMAScript spec proposal for String.prototype.{padStart,padEnd}](https://github.com/tc39/proposal-string-pad-start-end)
+> - [tc39/proposal-string-pad-start-end: ECMAScript spec proposal for String.prototype.\{padStart,padEnd\}](https://github.com/tc39/proposal-string-pad-start-end)
 > - [String.prototype.padStart() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padStart)
 > - [String.prototype.padEnd() - JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd)
 
@@ -1234,7 +1234,7 @@ str.padStart(targetLength [, padString])
 function clownPuppiesEverywhere(
   param1,
   param2, // updated to add a comma
-  param3 // updated to add new parameter
+  param3, // updated to add new parameter
 ) {
   /* ... */
 }
@@ -1242,7 +1242,7 @@ function clownPuppiesEverywhere(
 clownPuppiesEverywhere(
   'foo',
   'bar', // updated to add a comma
-  'baz' // updated to add new parameter
+  'baz', // updated to add new parameter
 )
 ```
 
@@ -1251,14 +1251,14 @@ clownPuppiesEverywhere(
 ```js
 function clownPuppiesEverywhere(
   param1,
-  param2 // 添加下一个参数时只会修改下面这一行，而不会修改这一行
+  param2, // 添加下一个参数时只会修改下面这一行，而不会修改这一行
 ) {
   /* ... */
 }
 
 clownPuppiesEverywhere(
   'foo',
-  'bar' // 添加下一个参数时只会修改下面这一行，而不会修改这一行
+  'bar', // 添加下一个参数时只会修改下面这一行，而不会修改这一行
 )
 
 // 这样也是可以的
